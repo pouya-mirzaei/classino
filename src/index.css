@@ -1,3 +1,28 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  @font-face {
+    font-family: 'IranSans';
+    src: url(../public/fonts/iranSans.woff) format(woff);
+  }
+
+  .font-primary {
+    font-family: 'IranSans';
+  }
+
+  svg {
+    aspect-ratio: 1/1;
+  }
+  .btn-panel {
+    @apply border-2 border-primary-1 px-[18px] py-2 rounded-3xl text-primary-1 font-semibold text-[15px] cursor-pointer transition-all;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+  }
+  .btn-panel:hover {
+    box-shadow: 0 5px 11px 0 rgba(0, 0, 0, 0.18), 0 4px 15px 0 rgba(0, 0, 0, 0.15);
+  }
+  .btn-panel:focus {
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+  }
+}

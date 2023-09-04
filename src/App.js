@@ -1,5 +1,16 @@
+import { useEffect } from 'react';
+import Home from './pages/Home/Home';
+
 function App() {
-  return <div className="text-5xl ">hello</div>;
+  useEffect(() => {
+    document.body.classList.add('font-primary');
+  }, []);
+
+  return (
+    <div className="h-[2000px]">
+      <Home></Home>
+    </div>
+  );
 }
 
 export default App;
