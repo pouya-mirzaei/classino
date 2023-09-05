@@ -1,5 +1,6 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Home from './pages/Home/Home';
+import PreLoader from './components/PreLoader';
 
 function App() {
   useEffect(() => {
@@ -7,7 +8,7 @@ function App() {
   }, []);
 
   return (
-    <div className="h-[2000px]">
+    <div className="min-h-screen relative">
       <Home></Home>
     </div>
   );

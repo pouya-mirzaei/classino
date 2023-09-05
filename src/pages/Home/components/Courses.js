@@ -32,9 +32,22 @@ export default function Courses() {
         }`}>
         <ul className="divide-y-2 w-full [&>*]:py-4 text-lg">
           <li className="text-primary-2 text-center">کلاسینو</li>
-          <li className="pr-5">سال تحصیلی 1402-1403</li>
-          <li className="pr-5">انتخاب رشته کنکور 1402</li>
-          <li className="pr-5">زبانینو</li>
+          <li className="pr-5">
+            <a className="hover:text-primary-1 transition-all" href="#">
+              سال تحصیلی 1402-1403
+            </a>
+          </li>
+          <li className="pr-5">
+            <a className="hover:text-primary-1 transition-all" a href="#">
+              انتخاب رشته کنکور 1402
+            </a>
+          </li>
+          <li className="pr-5">
+            <a className="hover:text-primary-1 transition-all" href="#">
+              زبانینو
+            </a>
+          </li>
+
           <li className="flex justify-center">
             <button className="text-center btn-panel bg-primary-1 text-white hover:bg-primary-2 w-4/5">
               دوره ها در یک نگاه
@@ -43,7 +56,9 @@ export default function Courses() {
         </ul>
       </div>
       <div
-        className={`fixed bg-black/50 w-screen h-screen z-10 scale-150 ${isMenuOpen ? 'block' : 'hidden'}`}
+        className={`fixed bg-black/50 w-screen h-screen z-10 scale-150 backdrop-blur-sm ${
+          isMenuOpen ? 'block' : 'hidden'
+        }`}
         onClick={closeMenu}></div>
     </div>
   );
