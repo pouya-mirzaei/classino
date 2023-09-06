@@ -65,4 +65,10 @@
   .menu-open {
     right: 0;
   }
+  .mobile-search-open {
+    top: 0;
+  }
+  .mobile-search-close {
+    top: -100%;
+  }
 }

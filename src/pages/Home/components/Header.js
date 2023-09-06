@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import Courses from '../pages/Home/components/Courses';
+import Courses from './Courses';
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(true);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isMobileSearchOpen, setIsMobileSearchOpen] = useState(false);
 
   // use effects
 
   useEffect(() => {
     window.addEventListener('scroll', handleScroll);
-    setIsMobileMenuOpen(true);
+    setIsMobileMenuOpen(false);
+    setIsMobileSearchOpen(false);
   }, []);
 
   // functions
@@ -18,16 +20,19 @@ export default function Header() {
     setScrolled(window.scrollY > 0 ? true : false);
   };
 
-  const handleClick = (e) => {
-    console.log(e);
-  };
-
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen((prev) => !prev);
+  };
+  const toggleMobileSearch = () => {
+    setIsMobileSearchOpen((prev) => !prev);
   };
 
   const closeMobileMenu = () => {
     setIsMobileMenuOpen(false);
+  };
+
+  const closeMobileSearch = () => {
+    setIsMobileSearchOpen(false);
   };
 
   return (
@@ -60,9 +65,7 @@ export default function Header() {
               placeholder="جست و جو دوره، پایه تحصیلی، استاد"
               className="w-80 xl:w-[400px] rounded-[34px] outline-none py-2 px-5 bg-[#f0f0f1] shadow-lg placeholder:text-sm hover:bg-white focus:bg-white transition-all"
             />
-            <svg
-              className="h-full p-2 rounded-full bg-primary-2 cursor-pointer text-white absolute left-0"
-              onClick={handleClick}>
+            <svg className="h-full p-2 rounded-full bg-primary-2 cursor-pointer text-white absolute left-0">
               <use href="sprite/hero.svg#magnifying-glass"></use>
             </svg>
           </div>
@@ -76,18 +79,26 @@ export default function Header() {
 
         {/* mobile icons */}
         <div className="flex items-center gap-x-2.5 lg:hidden h-full [&>*]:w-10">
-          <svg onClick={toggleMobileMenu}>
+          <svg
+            className="hover:border-b hover:border-black active:translate-y-0.5 inline-block transition-all"
+            onClick={toggleMobileMenu}>
             <use href="sprite/hero.svg#3-bars"></use>
           </svg>
-          <svg>
+          <svg
+            className="hover:border-b hover:border-black active:translate-y-0.5 inline-block transition-all"
+            onClick={toggleMobileSearch}>
             <use href="sprite/hero.svg#magnifying-glass"></use>
           </svg>
-          <svg>
+          <svg className="hover:border-b hover:border-black active:translate-y-0.5 inline-block transition-all">
             <use href="sprite/hero.svg#user-circle"></use>
           </svg>
         </div>
       </header>
+
+      {/* assets */}
+
       <div>
+        {/* mobile menu */}
         <div
           className={`absolute top-0 bottom-0 w-4/5 z-20 bg-[#f3f3f3] max-w-md transition-all duration-300 ${
             isMobileMenuOpen ? 'menu-open' : 'menu-close'
@@ -126,6 +137,28 @@ export default function Header() {
         <div
           className={`absolute inset-0 bg-black/50 z-10 ${isMobileMenuOpen ? 'block' : 'hidden'}`}
           onClick={closeMobileMenu}></div>
+
+        {/* mobile search bar */}
+
+        <div
+          className={`absolute right-0 left-0 transition-all duration-300 ${
+            isMobileSearchOpen ? 'mobile-search-open' : 'mobile-search-close'
+          }`}>
+          <div className="relative z-20">
+            <input
+              type="text"
+              autoComplete="off"
+              placeholder="جست و جو دوره، پایه تحصیلی، استاد"
+              className="w-full outline-none py-5 pr-16 bg-white shadow-lg placeholder:text-sm transition-all"
+            />
+            <svg className="w-14 p-2 rounded-full absolute right-0 top-1/2 -translate-y-1/2">
+              <use href="sprite/hero.svg#magnifying-glass"></use>
+            </svg>
+          </div>
+        </div>
+        <div
+          className={`absolute z-10 inset-0 bg-white/30 backdrop-blur-sm ${isMobileSearchOpen ? 'block' : 'hidden'}`}
+          onClick={closeMobileSearch}></div>
       </div>
     </>
   );
