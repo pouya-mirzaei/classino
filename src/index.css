@@ -71,4 +71,11 @@
   .mobile-search-close {
     top: -100%;
   }
+
+  section {
+    padding: 5rem 0;
+  }
+  h1 {
+    line-height: 60px !important;
+  }
 }
