@@ -3,13 +3,13 @@ import Courses from '../pages/Home/components/Courses';
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(true);
 
   // use effects
 
   useEffect(() => {
     window.addEventListener('scroll', handleScroll);
-    setIsMobileMenuOpen(false);
+    setIsMobileMenuOpen(true);
   }, []);
 
   // functions
@@ -89,12 +89,42 @@ export default function Header() {
       </header>
       <div>
         <div
-          className={`absolute top-0 bottom-0 w-4/5 z-20 bg-red-300 max-w-md transition-all duration-300 ${
+          className={`absolute top-0 bottom-0 w-4/5 z-20 bg-[#f3f3f3] max-w-md transition-all duration-300 ${
             isMobileMenuOpen ? 'menu-open' : 'menu-close'
-          }`}></div>
+          }`}>
+          <ul className="flex flex-col pt-2 [&>*]:border-y [&>*]:py-5">
+            <li className="flex justify-center">
+              <a href="#">
+                <img src="images/classino_Logo.08df55af.svg" alt="classni logo" />
+              </a>
+            </li>
+            <li className="pr-5">
+              <a className="hover:text-primary-1 transition-all" href="#">
+                سال تحصیلی 1402-1403
+              </a>
+            </li>
+            <li className="pr-5">
+              <a className="hover:text-primary-1 transition-all" a href="#">
+                انتخاب رشته کنکور 1402
+              </a>
+            </li>
+            <li className="pr-5">
+              <a className="hover:text-primary-1 transition-all" href="#">
+                زبانینو
+              </a>
+            </li>
+
+            <li className="flex justify-center items-center basis-full bg-white py-5">
+              <button className="btn-panel bg-primary-1 text-white hover:bg-primary-2 w-4/5">دوره ها در یک نگاه</button>
+            </li>
+            <li className="flex justify-center items-center">
+              <button className="btn-panel w-4/5">ورود به پنل کاربری</button>
+            </li>
+          </ul>
+        </div>
 
         <div
-          className={`absolute inset-0 bg-black/50 z-10 backdrop-blur-sm ${isMobileMenuOpen ? 'block' : 'hidden'}`}
+          className={`absolute inset-0 bg-black/50 z-10 ${isMobileMenuOpen ? 'block' : 'hidden'}`}
           onClick={closeMobileMenu}></div>
       </div>
     </>
