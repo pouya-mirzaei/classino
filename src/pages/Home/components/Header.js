@@ -2,47 +2,37 @@ import React, { useEffect, useState } from 'react';
 import Courses from './Courses';
 
 export default function Header() {
-  const [scrolled, setScrolled] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isMobileSearchOpen, setIsMobileSearchOpen] = useState(false);
 
   // use effects
 
   useEffect(() => {
     window.addEventListener('scroll', handleScroll);
     setIsMobileMenuOpen(false);
-    setIsMobileSearchOpen(false);
   }, []);
 
   // functions
 
-  const handleScroll = () => {
-    setScrolled(window.scrollY > 0 ? true : false);
+  const handleScroll = (e) => {
+    setIsScrolled(window.scrollY > 0);
   };
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen((prev) => !prev);
   };
-  const toggleMobileSearch = () => {
-    setIsMobileSearchOpen((prev) => !prev);
-  };
 
   const closeMobileMenu = () => {
     setIsMobileMenuOpen(false);
   };
-
-  const closeMobileSearch = () => {
-    setIsMobileSearchOpen(false);
-  };
-
   return (
     <>
       {/* assets */}
 
-      <div>
+      <div className="absolute h-screen">
         {/* mobile menu */}
         <div
-          className={`absolute top-0 bottom-0 w-4/5 z-20 bg-[#f3f3f3] max-w-md transition-all duration-300 ${
+          className={`fixed w-4/5 min-h-screen z-40 bg-[#f3f3f3] max-w-md transition-all duration-300 ${
             isMobileMenuOpen ? 'menu-open' : 'menu-close'
           }`}>
           <ul className="flex flex-col pt-2 [&>*]:border-y [&>*]:py-5">
@@ -77,37 +67,14 @@ export default function Header() {
         </div>
 
         <div
-          className={`absolute inset-0 bg-black/50 z-10 ${isMobileMenuOpen ? 'block' : 'hidden'}`}
+          className={`fixed inset-0 bg-black/50 z-[35] ${isMobileMenuOpen ? 'block' : 'hidden'}`}
           onClick={closeMobileMenu}></div>
-
-        {/* mobile search bar */}
-
-        <div
-          className={`absolute right-0 left-0 transition-all duration-300 ${
-            isMobileSearchOpen ? 'mobile-search-open' : 'mobile-search-close'
-          }`}>
-          <div className="relative z-20">
-            <input
-              type="text"
-              autoComplete="off"
-              placeholder="جست و جو دوره، پایه تحصیلی، استاد"
-              className="w-full outline-none py-5 pr-16 bg-white shadow-lg placeholder:text-sm transition-all"
-            />
-            <svg className="w-14 p-2 rounded-full absolute right-0 top-1/2 -translate-y-1/2">
-              <use href="sprite/hero.svg#magnifying-glass"></use>
-            </svg>
-          </div>
-        </div>
-        <div
-          className={`absolute z-10 inset-0 bg-white/30 backdrop-blur-sm ${isMobileSearchOpen ? 'block' : 'hidden'}`}
-          onClick={closeMobileSearch}></div>
       </div>
       <header
-        className={`flex items-center bg-white transition-all justify-between lg:justify-around flex-row-reverse lg:flex-row h-20 sticky z-40 top-0 px-3.5 ${
-          scrolled ? 'shadow-lg' : ''
+        className={`flex items-center justify-between lg:justify-around flex-row-reverse lg:flex-row bg-white transition-all h-20 sticky z-30 top-0 px-3.5 ${
+          isScrolled ? 'shadow-lg' : ''
         }`}>
         {/* right side */}
-
         <div className="flex items-center gap-x-5">
           {/* logo */}
 
@@ -135,24 +102,16 @@ export default function Header() {
             </svg>
           </div>
         </div>
-
         {/* left side */}
-
         <div className="hidden lg:inline-block">
           <button className="btn-panel">ورود به پنل کاربری</button>
         </div>
-
         {/* mobile icons */}
         <div className="flex items-center gap-x-2.5 lg:hidden h-full [&>*]:w-10">
           <svg
             className="hover:border-b hover:border-black active:translate-y-0.5 inline-block transition-all"
             onClick={toggleMobileMenu}>
             <use href="sprite/hero.svg#3-bars"></use>
-          </svg>
-          <svg
-            className="hover:border-b hover:border-black active:translate-y-0.5 inline-block transition-all"
-            onClick={toggleMobileSearch}>
-            <use href="sprite/hero.svg#magnifying-glass"></use>
           </svg>
           <svg className="hover:border-b hover:border-black active:translate-y-0.5 inline-block transition-all">
             <use href="sprite/hero.svg#user-circle"></use>

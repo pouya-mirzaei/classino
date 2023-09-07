@@ -12,6 +12,11 @@
     font-family: 'IranSans';
   }
 
+  body {
+    min-height: 100vh;
+    position: relative;
+  }
+
   svg {
     aspect-ratio: 1/1;
   }
