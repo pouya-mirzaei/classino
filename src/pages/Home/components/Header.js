@@ -103,7 +103,7 @@ export default function Header() {
           onClick={closeMobileSearch}></div>
       </div>
       <header
-        className={`flex items-center bg-white transition-all justify-between lg:justify-around flex-row-reverse lg:flex-row h-20 sticky top-0 px-3.5 ${
+        className={`flex items-center bg-white transition-all justify-between lg:justify-around flex-row-reverse lg:flex-row h-20 sticky z-40 top-0 px-3.5 ${
           scrolled ? 'shadow-lg' : ''
         }`}>
         {/* right side */}
