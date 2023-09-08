@@ -3,10 +3,11 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay } from 'swiper/modules';
 import 'swiper/css';
 import teachers from '../../../data/teachers';
+import PreLoader from '../../../components/PreLoader';
 
 export default function TeachersSection() {
   return (
-    <section className="container px-5 md:p-0">
+    <section className="container px-5 md:p-0 relative">
       <h2 className="heading-secondary text-center">مجموعه ای از بهترین اساتید کنکور ایران</h2>
 
       <Swiper
@@ -14,7 +15,7 @@ export default function TeachersSection() {
         slidesPerView={1}
         loop={true}
         modules={[Autoplay]}
-        autoplay={{ delay: 2500, disableOnInteraction: false }}
+        autoplay={{ delay: 3000, disableOnInteraction: false }}
         breakpoints={{
           765: {
             slidesPerView: 2,
@@ -26,7 +27,9 @@ export default function TeachersSection() {
             slidesPerView: 5,
           },
         }}
-        className="mt-12">
+        className="relative mt-12">
+        <PreLoader title="استاید کلاسینو"></PreLoader>
+
         {teachers.map((teacher) => (
           <SwiperSlide className="w-48" key={teacher.id}>
             <div className="relative min-h-[230px] bg-gray-100 rounded-xl overflow-hidden hover:shadow-xl hover:shadow-black/60 cursor-pointer transition-all">
@@ -41,6 +44,10 @@ export default function TeachersSection() {
           </SwiperSlide>
         ))}
       </Swiper>
+
+      <button className="mt-10 mx-auto block btn-panel text-white bg-secondary-1 border border-[#da7c0c]">
+        مشاهده کادر استاد کلاسینو
+      </button>
     </section>
   );
 }

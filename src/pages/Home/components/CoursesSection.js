@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import CourseBox from './CourseBox';
+import PreLoader from '../../../components/PreLoader';
 
 export default function CoursesSection() {
   const [coursesData, setCoursesData] = useState([
@@ -14,7 +15,8 @@ export default function CoursesSection() {
   return (
     <section className="container px-5 md:p-0">
       <h2 className="heading-secondary text-center">دوره های ۱۴۰۲-۱۴۰۳ کلاسینو</h2>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-16 gap-y-5 mt-10">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-16 gap-y-5 mt-10 relative">
+        <PreLoader />
         {coursesData.map((course) => (
           <CourseBox key={course.id} {...course} />
         ))}
