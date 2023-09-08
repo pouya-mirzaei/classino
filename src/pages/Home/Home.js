@@ -1,17 +1,19 @@
 import React from 'react';
-import Header from './components/Header';
-import HeroSection from './components/HeroSection';
-import CoursesSection from './components/CoursesSection';
-import TeachersSection from './components/TeachersSection';
+import HeroSection from '../../components/home/HeroSection';
+import CoursesSection from '../../components/home/CoursesSection';
+import TeachersSection from '../../components/home/TeachersSection';
+import TopStudentsSection from '../../components/home/TopStudentsSection';
+import Header from '../../components/home/Header';
 
 export default function Home() {
   return (
     <>
-      <Header></Header>
+      <Header />
       <main>
-        <HeroSection></HeroSection>
-        <CoursesSection></CoursesSection>
-        <TeachersSection></TeachersSection>
+        <HeroSection />
+        <CoursesSection />
+        <TeachersSection />
+        <TopStudentsSection />
       </main>
     </>
   );

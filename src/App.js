@@ -12,7 +12,7 @@ function App() {
     // loading the preloader
     setTimeout(() => {
       setIsContentLoaded(true);
-    }, 2000);
+    }, 1000);
   }, []);
 
   return <>{isContentLoaded ? <Home /> : <PreLoader />}</>;

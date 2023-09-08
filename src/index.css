@@ -90,4 +90,17 @@
     font-size: 2rem;
     line-height: 60px;
   }
+
+  .student {
+    @apply bg-red-300 p-4 rounded-lg overflow-hidden;
+    height: 352px !important;
+  }
+  .student-contact {
+    @apply bg-gradient-to-b from-secondary-2 to-secondary-1;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 2rem 0;
+  }
 }

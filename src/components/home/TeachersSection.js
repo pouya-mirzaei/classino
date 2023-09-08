@@ -1,9 +1,9 @@
 import React from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay } from 'swiper/modules';
+import teachers from '../../data/teachers';
+import PreLoader from '../PreLoader';
 import 'swiper/css';
-import teachers from '../../../data/teachers';
-import PreLoader from '../../../components/PreLoader';
 
 export default function TeachersSection() {
   return (
@@ -11,7 +11,7 @@ export default function TeachersSection() {
       <h2 className="heading-secondary text-center">مجموعه ای از بهترین اساتید کنکور ایران</h2>
 
       <Swiper
-        spaceBetween={50}
+        spaceBetween={35}
         slidesPerView={1}
         loop={true}
         modules={[Autoplay]}
@@ -24,7 +24,7 @@ export default function TeachersSection() {
             slidesPerView: 3,
           },
           1200: {
-            slidesPerView: 5,
+            slidesPerView: 4,
           },
         }}
         className="relative mt-12">
