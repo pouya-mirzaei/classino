@@ -11,7 +11,7 @@ export default function TeachersSection() {
       <h2 className="heading-secondary text-center">مجموعه ای از بهترین اساتید کنکور ایران</h2>
 
       <Swiper
-        spaceBetween={35}
+        spaceBetween={50}
         slidesPerView={1}
         loop={true}
         modules={[Autoplay]}
@@ -24,7 +24,7 @@ export default function TeachersSection() {
             slidesPerView: 3,
           },
           1200: {
-            slidesPerView: 4,
+            slidesPerView: 5,
           },
         }}
         className="relative mt-12">

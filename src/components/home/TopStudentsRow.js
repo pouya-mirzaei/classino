@@ -1,6 +1,7 @@
 import React from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay } from 'swiper/modules';
+import topStudents from '../../data/top-students';
 
 export default function TopStudentsRow({ year }) {
   return (
@@ -27,12 +28,33 @@ export default function TopStudentsRow({ year }) {
             slidesPerView: 4,
           },
         }}
-        className="relative mt-12 w-4/5">
-        <SwiperSlide className="student">slide1</SwiperSlide>
-        <SwiperSlide className="student">slide1</SwiperSlide>
-        <SwiperSlide className="student">slide1</SwiperSlide>
-        <SwiperSlide className="student">slide1</SwiperSlide>
-        <SwiperSlide className="student">slide1</SwiperSlide>
+        className="relative mt-12 w-[90%]">
+        {/* students */}
+
+        {topStudents[year].map((student) => (
+          <SwiperSlide className="student" key={student.id}>
+            <figure className="w-full h-full">
+              {/* image section */}
+
+              <div className="absolute top-0 right-0 left-0">
+                <div className="relative">
+                  <img src={student.bg} alt={student.name} className="w-full" />
+                  <img src={student.studentImg} alt={student.name} className="top-student-img" />
+                </div>
+              </div>
+
+              <figcaption className="absolute bottom-0 left-4 right-4 h-44 flex flex-col items-center gap-2.5">
+                <h3 className="text-xl text-black/50 font-bold">{student.name}</h3>
+                <p className="text-2xl font-semibold">رتبه {student.rank} کنکور</p>
+                <span>مصاحبه با{student.interviewWith}</span>
+                <button className="btn-panel bg-primary-1 text-white">مشاهده مصاحبه</button>
+              </figcaption>
+            </figure>
+          </SwiperSlide>
+        ))}
+
+        {/* contact us slide  */}
+
         <SwiperSlide className="student student-contact">
           <div className="text-white flex flex-col items-center">
             <svg className="h-28">
@@ -44,7 +66,7 @@ export default function TopStudentsRow({ year }) {
             <button className="btn-panel bg-gradient-to-t from-primary-1 to-[#07a3fb] text-white w-4/5">
               ثبت نام رایگان
             </button>
-            <button className="btn-panel bg-gray-200 text-[#1f1f1f] shadow-md shadow-black/20 border-none">
+            <button className="btn-panel bg-gray-200 w-4/5 text-[#1f1f1f] shadow-md shadow-black/20 border-none">
               تماس با پشتیبانی
             </button>
           </div>

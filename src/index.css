@@ -92,7 +92,7 @@
   }
 
   .student {
-    @apply bg-red-300 p-4 rounded-lg overflow-hidden;
+    @apply bg-white p-4 rounded-lg overflow-hidden;
     height: 352px !important;
   }
   .student-contact {
@@ -102,5 +102,17 @@
     justify-content: center;
     flex-direction: column;
     gap: 2rem 0;
+  }
+
+  .top-student-img {
+    width: 100px;
+    height: 100px;
+    outline: 5px solid #fff;
+    background-color: #fff;
+    border-radius: 50%;
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translate(-50%, -50%);
   }
 }
