@@ -4,6 +4,7 @@ import CoursesSection from '../../components/home/CoursesSection';
 import TeachersSection from '../../components/home/TeachersSection';
 import TopStudentsSection from '../../components/home/TopStudentsSection';
 import Header from '../../components/home/Header';
+import Socials from '../../components/home/Socials';
 
 export default function Home() {
   return (
@@ -14,6 +15,7 @@ export default function Home() {
         <CoursesSection />
         <TeachersSection />
         <TopStudentsSection />
+        <Socials />
       </main>
     </>
   );

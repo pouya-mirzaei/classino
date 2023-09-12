@@ -9,7 +9,7 @@ function App() {
     // appling the font
     document.body.classList.add('font-primary');
 
-    // loading the preloader
+    // displaing the preloader
     setTimeout(() => {
       setIsContentLoaded(true);
     }, 1000);

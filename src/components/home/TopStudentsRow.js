@@ -1,7 +1,8 @@
 import React from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Autoplay } from 'swiper/modules';
+import { Autoplay, Pagination } from 'swiper/modules';
 import topStudents from '../../data/top-students';
+import 'swiper/css/pagination';
 
 export default function TopStudentsRow({ year }) {
   return (
@@ -15,8 +16,9 @@ export default function TopStudentsRow({ year }) {
       <Swiper
         spaceBetween={10}
         slidesPerView={1}
-        modules={[Autoplay]}
+        modules={[Autoplay, Pagination]}
         autoplay={{ delay: 3000, disableOnInteraction: false, stopOnLastSlide: true }}
+        pagination={{ clickable: true }}
         breakpoints={{
           765: {
             slidesPerView: 2,
