@@ -19,7 +19,7 @@ function App() {
 
   const router = useRoutes(routes);
 
-  return <>{isContentLoaded ? <>{router}</> : <PreLoader />}</>;
+  return <>{isContentLoaded ? <>{router}</> : <PreLoader duration={1000} />}</>;
 }
 
 export default App;

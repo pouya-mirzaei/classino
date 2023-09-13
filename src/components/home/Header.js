@@ -74,7 +74,7 @@ export default function Header() {
           onClick={closeMobileMenu}></div>
       </div>
       <header
-        className={`flex items-center justify-between lg:justify-around flex-row-reverse lg:flex-row bg-white transition-all h-20 sticky z-30 top-0 px-3.5 ${
+        className={`flex items-center justify-between lg:justify-around flex-row-reverse lg:flex-row bg-white transition-all h-20 sticky z-[51] top-0 px-3.5 ${
           isScrolled ? 'shadow-lg' : ' '
         }`}>
         {/* right side */}
