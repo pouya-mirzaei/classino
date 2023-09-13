@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import Courses from './Courses';
+import { Link } from 'react-router-dom';
 
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-
+  const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
   // use effects
 
   useEffect(() => {
@@ -14,7 +15,7 @@ export default function Header() {
 
   // functions
 
-  const handleScroll = (e) => {
+  const handleScroll = () => {
     setIsScrolled(window.scrollY > 0);
   };
 
@@ -60,9 +61,11 @@ export default function Header() {
             <li className="flex justify-center items-center basis-full bg-white py-5">
               <button className="btn-panel bg-primary-1 text-white hover:bg-primary-2 w-4/5">دوره ها در یک نگاه</button>
             </li>
-            <li className="flex justify-center items-center">
-              <button className="btn-panel w-4/5">ورود به پنل کاربری</button>
-            </li>
+            <Link to={isUserLoggedIn ? '/panel' : '/login'}>
+              <li className="flex justify-center items-center">
+                <button className="btn-panel w-4/5">ورود به پنل کاربری</button>
+              </li>
+            </Link>
           </ul>
         </div>
 
@@ -72,7 +75,7 @@ export default function Header() {
       </div>
       <header
         className={`flex items-center justify-between lg:justify-around flex-row-reverse lg:flex-row bg-white transition-all h-20 sticky z-30 top-0 px-3.5 ${
-          isScrolled ? 'shadow-lg' : ''
+          isScrolled ? 'shadow-lg' : ' '
         }`}>
         {/* right side */}
         <div className="flex items-center gap-x-5">
@@ -104,7 +107,9 @@ export default function Header() {
         </div>
         {/* left side */}
         <div className="hidden lg:inline-block">
-          <button className="btn-panel">ورود به پنل کاربری</button>
+          <Link to={isUserLoggedIn ? '/panel' : '/login'}>
+            <button className="btn-panel">ورود به پنل کاربری</button>
+          </Link>
         </div>
         {/* mobile icons */}
         <div className="flex items-center gap-x-2.5 lg:hidden h-full [&>*]:w-10">
