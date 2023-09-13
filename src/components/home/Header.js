@@ -33,7 +33,7 @@ export default function Header() {
       <div className="absolute h-screen">
         {/* mobile menu */}
         <div
-          className={`fixed w-4/5 min-h-screen z-40 bg-[#f3f3f3] max-w-md transition-all duration-300 ${
+          className={`fixed w-4/5 min-h-screen z-[60] bg-[#f3f3f3] max-w-md transition-all duration-300 ${
             isMobileMenuOpen ? 'menu-open' : 'menu-close'
           }`}>
           <ul className="flex flex-col pt-2 [&>*]:border-y [&>*]:py-5">
@@ -70,7 +70,7 @@ export default function Header() {
         </div>
 
         <div
-          className={`fixed inset-0 bg-black/50 z-[35] ${isMobileMenuOpen ? 'block' : 'hidden'}`}
+          className={`fixed inset-0 bg-black/50 z-[52] ${isMobileMenuOpen ? 'block' : 'hidden'}`}
           onClick={closeMobileMenu}></div>
       </div>
       <header
@@ -118,9 +118,11 @@ export default function Header() {
             onClick={toggleMobileMenu}>
             <use href="sprite/hero.svg#3-bars"></use>
           </svg>
-          <svg className="hover:border-b hover:border-black active:translate-y-0.5 inline-block transition-all">
-            <use href="sprite/hero.svg#user-circle"></use>
-          </svg>
+          <Link to={isUserLoggedIn ? '/panel' : '/login'}>
+            <svg className="hover:border-b hover:border-black active:translate-y-0.5 inline-block transition-all">
+              <use href="sprite/hero.svg#user-circle"></use>
+            </svg>
+          </Link>
         </div>
       </header>
     </>
