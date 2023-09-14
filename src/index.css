@@ -56,14 +56,6 @@
     animation: loader-rotate 1s linear infinite reverse;
   }
 
-  @keyframes loader-rotate {
-    0% {
-      transform: rotate(0);
-    }
-    100% {
-      transform: rotate(1turn);
-    }
-  }
   .menu-close {
     right: -450px;
   }
@@ -189,5 +181,114 @@
   }
   .submit-btn:hover {
     background-color: #53297c !important;
+  }
+
+  .squares {
+    position: absolute;
+    inset: 0;
+    z-index: 10;
+    overflow: hidden;
+  }
+
+  .squares div {
+    position: absolute;
+    animation: squares 25s linear infinite;
+    transform: translateY(0) rotate(0);
+    aspect-ratio: 1/1;
+    box-shadow: 0 5px 20px rgba(3, 106, 245, 0.35);
+    bottom: -150px;
+  }
+
+  .squares div:nth-child(1) {
+    width: 80px;
+    border: 3px solid #036af5;
+    bottom: 5%;
+    left: 25%;
+    background-color: #fff;
+  }
+  .squares div:nth-child(2) {
+    width: 20px;
+    left: 10%;
+    animation-delay: 2s;
+    animation-duration: 12s;
+    background-image: linear-gradient(144deg, #fe8c00, #f83600);
+  }
+
+  .squares div:nth-child(3) {
+    width: 20px;
+    left: 70%;
+    border: 3px solid #fe8c00;
+    animation-delay: 4s;
+    background-color: #fff;
+    box-shadow: 0 2px 10px rgba(254, 140, 0, 0.35);
+  }
+  .squares div:nth-child(4) {
+    width: 60px;
+    bottom: 2%;
+    left: 40%;
+    border: 3px solid #036af5;
+    animation-duration: 18s;
+    background-color: #fff;
+  }
+  .squares div:nth-child(5) {
+    width: 20px;
+    left: 65%;
+    border: 3px solid #fe8c00;
+    background-color: #fff;
+    box-shadow: 0 2px 10px rgba(254, 140, 0, 0.35);
+  }
+  .squares div:nth-child(6) {
+    width: 110px;
+    left: 75%;
+    background-image: linear-gradient(144deg, #007aff, #036af5);
+    animation-delay: 3s;
+  }
+  .squares div:nth-child(7) {
+    width: 125px;
+    left: 35%;
+    animation-delay: 7s;
+    border: 3px solid #fe8c00;
+    background-color: #fff;
+  }
+  .squares div:nth-child(8) {
+    width: 25px;
+    left: 50%;
+    animation-delay: 15s;
+    animation-duration: 45s;
+    border: 3px solid #007aff;
+    background-color: #fff;
+  }
+  .squares div:nth-child(9) {
+    width: 15px;
+    left: 20%;
+    animation-delay: 2s;
+    animation-duration: 35s;
+    border: 3px solid #fe8c00;
+    background-color: #fff;
+    box-shadow: 0 2px 10px rgba(254, 140, 0, 0.35);
+  }
+  .squares div:nth-child(10) {
+    width: 150px;
+    left: 85%;
+    animation-delay: 2s;
+    animation-duration: 11s;
+    background-color: hsl(0, 0%, 100%, 0.5);
+    box-shadow: none;
+  }
+
+  @keyframes loader-rotate {
+    0% {
+      transform: rotate(0);
+    }
+    100% {
+      transform: rotate(1turn);
+    }
+  }
+  @keyframes squares {
+    100% {
+      transform: translateY(-1000px) rotate(720deg);
+      opacity: 0.1;
+      border-radius: 50%;
+    }
   }
 }
