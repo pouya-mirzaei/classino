@@ -1,11 +1,12 @@
 import React from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay } from 'swiper/modules';
-import teachers from '../../data/teachers';
 import PreLoader from '../PreLoader';
 import 'swiper/css';
+import { getAllTeachers } from '../../functions/Utilities';
 
 export default function TeachersSection() {
+  const teachers = getAllTeachers();
   return (
     <section className="container px-5 md:p-0 relative">
       <h2 className="heading-secondary text-center">مجموعه ای از بهترین اساتید کنکور ایران</h2>

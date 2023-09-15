@@ -1,10 +1,12 @@
 import React from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Pagination } from 'swiper/modules';
-import topStudents from '../../data/top-students';
 import 'swiper/css/pagination';
+import { getAllTopStudents } from '../../functions/Utilities';
 
 export default function TopStudentsRow({ year }) {
+  const topStudents = getAllTopStudents();
+
   return (
     <div className="container">
       {/* title */}

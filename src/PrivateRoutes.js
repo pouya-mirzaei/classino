@@ -1,10 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Navigate } from 'react-router-dom';
-
-function isUserLoggedIn() {
-  return false;
-}
+import { isUserLoggedIn } from './functions/Utilities';
 
 export default function PrivateRoutes({ children }) {
-  return <>{isUserLoggedIn() ? <>{children}</> : <Navigate to="/login" />}</>;
+  return <>{isUserLoggedIn() ? <>{children}</> : <Navigate to="/login" replace />}</>;
 }

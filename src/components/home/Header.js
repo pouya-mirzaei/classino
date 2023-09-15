@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
+
   // use effects
 
   useEffect(() => {
@@ -61,7 +61,7 @@ export default function Header() {
             <li className="flex justify-center items-center basis-full bg-white py-5">
               <button className="btn-panel bg-primary-1 text-white hover:bg-primary-2 w-4/5">دوره ها در یک نگاه</button>
             </li>
-            <Link to={isUserLoggedIn ? '/panel' : '/login'}>
+            <Link to="/panel">
               <li className="flex justify-center items-center">
                 <button className="btn-panel w-4/5">ورود به پنل کاربری</button>
               </li>
@@ -107,7 +107,7 @@ export default function Header() {
         </div>
         {/* left side */}
         <div className="hidden lg:inline-block">
-          <Link to={isUserLoggedIn ? '/panel' : '/login'}>
+          <Link to="/panel">
             <button className="btn-panel">ورود به پنل کاربری</button>
           </Link>
         </div>
@@ -118,7 +118,7 @@ export default function Header() {
             onClick={toggleMobileMenu}>
             <use href="sprite/hero.svg#3-bars"></use>
           </svg>
-          <Link to={isUserLoggedIn ? '/panel' : '/login'}>
+          <Link to="/panel">
             <svg className="hover:border-b hover:border-black active:translate-y-0.5 inline-block transition-all">
               <use href="sprite/hero.svg#user-circle"></use>
             </svg>
