@@ -6,7 +6,7 @@ export default function Header() {
   return (
     <header className="panel-header">
       {/* header container */}
-      <div className="p-2 sm:p-5 flex items-center justify-between h-full">
+      <div className="p-2 sm:p-5 flex items-center justify-between flex-wrap h-full">
         {/* right side */}
         <div className="flex flex-row-reverse md:flex-row items-center gap-5 lg:gap-16">
           <div className="w-[100px] sm:w-auto">
