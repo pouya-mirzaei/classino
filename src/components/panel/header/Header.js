@@ -6,10 +6,10 @@ export default function Header() {
   return (
     <header className="panel-header">
       {/* header container */}
-      <div className="p-5 flex items-center justify-between">
+      <div className="p-2 sm:p-5 flex items-center justify-between h-full">
         {/* right side */}
-        <div className="flex items-center gap-16">
-          <div>
+        <div className="flex flex-row-reverse md:flex-row items-center gap-5 lg:gap-16">
+          <div className="w-[100px] sm:w-auto">
             <Link to="">
               <img src="images/classinoLogo.08df55af.svg" alt="classino logo" />
             </Link>
@@ -19,7 +19,7 @@ export default function Header() {
               <use href="sprite/hero.svg#3-bars"></use>
             </svg>
           </div>
-          <div className="text-black w-6 cursor-pointer">
+          <div className="text-black w-6 cursor-pointer hidden md:block">
             <svg>
               <use href="sprite/hero.svg#moon"></use>
             </svg>
@@ -30,8 +30,8 @@ export default function Header() {
           <HeaderBox icon="chat-left" />
           <HeaderBox icon="bell" />
           <HeaderBox icon="shopping-cart" />
-          <HeaderBox icon="wallet" text="اعتبار 0 ریال" />
-          <HeaderBox icon="user-circle" text="پویا میرزایی" />
+          <HeaderBox icon="wallet" text="اعتبار 0 ریال" breakpoint={{ full: true }} />
+          <HeaderBox icon="user-circle" text="پویا میرزایی" breakpoint={{ full: false }} />
         </div>
       </div>
     </header>
