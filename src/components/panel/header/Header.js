@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import HeaderBox from './HeaderBox';
 
-export default function Header({ onOpenSidebar }) {
+export default function Header({ onOpenSidebar, onToggleDark, dark }) {
   return (
     <header className="panel-header">
       {/* header container */}
@@ -14,14 +14,14 @@ export default function Header({ onOpenSidebar }) {
               <img src="images/classinoLogo.08df55af.svg" alt="classino logo" />
             </Link>
           </div>
-          <div className="text-black w-6 cursor-pointer" onClick={onOpenSidebar}>
+          <div className="text-black dark:text-white w-6 cursor-pointer" onClick={onOpenSidebar}>
             <svg>
               <use href="sprite/hero.svg#3-bars"></use>
             </svg>
           </div>
-          <div className="text-black w-6 cursor-pointer hidden md:block">
+          <div className="text-black dark:text-white w-6 cursor-pointer hidden md:block" onClick={onToggleDark}>
             <svg>
-              <use href="sprite/hero.svg#moon"></use>
+              <use href={`sprite/hero.svg#${dark ? 'sun' : 'moon'}`}></use>
             </svg>
           </div>
         </div>
