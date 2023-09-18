@@ -1,36 +1,30 @@
 import React, { useEffect, useState } from 'react';
 import Header from '../../components/panel/header/Header';
 import SideBar from '../../components/panel/side-bar/SideBar';
+import { Outlet, useNavigate } from 'react-router-dom';
 
 export default function Panel() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [darkMode, setDarkMode] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     window.innerWidth < 575 && setIsSidebarOpen(false);
-    window.addEventListener('resize', () => {
-      setIsSidebarOpen(false);
-    });
-    handleDarkClass();
+
+    if (window.location.pathname === '/panel') {
+      navigate('/panel/dashboard');
+    }
   }, []);
+
+  useEffect(() => {
+    darkMode ? document.body.classList.add('dark') : document.body.classList.remove('dark');
+  }, [darkMode]);
 
   const toggleSidebar = () => {
     setIsSidebarOpen((prev) => !prev);
   };
 
-  const handleDarkClass = () => {
-    switch (darkMode) {
-      case true:
-        document.body.classList.add('dark');
-        break;
-      case false:
-        document.body.classList.remove('dark');
-        break;
-    }
-  };
-
   const toggleDarkMode = () => {
-    handleDarkClass();
     setDarkMode((prev) => !prev);
   };
 
@@ -40,7 +34,10 @@ export default function Panel() {
         <Header onOpenSidebar={toggleSidebar} dark={darkMode} onToggleDark={toggleDarkMode} />
         <main className="relative flex">
           <SideBar isOpen={isSidebarOpen} />
-          <div className="bg-red-500 grow text-center h-[1000px]">test</div>
+          {/* content */}
+          <div className="h-[1000px] bg-gray-200 dark:bg-dark-3 grow">
+            <Outlet />
+          </div>
         </main>
       </div>
     </>

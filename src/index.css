@@ -323,11 +323,16 @@
   }
 
   .side-bar {
-    background-color: rgb(190, 250, 100);
-    color: #fff;
-    @apply w-[90px] sm:w-[120px] fixed xs:sticky;
+    @apply w-[90px] sm:w-[120px] fixed xs:sticky bg-white dark:bg-dark-1 dark:text-white divide-y-2;
     top: 80px;
     z-index: 20;
     height: calc(100vh - 80px);
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+  }
+  .side-bar .active {
+    @apply text-primary-2 dark:bg-transparent bg-[#dde7f5];
+    border-left: 2px solid #036af5;
   }
 }
