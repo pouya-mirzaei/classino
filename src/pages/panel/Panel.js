@@ -11,14 +11,26 @@ export default function Panel() {
     window.addEventListener('resize', () => {
       setIsSidebarOpen(false);
     });
+    handleDarkClass();
   }, []);
 
   const toggleSidebar = () => {
     setIsSidebarOpen((prev) => !prev);
   };
 
+  const handleDarkClass = () => {
+    switch (darkMode) {
+      case true:
+        document.body.classList.add('dark');
+        break;
+      case false:
+        document.body.classList.remove('dark');
+        break;
+    }
+  };
+
   const toggleDarkMode = () => {
-    document.body.classList.toggle('dark');
+    handleDarkClass();
     setDarkMode((prev) => !prev);
   };
 
