@@ -7,6 +7,9 @@ module.exports = {
       center: true,
     },
     extend: {
+      screens: {
+        xs: '575px',
+      },
       fontFamily: {
         iranSans: 'IranSans',
       },
