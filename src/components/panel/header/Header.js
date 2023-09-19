@@ -10,7 +10,7 @@ export default function Header({ onOpenSidebar, onToggleDark, dark }) {
         {/* right side */}
         <div className="flex flex-row-reverse md:flex-row items-center gap-5 lg:gap-12">
           <div className="w-[100px] sm:w-auto">
-            <Link to="">
+            <Link to="dashboard">
               <img src="../images/classinoLogo.08df55af.svg" alt="classino logo" />
             </Link>
           </div>
