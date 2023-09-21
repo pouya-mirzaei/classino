@@ -1,12 +1,12 @@
 import PrivateRoutes from './PrivateRoutes';
+import Courses from './components/home/Courses';
 import NotFound from './pages/404/NotFound';
 import Home from './pages/Home/Home';
 import Login from './pages/login/Login';
-import Courses from './pages/panel/Courses';
-import Dashboard from './pages/panel/Dashboard';
-import Finance from './pages/panel/Finance';
 import Panel from './pages/panel/Panel';
-import Store from './pages/panel/Store';
+import Dashboard from './pages/panel/dashboard/Dashboard';
+import Finance from './pages/panel/finance/Finance';
+import Store from './pages/panel/store/Store';
 
 const routes = [
   { path: '/', element: <Home /> },
