@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-const useCountdownReactHookTimer = (endTime) => {
+const useCountDownTimer = (endPoint) => {
   const [timer, setTimer] = useState({
     days: 0,
     hours: 0,
@@ -11,7 +11,7 @@ const useCountdownReactHookTimer = (endTime) => {
   useEffect(() => {
     const interval = setInterval(() => {
       const now = new Date();
-      const delta = endTime - now;
+      const delta = endPoint - now;
 
       const days = Math.floor(delta / (1000 * 60 * 60 * 24));
       const hours = Math.floor((delta % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
