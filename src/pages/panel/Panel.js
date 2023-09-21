@@ -10,6 +10,9 @@ export default function Panel() {
 
   useEffect(() => {
     window.innerWidth < 575 && setIsSidebarOpen(false);
+    window.addEventListener('resize', () => {
+      window.innerWidth < 575 && setIsSidebarOpen(false);
+    });
 
     if (window.location.pathname === '/panel') {
       navigate('/panel/dashboard');

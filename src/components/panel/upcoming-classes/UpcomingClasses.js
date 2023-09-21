@@ -8,7 +8,7 @@ export default function UpcomingClasses() {
   };
 
   return (
-    <div className="basis-full lg:basis-1/3 px-4">
+    <div className="basis-full lg:basis-1/3 px-1 md:px-4">
       {/* card */}
       <div className="bg-white rounded-xl card">
         <ul className="flex items-center border-b border-secondary-1 shadow-md shadow-black/20">
