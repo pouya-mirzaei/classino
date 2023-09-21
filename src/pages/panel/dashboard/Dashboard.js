@@ -4,10 +4,16 @@ import Features from '../../../components/features/Features';
 
 export default function Dashboard() {
   return (
-    <section className="p-section flex flex-wrap">
+    <section className="p-section flex flex-wrap mt-5">
       <UpcomingClasses />
       <Features />
-      <div className="basis-full md:basis-1/2 lg:basis-1/4 bg-lime-300 px-4">hello</div>
+      <div className="basis-full md:basis-1/2 lg:basis-1/4 px-4">
+        <div className="diamond-bg">
+          <div className="diamond-bg__content">
+            <img src="/images/classinoLogoWhite.svg" />
+          </div>
+        </div>
+      </div>
     </section>
   );
 }

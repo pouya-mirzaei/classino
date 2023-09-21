@@ -318,7 +318,7 @@
 
   .panel-header {
     position: sticky;
-    z-index: 40;
+    z-index: 55;
     top: 0;
     width: 100%;
     height: 80px;
@@ -341,5 +341,20 @@
   }
   .card .active {
     @apply border border-secondary-1 rounded-t-lg bg-[#ffeccb] dark:border-none dark:bg-dark-1;
+  }
+
+  .diamond-bg {
+    @apply h-full overflow-hidden rounded-xl;
+    background-image: url('/public/images/almas-card-background.png');
+    background-size: contain;
+  }
+  .diamond-bg__content {
+    height: 100%;
+    width: 100%;
+    background-image: linear-gradient(180deg, rgba(0, 122, 255, 0.5) 2%, rgba(3, 106, 245, 0.7));
+    backdrop-filter: blur(10px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 }

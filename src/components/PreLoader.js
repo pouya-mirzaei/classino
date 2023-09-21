@@ -21,7 +21,7 @@ export default function PreLoader({ duration = 3000, title }) {
           <span className="text-primary-1 text-base font-bold inline-block relative z-[60]">{title || 'کلاسینو'}</span>
 
           {/* blue bg */}
-          <div className="absolute z-50 inset-0 bg-slate-100 backdrop-blur-sm"></div>
+          <div className="absolute z-50 inset-0 bg-slate-100 dark:bg-dark-2 backdrop-blur-sm"></div>
         </div>
       )}
     </>

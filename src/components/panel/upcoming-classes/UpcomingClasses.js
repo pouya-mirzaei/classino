@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
+import PreLoader from '../../PreLoader';
 
 export default function UpcomingClasses() {
   const [display, setDisplay] = useState('today');
+  const [test, setTest] = useState([]);
 
   const handleDisplay = (value) => {
     setDisplay(value);
@@ -28,7 +30,8 @@ export default function UpcomingClasses() {
           </li>
         </ul>
         {/* classes */}
-        <div className="h-[350px] flex flex-col items-center justify-center overflow-y-scroll">
+        <div className="h-[350px] flex flex-col items-center justify-center overflow-y-scroll relative">
+          <PreLoader title={'کلاس های پیش رو'} />
           {/* no classes */}
           <div className="w-10 text-primary-1 dark:text-tertiary-2">
             <svg>
