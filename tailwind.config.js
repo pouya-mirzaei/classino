@@ -22,6 +22,10 @@ module.exports = {
           1: '#ffaf20',
           2: '#ffd843',
         },
+        tertiary: {
+          1: '#20bf6b',
+          2: '#00eda5',
+        },
         dark: {
           1: '#1c3b5a',
           2: '#17304c',

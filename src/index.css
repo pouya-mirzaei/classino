@@ -340,7 +340,6 @@
     border-left: 2px solid #036af5;
   }
   .card .active {
-    @apply border border-secondary-1 rounded-t-lg;
-    background-color: #ffeccb;
+    @apply border border-secondary-1 rounded-t-lg bg-[#ffeccb] dark:border-none dark:bg-dark-1;
   }
 }
