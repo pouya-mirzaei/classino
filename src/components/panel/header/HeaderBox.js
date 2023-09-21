@@ -8,7 +8,7 @@ export default function HeaderBox({ icon, text, breakpoint, badge }) {
       } ${breakpoint && 'dark:bg-dark-3 dark:border-none'}`}>
       <div className="w-6 sm:w-7">
         <svg>
-          <use href={`../sprite/hero.svg#${icon}`}></use>
+          <use href={`/sprite/hero.svg#${icon}`}></use>
         </svg>
       </div>
       {text && (

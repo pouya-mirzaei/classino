@@ -23,6 +23,10 @@
   section {
     margin: 5rem 0;
   }
+  .p-section {
+    margin: 0;
+    padding: 1rem;
+  }
 
   h1 {
     line-height: 60px !important;
@@ -334,5 +338,9 @@
   .side-bar .active {
     @apply text-primary-2 dark:bg-transparent bg-[#dde7f5];
     border-left: 2px solid #036af5;
+  }
+  .card .active {
+    @apply border border-secondary-1 rounded-t-lg;
+    background-color: #ffeccb;
   }
 }

@@ -21,7 +21,7 @@ export default function Header({ onOpenSidebar, onToggleDark, dark }) {
           </div>
           <div className="text-black dark:text-white w-6 cursor-pointer hidden md:block" onClick={onToggleDark}>
             <svg>
-              <use href={`../sprite/hero.svg#${dark ? 'sun' : 'moon'}`}></use>
+              <use href={`/sprite/hero.svg#${dark ? 'sun' : 'moon'}`}></use>
             </svg>
           </div>
         </div>
