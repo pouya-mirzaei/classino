@@ -38,7 +38,7 @@ export default function Panel() {
         <main className="relative flex">
           <SideBar isOpen={isSidebarOpen} />
           {/* content */}
-          <div className="h-[1000px] bg-gray-200 dark:bg-dark-3 grow">
+          <div className="bg-gray-200 dark:bg-dark-3 grow">
             <Outlet />
           </div>
         </main>
