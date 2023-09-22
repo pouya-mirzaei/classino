@@ -327,6 +327,7 @@
   }
 
   .side-bar {
+    flex-shrink: 0;
     @apply w-[90px] sm:w-[120px] fixed xs:sticky bg-white dark:bg-dark-1 dark:text-white divide-y-2;
     top: 80px;
     z-index: 20;
@@ -356,5 +357,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
+  }
+  .full-width {
+    width: 100% !important;
   }
 }

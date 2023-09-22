@@ -11,7 +11,7 @@ export default function NavLinkBox({ name, icon, href }) {
           <use href={`/sprite/hero.svg#${icon}`}></use>
         </svg>
       </div>
-      <span className="text-xs font-semibold">{name}</span>
+      <span className="text-xs text-center font-semibold">{name}</span>
     </NavLink>
   );
 }
