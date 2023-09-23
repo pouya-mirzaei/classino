@@ -15,7 +15,7 @@ export default function SocialBox({ name, color, link, icon, socialId }) {
             {socialId}
           </span>
           {/* text */}
-          <span className="text-xs">مارو توی {name} دنبال کنید</span>
+          <span className="text-xs dark:text-white">مارو توی {name} دنبال کنید</span>
         </div>
       </div>
     </a>

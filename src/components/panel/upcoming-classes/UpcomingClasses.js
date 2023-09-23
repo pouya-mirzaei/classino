@@ -3,7 +3,6 @@ import PreLoader from '../../PreLoader';
 
 export default function UpcomingClasses() {
   const [display, setDisplay] = useState('today');
-  const [test, setTest] = useState([]);
 
   const handleDisplay = (value) => {
     setDisplay(value);
