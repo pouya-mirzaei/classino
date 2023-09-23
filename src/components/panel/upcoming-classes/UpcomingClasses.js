@@ -10,7 +10,7 @@ export default function UpcomingClasses() {
   };
 
   return (
-    <div className="basis-full lg:basis-1/3 px-1 md:px-4">
+    <div className="basis-full lg:basis-1/3">
       {/* card */}
       <div className="bg-white dark:bg-dark-1 dark:text-white rounded-xl card">
         <ul className="flex items-center border-b border-secondary-1 dark:bg-dark-3 dark:border-none shadow-md shadow-black/20">

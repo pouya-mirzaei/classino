@@ -6,7 +6,7 @@ export default function Calendar() {
   return (
     <div className="basis-5/12 w-full shadow-md shadow-black/20 rounded-xl">
       {/* header */}
-      <div className="p-5 text-center bg-[#eb3b5a] dark:bg-dark-1 border-b-4 border-dashed border-white rounded-t-xl">
+      <div className="p-5 text-center bg-[#eb3b5a] dark:bg-dark-2 border-b-4 border-dashed border-white rounded-t-xl">
         <span className="text-white dark:text-[#eb3b5a] text-3xl font-semibold">{currentDate.month}</span>
       </div>
       {/* body */}

@@ -326,11 +326,16 @@
     @apply bg-white dark:bg-dark-1;
   }
 
+  .panel-content {
+    @apply bg-gray-200 dark:bg-dark-3 grow flex justify-between flex-col;
+    min-height: calc(100vh - 80px);
+  }
+
   .side-bar {
     flex-shrink: 0;
     @apply w-[90px] sm:w-[120px] fixed xs:sticky bg-white dark:bg-dark-1 dark:text-white divide-y-2;
     top: 80px;
-    z-index: 20;
+    z-index: 55;
     height: calc(100vh - 80px);
     display: flex;
     align-items: center;

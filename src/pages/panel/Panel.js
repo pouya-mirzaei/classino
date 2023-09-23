@@ -36,14 +36,14 @@ export default function Panel() {
     <>
       <div className="relative">
         <Header onOpenSidebar={toggleSidebar} dark={darkMode} onToggleDark={toggleDarkMode} />
-        <main className="relative flex">
-          <SideBar isOpen={isSidebarOpen} />
+        <div className="relative flex">
+          <SideBar isOpen={isSidebarOpen} onOpen={setIsSidebarOpen} />
           {/* content */}
-          <div className="bg-gray-200 dark:bg-dark-3 grow">
+          <main className="panel-content">
             <Outlet />
             <Copyright />
-          </div>
-        </main>
+          </main>
+        </div>
       </div>
     </>
   );
