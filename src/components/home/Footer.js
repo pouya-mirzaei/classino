@@ -1,4 +1,5 @@
 import React from 'react';
+import Copyright from '../Copyright';
 
 export default function Footer() {
   return (
@@ -38,9 +39,7 @@ export default function Footer() {
         </div>
       </div>
       {/* copyright */}
-      <div className="w-full py-6 bg-[#dfdfdf] text-center px-2">
-        تمامی حقوق مادی و معنوی محفوظ میباشد. (ساخته شده با <span>❤️ کلاسینو</span>)
-      </div>
+      <Copyright />
     </footer>
   );
 }

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Header from '../../components/panel/header/Header';
 import SideBar from '../../components/panel/side-bar/SideBar';
 import { Outlet, useNavigate } from 'react-router-dom';
+import Copyright from '../../components/Copyright';
 
 export default function Panel() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
@@ -40,6 +41,7 @@ export default function Panel() {
           {/* content */}
           <div className="bg-gray-200 dark:bg-dark-3 grow">
             <Outlet />
+            <Copyright />
           </div>
         </main>
       </div>
