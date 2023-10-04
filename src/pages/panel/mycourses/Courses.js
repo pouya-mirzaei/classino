@@ -20,9 +20,9 @@ function CourseBox({ id, description, image }) {
   return (
     <li className="w-full bg-white dark:bg-dark-1 rounded-xl shadow shadow-black/10">
       <Link to={`/panel/courses/${id}`} className="w-full h-full inline-block p-5">
-        <div className="flex items-center flex-wrap">
+        <div className="flex items-center flex-wrap gap-y-10">
           {/* course title and image */}
-          <div className="flex items-center basis-full lg:basis-2/5">
+          <div className="flex flex-col md:flex-row items-center justify-center md:justify-start basis-full lg:basis-2/5 gap-5">
             <div className="shrink-0 w-[150px] h-[150px]">
               <img src={image} className="w-full h-full bg-cover" />
             </div>
@@ -32,7 +32,7 @@ function CourseBox({ id, description, image }) {
             </div>
           </div>
           {/* course timing information */}
-          <div className="flex items-center justify-around basis-3/5">
+          <div className="flex items-center justify-around lg:justify-around basis-full lg:basis-3/5">
             <HoldingInfo title="زمان برگزاری" icon="/sprite/hero.svg#calendar" value="شنبه" />
             <HoldingInfo title="ساعت برگزاری" icon="/sprite/hero.svg#clock" value=" 01:00 تا 01:00 " />
           </div>
