@@ -7,6 +7,7 @@ import Dashboard from './pages/panel/dashboard/Dashboard';
 import Courses from './pages/panel/mycourses/Courses';
 import Finance from './pages/panel/finance/Finance';
 import Store from './pages/panel/store/Store';
+import CourseDetails from './pages/panel/courseDetails/CourseDetails';
 
 const routes = [
   { path: '/', element: <Home /> },
@@ -24,6 +25,7 @@ const routes = [
       { path: 'mycourselist', element: <Courses /> },
       { path: 'finance', element: <Finance /> },
       { path: 'store', element: <Store /> },
+      { path: 'courses/:id', element: <CourseDetails /> },
     ],
   },
   { path: '*', element: <NotFound /> },

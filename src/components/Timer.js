@@ -2,7 +2,7 @@ import React from 'react';
 import useCountDownTimer from '../hooks/useCountDownTimer';
 
 export default function Timer() {
-  const { days, hours, minutes, seconds, delta } = useCountDownTimer('29 june 2024');
+  const { days, hours, minutes, seconds, delta } = useCountDownTimer('7 july 2024');
 
   const percentageLeft = ((delta / (365 * 24 * 3600 * 1000)) * 100).toString().split('').slice(0, 4).join('');
 

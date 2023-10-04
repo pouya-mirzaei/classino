@@ -11,12 +11,12 @@ export default function Header({ onOpenSidebar, onToggleDark, dark }) {
         <div className="flex flex-row-reverse md:flex-row items-center gap-5 lg:gap-12">
           <div className="w-[100px] sm:w-auto">
             <Link to="dashboard">
-              <img src="../images/classinoLogo.08df55af.svg" alt="classino logo" />
+              <img src="/images/classinoLogo.08df55af.svg" alt="classino logo" />
             </Link>
           </div>
           <div className="text-black dark:text-white w-6 cursor-pointer" onClick={onOpenSidebar}>
             <svg>
-              <use href="../sprite/hero.svg#3-bars"></use>
+              <use href="/sprite/hero.svg#3-bars"></use>
             </svg>
           </div>
           <div className="text-black dark:text-white w-6 cursor-pointer hidden md:block" onClick={onToggleDark}>
