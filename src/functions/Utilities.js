@@ -1,3 +1,4 @@
+import courses from '../data/courses';
 import teachers from '../data/teachers';
 import topStudents from '../data/top-students';
 import users from '../data/users';
@@ -22,6 +23,10 @@ const isUserLoggedIn = () => (!getItemFromLocalStorage('userId') ? true : false)
 
 const logout = () => localStorage.removeItem('userId');
 
+const getCourseData = (courseId) => {
+  return courses.find((course) => course.id === courseId);
+};
+
 export {
   getAllTeachers,
   getAllTopStudents,
@@ -30,4 +35,5 @@ export {
   getItemFromLocalStorage,
   isUserLoggedIn,
   logout,
+  getCourseData,
 };

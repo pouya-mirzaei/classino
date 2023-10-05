@@ -5,18 +5,18 @@ export default function Courses() {
   return (
     <div className="p-5">
       <ul className="space-y-2.5 dark:text-white">
-        <CourseBox id="1" description="جلسات رایگان تمام پایه ها" image="/images/courses/3.png" />
         <CourseBox
-          id="2"
-          description="وبینار پرسش و پاسخ درباره رشته ها و دانشگاه ها (پرسش و پاسخ کلاسینو)"
-          image="/images/courses/2.png"
+          id="1"
+          title="کلاس آنلاین جامع مرداد کنکور1403 حسابان استاد آریان حیدری"
+          image="/images/courses/3.png"
         />
+        <CourseBox id="2" title="کلاس آنلاین جاست تست 1403 حسابان استاد آریان حیدری" image="/images/courses/2.png" />
       </ul>
     </div>
   );
 }
 
-function CourseBox({ id, description, image }) {
+function CourseBox({ id, title, image }) {
   return (
     <li className="w-full bg-white dark:bg-dark-1 rounded-xl shadow shadow-black/10">
       <Link to={`/panel/courses/${id}`} className="w-full h-full inline-block p-5">
@@ -28,7 +28,7 @@ function CourseBox({ id, description, image }) {
             </div>
             <div className="flex flex-col gap-5 mr-5">
               <span className="text-lg font-bold dark:text-[#a9d4ff]">درس :</span>
-              <span className="text-sm">{description}</span>
+              <span className="text-sm">{title}</span>
             </div>
           </div>
           {/* course timing information */}

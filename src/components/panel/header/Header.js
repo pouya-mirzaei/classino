@@ -30,7 +30,9 @@ export default function Header({ onOpenSidebar, onToggleDark, dark }) {
           <HeaderBox icon="chat-left" badge="0" />
           <HeaderBox icon="bell" badge="0" />
           <HeaderBox icon="shopping-cart" badge="0" />
-          <HeaderBox icon="wallet" text="اعتبار 0 ریال" breakpoint={{ full: true }} />
+          <Link to={'finance'}>
+            <HeaderBox icon="wallet" text="اعتبار 0 ریال" breakpoint={{ full: true }} />
+          </Link>
           <HeaderBox icon="user-circle" text="پویا میرزایی" breakpoint={{ full: false }} />
         </div>
       </div>
