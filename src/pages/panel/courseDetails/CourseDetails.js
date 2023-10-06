@@ -5,11 +5,11 @@ import { getCourseData } from '../../../functions/Utilities';
 export default function CourseDetails() {
   const { id } = useParams();
 
-  const { id: courseId, name, description, image, teacherId, teacherImage, classes } = getCourseData(Number(id));
+  const { name, teacherImage, classes, teacherName } = getCourseData(Number(id));
 
   return (
     <div className="m-5">
-      <Header teacherImg={teacherImage} courseTitle={name} />
+      <Header teacherImg={teacherImage} courseTitle={name} teacherName={teacherName} />
 
       <table className="w-full mt-5 dark:text-white">
         <thead>
@@ -22,7 +22,7 @@ export default function CourseDetails() {
         </thead>
         <tbody className="divide-y-2 rounded-xl">
           {classes.map((Class) => (
-            <tr className="[&>*]:p-3 bg-white dark:bg-dark-1 cursor-pointer">
+            <tr key={Class.id} className="[&>*]:p-3 bg-white dark:bg-dark-1 cursor-pointer">
               <td className="w-8">
                 <svg className="w-8 text-primary-1">
                   <use href={`/sprite/hero.svg#lock-${Class.isLocked ? 'close' : 'open'}`}></use>
@@ -43,11 +43,11 @@ export default function CourseDetails() {
   );
 }
 
-function Header({ courseTitle, holdingDays, holdingHours, teacherImg }) {
+function Header({ courseTitle, holdingDays, holdingHours, teacherImg, teacherName }) {
   return (
     <div className="bg-primary-1 w-full rounded-xl pt-5 flex">
       <div className="basis-1/6 mr-5">
-        <img src={teacherImg} />
+        <img src={teacherImg} alt={teacherName} />
       </div>
       <div className="grow flex flex-col justify-center gap-y-10 items-center text-white">
         <span className="text-3xl font-extrabold">{courseTitle}</span>

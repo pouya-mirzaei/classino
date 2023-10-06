@@ -366,4 +366,15 @@
   .full-width {
     width: 100% !important;
   }
+
+  .secondary-logo-box {
+    background-image: radial-gradient(circle, #f994a6, #eb3b5a);
+    padding: 2.75rem 1.5rem;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    justify-content: center;
+  }
 }
