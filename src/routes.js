@@ -21,6 +21,7 @@ const routes = [
       </PrivateRoutes>
     ),
     children: [
+      { index: true, element: <NotFound /> },
       { path: 'dashboard', element: <Dashboard /> },
       { path: 'mycourselist', element: <Courses /> },
       { path: 'finance', element: <Finance /> },
