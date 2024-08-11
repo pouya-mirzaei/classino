@@ -27,6 +27,7 @@ const routes = [
       { path: 'finance', element: <Finance /> },
       { path: 'store', element: <Store /> },
       { path: 'courses/:id', element: <CourseDetails /> },
+      { path: '*', element: <NotFound /> },
     ],
   },
   { path: '*', element: <NotFound /> },

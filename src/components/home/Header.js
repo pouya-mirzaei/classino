@@ -35,7 +35,8 @@ export default function Header() {
         <div
           className={`fixed w-4/5 min-h-screen z-[60] bg-[#f3f3f3] max-w-md transition-all duration-300 ${
             isMobileMenuOpen ? 'menu-open' : 'menu-close'
-          }`}>
+          }`}
+        >
           <ul className="flex flex-col pt-2 [&>*]:border-y [&>*]:py-5">
             <li className="flex justify-center">
               <a href="#">
@@ -71,12 +72,14 @@ export default function Header() {
 
         <div
           className={`fixed inset-0 bg-black/50 z-[52] ${isMobileMenuOpen ? 'block' : 'hidden'}`}
-          onClick={closeMobileMenu}></div>
+          onClick={closeMobileMenu}
+        ></div>
       </div>
       <header
         className={`flex items-center justify-between lg:justify-around flex-row-reverse lg:flex-row bg-white transition-all h-20 sticky z-[51] top-0 px-3.5 ${
           isScrolled ? 'shadow-lg' : ' '
-        }`}>
+        }`}
+      >
         {/* right side */}
         <div className="flex items-center gap-x-5">
           {/* logo */}
@@ -107,7 +110,7 @@ export default function Header() {
         </div>
         {/* left side */}
         <div className="hidden lg:inline-block">
-          <Link to="/panel">
+          <Link to="/panel/dashboard">
             <button className="btn-panel">ورود به پنل کاربری</button>
           </Link>
         </div>
@@ -115,7 +118,8 @@ export default function Header() {
         <div className="flex items-center gap-x-2.5 lg:hidden h-full [&>*]:w-10">
           <svg
             className="hover:border-b hover:border-black active:translate-y-0.5 inline-block transition-all"
-            onClick={toggleMobileMenu}>
+            onClick={toggleMobileMenu}
+          >
             <use href="sprite/hero.svg#3-bars"></use>
           </svg>
           <Link to="/panel">
