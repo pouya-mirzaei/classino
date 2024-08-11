@@ -10,7 +10,7 @@ export default function SideBar({ isOpen, onOpen }) {
   ];
 
   return (
-    <div className={`side-bar ${!isOpen ? ' hidden' : ''}`}>
+    <div className={`side-bar ${!isOpen ? 'side-bar-hidden' : ''}`}>
       {links.map((link) => (
         <NavLinkBox {...link} key={link.id} onOpen={onOpen} />
       ))}

@@ -15,9 +15,11 @@ export default function Panel() {
   });
 
   useEffect(() => {
-    window.innerWidth < 575 && setIsSidebarOpen(false);
+    window.innerWidth < 1000 && setIsSidebarOpen(false);
+    window.innerWidth > 1000 && setIsSidebarOpen(true);
     window.addEventListener('resize', () => {
-      window.innerWidth < 575 && setIsSidebarOpen(false);
+      window.innerWidth < 1000 && setIsSidebarOpen(false);
+      window.innerWidth > 1000 && setIsSidebarOpen(true);
     });
   }, []);
 
@@ -37,7 +39,7 @@ export default function Panel() {
     <>
       <div className="relative">
         <Header onOpenSidebar={toggleSidebar} dark={darkMode} onToggleDark={toggleDarkMode} />
-        <div className="relative flex">
+        <div className="relative flex dark:bg-dark-2">
           <SideBar isOpen={isSidebarOpen} onOpen={setIsSidebarOpen} />
           {/* content */}
           <main className="panel-content">

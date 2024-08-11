@@ -99,7 +99,7 @@ export default function Store() {
         </div>
 
         {/* results */}
-        <div className="grid grid-cols-4 gap-5 mt-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 mt-10">
           {results.map((course) => (
             <div className="bg-white dark:bg-dark-2 dark:text-white shadow-md shadow-black/10 overflow-hidden rounded-xl cursor-pointer hover:shadow-xl hover:scale-105 transition-all duration-200">
               <div>
