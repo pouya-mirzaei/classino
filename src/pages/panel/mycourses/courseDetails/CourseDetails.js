@@ -1,9 +1,11 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import { getCourseData } from '../../../functions/Utilities';
+import { getCourseData } from '../../../../functions/Utilities';
 
 export default function CourseDetails() {
   const { id } = useParams();
+
+  console.log(id);
 
   const { name, teacherImage, classes, teacherName } = getCourseData(Number(id));
 

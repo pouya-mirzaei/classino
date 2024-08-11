@@ -6,13 +6,15 @@ export default function NavLinkBox({ name, icon, href, onOpen }) {
     window.innerWidth < 575 && onOpen(false);
   };
 
-  const loc = useLocation();
-  useEffect(() => console.log(loc));
+  const location = useLocation();
+  const isActive = location.pathname.startsWith('/panel/courses/');
 
   return (
     <NavLink
       to={href}
-      className="basis-1/4 flex flex-col items-center justify-center gap-1 w-full text-black/70 font-medium dark:text-white"
+      className={`basis-1/4 flex flex-col items-center justify-center gap-1 w-full text-black/70 font-medium dark:text-white ${
+        isActive && href == 'mycourselist' ? 'active' : ''
+      }`}
       onClick={handleClick}
     >
       <div className="w-12">

@@ -1,6 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 export default function Store() {
+  const [searchInput, setSearchInput] = useState(null);
+  const [courseInput, setCourseInput] = useState(null);
+  const [gradeInput, setGradeInput] = useState(null);
+  const [lessonInput, setLessonInput] = useState(null);
+  const [teacherInput, setTeacherInput] = useState(null);
+
   const badgeData = [
     { id: 0, img: '/images/doreh/DoreJameDahomEshteraki1403-Big.8fd2f5b9.png' },
     { id: 1, img: '/images/doreh/DoreJameDahomYazdahom1403-Big.d762d1a1.png' },
@@ -22,7 +28,73 @@ export default function Store() {
       </section>
 
       {/* store */}
-      <section>
+      <section className="">
+        {/* filtering */}
+        <div className="flex items-center justify-center flex-col gap-5">
+          {/* search */}
+          <input
+            type="text"
+            placeholder="جستجور در دوره ها..."
+            className="w-full md:w-80 py-2.5 px-5 rounded-lg shadow-md shadow-black/10"
+            onFocus={(e) => (e.target.placeholder = 'نام دوره را وارد کنید')}
+            onBlur={(e) => (e.target.placeholder = 'جستجور در دوره ها...')}
+            value={searchInput}
+            onChange={(e) => setSearchInput(e.target.value)}
+          />
+          {/* sorting */}
+          <div className="flex flex-wrap gap-5 items-center justify-center">
+            <div className="store-sorting-input">
+              <input
+                type="text"
+                placeholder="دوره"
+                className="w-full py-2.5 px-5 rounded-lg shadow-md shadow-black/10"
+                value={courseInput}
+                onChange={(e) => setCourseInput(e.target.value)}
+              />
+              <svg className="absolute w-3 left-5 top-1/2 -translate-y-1/2 text-gray-600">
+                <use href="/sprite/hero.svg#chevron-down"></use>
+              </svg>
+            </div>
+            <div className="store-sorting-input">
+              <input
+                type="text"
+                placeholder="مقاطع تحصیلی"
+                className="w-full py-2.5 px-5 rounded-lg shadow-md shadow-black/10"
+                value={gradeInput}
+                onChange={(e) => setGradeInput(e.target.value)}
+              />
+              <svg className="absolute w-3 left-5 top-1/2 -translate-y-1/2 text-gray-600">
+                <use href="/sprite/hero.svg#chevron-down"></use>
+              </svg>
+            </div>
+            <div className="store-sorting-input">
+              <input
+                type="text"
+                placeholder="درس"
+                className="w-full py-2.5 px-5 rounded-lg shadow-md shadow-black/10"
+                value={lessonInput}
+                onChange={(e) => setLessonInput(e.target.value)}
+              />
+              <svg className="absolute w-3 left-5 top-1/2 -translate-y-1/2 text-gray-600">
+                <use href="/sprite/hero.svg#chevron-down"></use>
+              </svg>
+            </div>
+            <div className="store-sorting-input">
+              <input
+                type="text"
+                placeholder="استاد"
+                className="w-full py-2.5 px-5 rounded-lg shadow-md shadow-black/10"
+                value={teacherInput}
+                onChange={(e) => setTeacherInput(e.target.value)}
+              />
+              <svg className="absolute w-3 left-5 top-1/2 -translate-y-1/2 text-gray-600">
+                <use href="/sprite/hero.svg#chevron-down"></use>
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        {/* results */}
         <div></div>
       </section>
     </div>
@@ -31,8 +103,8 @@ export default function Store() {
 
 function BadgeBox({ img }) {
   return (
-    <div className="w-[200px] m-2.5 transition-all duration-300 rounded-md overflow-hidden shadow-md hover:shadow-lg shadow-black/20 hover:scale-110 cursor-pointer">
-      <img src={img} alt="course box" />
+    <div className="lg:basis-[200px]  md:basis-1/2 l0g:m-2.5 my-2.5 transition-all duration-300 rounded-md overflow-hidden shadow-md hover:shadow-lg shadow-black/20 hover:scale-110 cursor-pointer">
+      <img src={img} alt="course box" className="w-full h-full bg-cover" />
     </div>
   );
 }

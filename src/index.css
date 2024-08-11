@@ -31,6 +31,9 @@
   h1 {
     line-height: 60px !important;
   }
+  input {
+    outline: none;
+  }
 }
 
 @layer components {
@@ -376,5 +379,21 @@
     align-items: center;
     gap: 1rem;
     justify-content: center;
+  }
+
+  .store-sorting-input {
+    @apply relative;
+    flex-basis: calc(25% - 15px);
+  }
+
+  @media (max-width: 1024px) {
+    .store-sorting-input {
+      flex-basis: 45%;
+    }
+  }
+  @media (max-width: 768px) {
+    .store-sorting-input {
+      flex-basis: 100%;
+    }
   }
 }

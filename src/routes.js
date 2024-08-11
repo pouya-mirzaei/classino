@@ -7,7 +7,7 @@ import Dashboard from './pages/panel/dashboard/Dashboard';
 import Courses from './pages/panel/mycourses/Courses';
 import Finance from './pages/panel/finance/Finance';
 import Store from './pages/panel/store/Store';
-import CourseDetails from './pages/panel/courseDetails/CourseDetails';
+import CourseDetails from './pages/panel/mycourses/courseDetails/CourseDetails';
 
 const routes = [
   { path: '/', element: <Home /> },
