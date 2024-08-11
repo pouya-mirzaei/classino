@@ -2,13 +2,15 @@ import courses from '../data/courses';
 import teachers from '../data/teachers';
 import topStudents from '../data/top-students';
 import users from '../data/users';
-
 const getAllTeachers = () => {
   return teachers;
 };
 
 const getAllTopStudents = () => {
   return topStudents;
+};
+const getAllCourses = () => {
+  return courses;
 };
 
 const getAllUsers = () => {
@@ -36,4 +38,5 @@ export {
   isUserLoggedIn,
   logout,
   getCourseData,
+  getAllCourses,
 };

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { getAllCourses } from '../../../functions/Utilities';
 
 export default function Store() {
   const [searchInput, setSearchInput] = useState(null);
@@ -15,6 +16,9 @@ export default function Store() {
     { id: 4, img: '/images/doreh/DoreJamePanjomTaNohom1403-Big.81a8226b.png' },
     { id: 5, img: '/images/doreh/zabaninopng.png' },
   ];
+
+  const results = getAllCourses();
+  const formatNumber = (num) => num.toLocaleString();
 
   return (
     <div className="m-5">
@@ -95,7 +99,169 @@ export default function Store() {
         </div>
 
         {/* results */}
-        <div></div>
+        <div className="grid grid-cols-4 gap-5 mt-10">
+          {results.map((course) => (
+            <div className="bg-white dark:bg-dark-2 dark:text-white shadow-md shadow-black/10 overflow-hidden rounded-xl cursor-pointer hover:shadow-xl hover:scale-105 transition-all duration-200">
+              <div>
+                <img src={course.image} alt={course.name} className="w-full h-80 bg-cover" />
+              </div>
+              <div className="py-5 px-2.5">
+                <span className="text-sm font-semibold">{course.name}</span>
+                {/* course details */}
+                <div className="flex items-center justify-between">
+                  <div>
+                    <span className="text-xs">قیمت : </span>
+                    <span className="text-xs font-bold">{formatNumber(course.price)} ریال</span>
+                  </div>
+                  <span className="text-xs text-blue-800 underline">بیشتر</span>
+                </div>
+                <div>
+                  <button className="mt-5 w-full bg-primary-1 text-white py-3 rounded-md shadow-md shadow-black/10 hover:bg-primary-2 active:scale-95 transition-all">
+                    افزودن به سبد خرید
+                  </button>
+                </div>
+              </div>
+            </div>
+          ))}
+          {results.map((course) => (
+            <div className="bg-white dark:bg-dark-2 dark:text-white shadow-md shadow-black/10 overflow-hidden rounded-xl cursor-pointer hover:shadow-xl hover:scale-105 transition-all duration-200">
+              <div>
+                <img src={course.image} alt={course.name} className="w-full h-80 bg-cover" />
+              </div>
+              <div className="py-5 px-2.5">
+                <span className="text-sm font-semibold">{course.name}</span>
+                {/* course details */}
+                <div className="flex items-center justify-between">
+                  <div>
+                    <span className="text-xs">قیمت : </span>
+                    <span className="text-xs font-bold">{formatNumber(course.price)} ریال</span>
+                  </div>
+                  <span className="text-xs text-blue-800 underline">بیشتر</span>
+                </div>
+                <div>
+                  <button className="mt-5 w-full bg-primary-1 text-white py-3 rounded-md shadow-md shadow-black/10 hover:bg-primary-2 active:scale-95 transition-all">
+                    افزودن به سبد خرید
+                  </button>
+                </div>
+              </div>
+            </div>
+          ))}
+          {results.map((course) => (
+            <div className="bg-white dark:bg-dark-2 dark:text-white shadow-md shadow-black/10 overflow-hidden rounded-xl cursor-pointer hover:shadow-xl hover:scale-105 transition-all duration-200">
+              <div>
+                <img src={course.image} alt={course.name} className="w-full h-80 bg-cover" />
+              </div>
+              <div className="py-5 px-2.5">
+                <span className="text-sm font-semibold">{course.name}</span>
+                {/* course details */}
+                <div className="flex items-center justify-between">
+                  <div>
+                    <span className="text-xs">قیمت : </span>
+                    <span className="text-xs font-bold">{formatNumber(course.price)} ریال</span>
+                  </div>
+                  <span className="text-xs text-blue-800 underline">بیشتر</span>
+                </div>
+                <div>
+                  <button className="mt-5 w-full bg-primary-1 text-white py-3 rounded-md shadow-md shadow-black/10 hover:bg-primary-2 active:scale-95 transition-all">
+                    افزودن به سبد خرید
+                  </button>
+                </div>
+              </div>
+            </div>
+          ))}
+          {results.map((course) => (
+            <div className="bg-white dark:bg-dark-2 dark:text-white shadow-md shadow-black/10 overflow-hidden rounded-xl cursor-pointer hover:shadow-xl hover:scale-105 transition-all duration-200">
+              <div>
+                <img src={course.image} alt={course.name} className="w-full h-80 bg-cover" />
+              </div>
+              <div className="py-5 px-2.5">
+                <span className="text-sm font-semibold">{course.name}</span>
+                {/* course details */}
+                <div className="flex items-center justify-between">
+                  <div>
+                    <span className="text-xs">قیمت : </span>
+                    <span className="text-xs font-bold">{formatNumber(course.price)} ریال</span>
+                  </div>
+                  <span className="text-xs text-blue-800 underline">بیشتر</span>
+                </div>
+                <div>
+                  <button className="mt-5 w-full bg-primary-1 text-white py-3 rounded-md shadow-md shadow-black/10 hover:bg-primary-2 active:scale-95 transition-all">
+                    افزودن به سبد خرید
+                  </button>
+                </div>
+              </div>
+            </div>
+          ))}
+          {results.map((course) => (
+            <div className="bg-white dark:bg-dark-2 dark:text-white shadow-md shadow-black/10 overflow-hidden rounded-xl cursor-pointer hover:shadow-xl hover:scale-105 transition-all duration-200">
+              <div>
+                <img src={course.image} alt={course.name} className="w-full h-80 bg-cover" />
+              </div>
+              <div className="py-5 px-2.5">
+                <span className="text-sm font-semibold">{course.name}</span>
+                {/* course details */}
+                <div className="flex items-center justify-between">
+                  <div>
+                    <span className="text-xs">قیمت : </span>
+                    <span className="text-xs font-bold">{formatNumber(course.price)} ریال</span>
+                  </div>
+                  <span className="text-xs text-blue-800 underline">بیشتر</span>
+                </div>
+                <div>
+                  <button className="mt-5 w-full bg-primary-1 text-white py-3 rounded-md shadow-md shadow-black/10 hover:bg-primary-2 active:scale-95 transition-all">
+                    افزودن به سبد خرید
+                  </button>
+                </div>
+              </div>
+            </div>
+          ))}
+          {results.map((course) => (
+            <div className="bg-white dark:bg-dark-2 dark:text-white shadow-md shadow-black/10 overflow-hidden rounded-xl cursor-pointer hover:shadow-xl hover:scale-105 transition-all duration-200">
+              <div>
+                <img src={course.image} alt={course.name} className="w-full h-80 bg-cover" />
+              </div>
+              <div className="py-5 px-2.5">
+                <span className="text-sm font-semibold">{course.name}</span>
+                {/* course details */}
+                <div className="flex items-center justify-between">
+                  <div>
+                    <span className="text-xs">قیمت : </span>
+                    <span className="text-xs font-bold">{formatNumber(course.price)} ریال</span>
+                  </div>
+                  <span className="text-xs text-blue-800 underline">بیشتر</span>
+                </div>
+                <div>
+                  <button className="mt-5 w-full bg-primary-1 text-white py-3 rounded-md shadow-md shadow-black/10 hover:bg-primary-2 active:scale-95 transition-all">
+                    افزودن به سبد خرید
+                  </button>
+                </div>
+              </div>
+            </div>
+          ))}
+          {results.map((course) => (
+            <div className="bg-white dark:bg-dark-2 dark:text-white shadow-md shadow-black/10 overflow-hidden rounded-xl cursor-pointer hover:shadow-xl hover:scale-105 transition-all duration-200">
+              <div>
+                <img src={course.image} alt={course.name} className="w-full h-80 bg-cover" />
+              </div>
+              <div className="py-5 px-2.5">
+                <span className="text-sm font-semibold">{course.name}</span>
+                {/* course details */}
+                <div className="flex items-center justify-between">
+                  <div>
+                    <span className="text-xs">قیمت : </span>
+                    <span className="text-xs font-bold">{formatNumber(course.price)} ریال</span>
+                  </div>
+                  <span className="text-xs text-blue-800 underline">بیشتر</span>
+                </div>
+                <div>
+                  <button className="mt-5 w-full bg-primary-1 text-white py-3 rounded-md shadow-md shadow-black/10 hover:bg-primary-2 active:scale-95 transition-all">
+                    افزودن به سبد خرید
+                  </button>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
       </section>
     </div>
   );

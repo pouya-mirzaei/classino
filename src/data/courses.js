@@ -3,9 +3,10 @@ const courses = [
     id: 1,
     name: 'کلاس آنلاین جامع مرداد کنکور1403 حسابان استاد آریان حیدری',
     description: '',
-    image: '/images/courses/1.png',
+    image: '/images/courses/3.png',
     teacherId: 1,
     teacherImage: '/images/teacher/arian.png',
+    price: 800000,
     classes: [
       {
         id: 0,
@@ -69,8 +70,7 @@ const courses = [
       },
       {
         id: 6,
-        title:
-          'جلسه اول first class  استاد امرایی(خلاقیت نمایشی)(معرفی درس خلاقیت نمایشی+معرفی منابع مطالعاتی+درس اول(انیمیشن))',
+        title: 'جلسه اول first class  استاد امرایی(خلاقیت نمایشی)(معرفی درس خلاقیت نمایشی+معرفی منابع مطالعاتی+درس اول(انیمیشن))',
         isFree: false,
         isLocked: false,
         courseId: '',
@@ -117,6 +117,7 @@ const courses = [
     image: '/images/courses/2.png',
     teacherId: 1,
     teacherImage: '/images/teacher/bahraam.webp',
+    price: 2800000,
     classes: [
       {
         id: 0,
@@ -140,8 +141,7 @@ const courses = [
       },
       {
         id: 2,
-        title:
-          'جلسه اول first class  استاد امرایی(خلاقیت نمایشی)(معرفی درس خلاقیت نمایشی+معرفی منابع مطالعاتی+درس اول(انیمیشن))',
+        title: 'جلسه اول first class  استاد امرایی(خلاقیت نمایشی)(معرفی درس خلاقیت نمایشی+معرفی منابع مطالعاتی+درس اول(انیمیشن))',
         isFree: false,
         isLocked: false,
         courseId: '',
@@ -190,6 +190,16 @@ const courses = [
         holdingDate: ' شنبه ۳ تیر ۱۴۰۲ ساعت ۱۷:۰۰ ',
       },
     ],
+  },
+  {
+    id: 3,
+    name: 'کلاس آنلاین همایش 60 درصدی حسابان استاد آریان حیدری',
+    description: '',
+    image: '/images/courses/1.jpg',
+    teacherId: 1,
+    teacherImage: '/images/teacher/arian.png',
+    price: 1900000,
+    classes: [],
   },
 ];
 export default courses;
