@@ -47,7 +47,8 @@ export default function Finance() {
             className={`text-center dark:text-white cursor-pointer text-lg font-medium p-10 ${
               titleIndex === index ? 'bg-primary-1 dark:bg-primary-2 text-white' : 'bg-white dark:bg-dark-1'
             }`}
-            onClick={() => setTitleIndex(index)}>
+            onClick={() => setTitleIndex(index)}
+          >
             {title}
           </div>
         ))}

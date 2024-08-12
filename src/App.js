@@ -11,6 +11,9 @@ function App() {
     // appling the font
     document.body.classList.add('font-primary');
 
+    // set default theme
+    if (localStorage.getItem('dark') == null) localStorage.setItem('dark', false);
+
     // displaing the preloader
     setTimeout(() => {
       setIsContentLoaded(true);
