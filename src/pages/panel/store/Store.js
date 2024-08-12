@@ -22,7 +22,7 @@ export default function Store() {
   const formatNumber = (num) => num.toLocaleString();
 
   return (
-    <div>
+    <section className="p-section">
       <PrimaryHeading>فروشگاه</PrimaryHeading>
 
       {/* badge section */}
@@ -299,7 +299,7 @@ export default function Store() {
           ))}
         </div>
       </section>
-    </div>
+    </section>
   );
 }
 

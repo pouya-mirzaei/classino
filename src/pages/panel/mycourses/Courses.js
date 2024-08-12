@@ -3,12 +3,12 @@ import { Link } from 'react-router-dom';
 
 export default function Courses() {
   return (
-    <div>
+    <section className="p-section">
       <ul className="space-y-2.5 dark:text-white">
         <CourseBox id="1" title="کلاس آنلاین جامع مرداد کنکور1403 حسابان استاد آریان حیدری" image="/images/courses/3.png" />
         <CourseBox id="2" title="کلاس آنلاین جاست تست 1403 حسابان استاد آریان حیدری" image="/images/courses/2.png" />
       </ul>
-    </div>
+    </section>
   );
 }
 

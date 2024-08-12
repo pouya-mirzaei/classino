@@ -7,7 +7,7 @@ export default function Finance() {
   const titles = ['رسیدهای خرید', 'واریزی و پرداختی ', 'اقساط'];
 
   return (
-    <div>
+    <section className="p-section">
       <Breadcrumb title={titles[titleIndex]} />
 
       <div className="grid md:grid-cols-3 gap-8 [&>*]:dark:text-white [&>*]:rounded-xl">
@@ -54,7 +54,7 @@ export default function Finance() {
           </div>
         ))}
       </div>
-    </div>
+    </section>
   );
 }
 

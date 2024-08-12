@@ -1,0 +1,52 @@
+.alert {
+  padding: 1.75rem 1.25rem;
+  font-size: 1.3rem;
+  border: none;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.alert.alert-success {
+  color: #285b2a;
+  background-color: #beffdd;
+  border-color: #cde9ce;
+  box-shadow: 0 4px 15px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.1), inset 0 2px 0 0 #4caf50;
+}
+
+.alert-success .item-icon {
+  color: #beffdd;
+  background-color: #20bf6b;
+}
+
+.alert.alert-warning {
+  color: #ffac20;
+  background-color: #fff3cd;
+  border-color: #ffeeba;
+  box-shadow: 0 4px 15px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.1), inset 0 2px 0 0 #ffc107;
+}
+
+.alert-warning .item-icon {
+  color: #ffeccb;
+  background-color: #ffaf20;
+}
+
+.alert.alert-info {
+  color: #14205e;
+  background-color: #d4d8f0;
+  border-color: #c2c9ea;
+  box-shadow: 0 4px 15px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.1), inset 0 2px 0 0 #263db5;
+}
+
+.alert-danger {
+  color: #6d1224;
+  background-color: #f6d3da;
+  border-color: #f2c1cb;
+  box-shadow: 0 4px 15px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.1), inset 0 2px 0 0 #d22346;
+}
+
+.alert-danger .item-icon {
+  color: #f6d3da;
+  background-color: #eb3b5a;
+}

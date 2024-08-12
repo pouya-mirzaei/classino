@@ -32,7 +32,7 @@ export default function Dashboard() {
   ]);
 
   return (
-    <section className="flex flex-col gap-5">
+    <section className="p-section flex flex-col gap-5">
       {/* features */}
       <div className="flex flex-col lg:flex-row gap-5">
         <UpcomingClasses />
