@@ -1,0 +1,43 @@
+import React, { useContext } from 'react';
+import SecondaryHeading from '../SecondaryHeading';
+import { useCart } from '../../../Contexts/CartContext';
+import PreLoader from '../../PreLoader';
+
+export default function CheckOut() {
+  const cart = useCart();
+  const TAX = 10;
+
+  return (
+    <>
+      <div className="grow space-y-5 relative">
+        <PreLoader title="در حال محاسبه" />
+        <SecondaryHeading>صورت حساب</SecondaryHeading>
+        <div className="bg-[#f6f8fc] dark:bg-dark-1 dark:text-white rounded-md shadow-md shadow-black/20 p-5">
+          <div className="flex gap-5 my-5">
+            <span className="basis-1/2 text-xs font-bold text-gray-600 dark:text-white">مجموع: </span>
+            <span className="basis-1/2 font-bold text-sm">{cart.totalPrice().toLocaleString('fa-ir')} ریال</span>
+          </div>
+          <div className="flex gap-5 relative mb-12">
+            <span className="basis-1/2 text-xs font-bold text-gray-600 dark:text-white">مالیات بر ارزش افزوده: </span>
+            <span className="basis-1/2 font-bold text-sm">{cart.taxToPay(TAX).toLocaleString('fa-ir')} ریال</span>
+            <span className="text-xs absolute right-1/2 top-full mt-2">({TAX}% مبلغ کل)</span>
+          </div>
+          <div className="flex gap-5 mb-6">
+            <span className="basis-1/2 text-sm font-bold text-primary-1 dark:text-white">مبلغ نهایی:</span>
+            <span className="basis-1/2 font-bold text-base text-primary-1">
+              {cart.finalPrice(TAX).toLocaleString('fa-ir')} ریال
+            </span>
+          </div>
+          <div className="flex gap-5 mb-5">
+            <span className="basis-1/2 text-xs font-bold text-gray-600 dark:text-white">اعتبار شما:</span>
+            <span className="basis-1/2 font-bold text-sm">{parseInt('0').toLocaleString('fa-ir')} ریال</span>
+          </div>
+          <div className="flex gap-5 mb-5">
+            <span className="basis-1/2 text-xs font-bold text-gray-600 dark:text-white">قابل پرداخت</span>
+            <span className="basis-1/2 font-bold text-sm">{cart.finalPrice(TAX).toLocaleString('fa-ir')} ریال</span>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+}

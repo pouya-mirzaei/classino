@@ -6,7 +6,7 @@ const courses = [
     image: '/images/courses/3.png',
     teacherId: 1,
     teacherImage: '/images/teacher/arian.png',
-    price: 800000,
+    price: 8000000,
     classes: [
       {
         id: 0,
@@ -117,7 +117,7 @@ const courses = [
     image: '/images/courses/2.png',
     teacherId: 1,
     teacherImage: '/images/teacher/bahraam.webp',
-    price: 2800000,
+    price: 28000000,
     classes: [
       {
         id: 0,
@@ -198,7 +198,7 @@ const courses = [
     image: '/images/courses/1.jpg',
     teacherId: 1,
     teacherImage: '/images/teacher/arian.png',
-    price: 1900000,
+    price: 45000000,
     classes: [],
   },
 ];

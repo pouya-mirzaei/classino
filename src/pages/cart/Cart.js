@@ -2,13 +2,17 @@ import PrimaryHeading from '../../components/panel/PrimaryHeading';
 import Alert from '../../components/panel/Alert/Alert';
 import { getAllCourses } from '../../functions/Utilities';
 import { useCart } from '../../Contexts/CartContext';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import CheckOut from '../../components/panel/Checkout/CheckOut';
+import SecondaryHeading from '../../components/panel/SecondaryHeading';
 
 export default function Cart() {
   const cart = useCart();
   const courses = cart.cartItems;
   const navigate = useNavigate();
+
+  const TAX = 10;
 
   useEffect(() => {
     if (cart.isEmpty()) {
@@ -20,6 +24,7 @@ export default function Cart() {
     <section className="p-section space-y-10">
       <PrimaryHeading>سبد خرید</PrimaryHeading>
 
+      {/* cart items */}
       <div className="flex justify-evenly flex-col lg:flex-row gap-5">
         <div className="basis-2/3 space-y-7">
           {courses.map((course) => (
@@ -39,11 +44,16 @@ export default function Cart() {
           </Alert>
         </div>
       </div>
-      <div></div>
+
+      {/* checkout */}
+      <div className="flex flex-col md:flex-row gap-10">
+        <CheckOut />
+        <OffBox />
+      </div>
 
       <Alert status="success" className="flex-wrap">
         <span className="basis-full mb-2 text-center md:basis-auto">قابل پرداخت از طریق درگاه:</span>
-        <span className="">{cart.finalPrice().toLocaleString('fa-ir')} ریال</span>
+        <span className="">{cart.finalPrice(TAX).toLocaleString('fa-ir')} ریال</span>
         <button className="h-12 min-w-[80px] px-5 item-link text-sm text-white rounded-3xl shadow-lg shadow-black/20">
           تایید نهایی خرید
         </button>
@@ -51,6 +61,38 @@ export default function Cart() {
     </section>
   );
 }
+
+const OffBox = () => {
+  const [offInput, setOffInput] = useState('');
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log('submitted');
+  };
+
+  return (
+    <div className="grow space-y-5">
+      <SecondaryHeading>کد تخفیف</SecondaryHeading>
+      <div className="bg-[#f6f8fc] dark:bg-dark-1 dark:text-white rounded-md shadow-md shadow-black/20 p-5">
+        <p className="mb-7 font-bold">اگر کد تخفیفی دارید، اعمال کنید</p>
+
+        <form onSubmit={handleSubmit} className="flex flex-col md:flex-row gap-5 md:gap-0 items-center mb-5">
+          <input
+            type="text"
+            value={offInput}
+            onChange={(e) => setOffInput(e.target.value)}
+            className="h-10 md:w-72 w-full bg-white text-black pr-2 py-2 md:rounded-l-none rounded-lg shadow-lg shadow-black/30 text-xl"
+          />
+          <input
+            type="submit"
+            value="اعمال کد"
+            className="h-10 bg-primary-1 w-full md:w-max text-white p-2 md:rounded-r-none rounded-lg  cursor-pointer text-xs shadow-lg shadow-black/30 hover:bg-primary-2 transition-all active:scale-95"
+          />
+        </form>
+      </div>
+    </div>
+  );
+};
 
 const CoursePreview = ({ id, price, name, image, cart }) => {
   return (
@@ -69,19 +111,19 @@ const CoursePreview = ({ id, price, name, image, cart }) => {
 
       {/* course details */}
       <div className="basis-2/3 self-start">
-        <span className=" text-xs font-bold text-gray-400">نام دوره :</span>
+        <span className="text-xs font-bold text-gray-400">نام دوره :</span>
         <div className="mb-5 text-sm font-bold">{name}</div>
 
         <div>
-          <span className=" text-xs font-bold text-gray-400">کد محصول : </span>
+          <span className="text-xs font-bold text-gray-400">کد محصول : </span>
           <span className="text-sm text-gray-700 dark:text-white">{id.toLocaleString('fa-ir')}</span>
         </div>
         <div>
-          <span className=" text-xs font-bold text-gray-400">قیمت دوره : </span>
+          <span className="text-xs font-bold text-gray-400">قیمت دوره : </span>
           <span className="text-sm text-gray-700 dark:text-white">{price.toLocaleString('fa-ir')} ریال</span>
         </div>
         <div>
-          <span className=" text-xs font-bold text-gray-400">قیمت محاسبه شده : </span>
+          <span className="text-xs font-bold text-gray-400">قیمت محاسبه شده : </span>
           <span className="text-sm text-gray-700 dark:text-white">{price.toLocaleString('fa-ir')} ریال</span>
         </div>
       </div>

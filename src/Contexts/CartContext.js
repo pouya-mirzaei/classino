@@ -22,11 +22,14 @@ export const CartProvider = ({ children }) => {
     setCartItems([]);
   };
 
-  const finalPrice = () => {
+  const totalPrice = () => {
     let sum = 0;
     cartItems.map((course) => (sum += course.price));
     return sum;
   };
+  const finalPrice = (tax) => totalPrice() + taxToPay(tax);
+
+  const taxToPay = (tax) => (tax * totalPrice()) / 100;
 
   const value = {
     cartItems,
@@ -34,6 +37,8 @@ export const CartProvider = ({ children }) => {
     removeFromCart,
     clearCart,
     contains,
+    totalPrice,
+    taxToPay,
     finalPrice,
     isEmpty,
   };
