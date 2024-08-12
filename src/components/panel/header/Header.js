@@ -1,8 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import HeaderBox from './HeaderBox';
+import { useCart } from '../../../Contexts/CartContext';
 
 export default function Header({ onOpenSidebar, onToggleDark, dark }) {
+  const { cartItems } = useCart();
   return (
     <header className="panel-header">
       {/* header container */}
@@ -30,7 +32,7 @@ export default function Header({ onOpenSidebar, onToggleDark, dark }) {
           <HeaderBox icon="chat-left" badge="0" />
           <HeaderBox icon="bell" badge="0" />
           <Link to={'cart'}>
-            <HeaderBox icon="shopping-cart" badge="0" />
+            <HeaderBox icon="shopping-cart" badge={cartItems.length} />
           </Link>
           <Link to={'finance'}>
             <HeaderBox icon="wallet" text="اعتبار 0 ریال" breakpoint={{ full: true }} />
