@@ -24,7 +24,7 @@ export default function CourseDetails() {
         </thead>
         <tbody className="divide-y-2 rounded-xl">
           {classes.map((Class) => (
-            <tr key={Class.id} className="[&>*]:p-3 bg-white dark:bg-dark-1 cursor-pointer">
+            <tr key={Class.id} className="[&>*]:p-3 bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2">
               <td className="w-8">
                 <svg className="w-8 text-primary-1">
                   <use href={`/sprite/hero.svg#lock-${Class.isLocked ? 'close' : 'open'}`}></use>

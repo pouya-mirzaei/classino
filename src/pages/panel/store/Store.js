@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { getAllCourses } from '../../../functions/Utilities';
+import PrimaryHeading from '../../../components/panel/PrimaryHeading';
 
 export default function Store() {
   const [searchInput, setSearchInput] = useState(null);
@@ -21,8 +22,8 @@ export default function Store() {
   const formatNumber = (num) => num.toLocaleString();
 
   return (
-    <div className="m-5">
-      <h1 className="text-xl dark:text-white font-semibold">فروشگاه</h1>
+    <div>
+      <PrimaryHeading>فروشگاه</PrimaryHeading>
 
       {/* badge section */}
       <section className="m-0 flex flex-wrap items-center justify-around">
@@ -117,7 +118,12 @@ export default function Store() {
                 </div>
                 <div>
                   <button className="mt-5 w-full bg-primary-1 text-white py-3 rounded-md shadow-md shadow-black/10 hover:bg-primary-2 active:scale-95 transition-all">
-                    افزودن به سبد خرید
+                    <div className="flex items-center justify-center gap-2.5">
+                      <svg className="w-5 h-5 text-white">
+                        <use href="/sprite/hero.svg#shopping-cart"></use>
+                      </svg>
+                      <span>افزودن به سبد خرید</span>
+                    </div>
                   </button>
                 </div>
               </div>
@@ -140,7 +146,12 @@ export default function Store() {
                 </div>
                 <div>
                   <button className="mt-5 w-full bg-primary-1 text-white py-3 rounded-md shadow-md shadow-black/10 hover:bg-primary-2 active:scale-95 transition-all">
-                    افزودن به سبد خرید
+                    <div className="flex items-center justify-center gap-2.5">
+                      <svg className="w-5 h-5 text-white">
+                        <use href="/sprite/hero.svg#shopping-cart"></use>
+                      </svg>
+                      <span>افزودن به سبد خرید</span>
+                    </div>
                   </button>
                 </div>
               </div>
@@ -163,7 +174,12 @@ export default function Store() {
                 </div>
                 <div>
                   <button className="mt-5 w-full bg-primary-1 text-white py-3 rounded-md shadow-md shadow-black/10 hover:bg-primary-2 active:scale-95 transition-all">
-                    افزودن به سبد خرید
+                    <div className="flex items-center justify-center gap-2.5">
+                      <svg className="w-5 h-5 text-white">
+                        <use href="/sprite/hero.svg#shopping-cart"></use>
+                      </svg>
+                      <span>افزودن به سبد خرید</span>
+                    </div>
                   </button>
                 </div>
               </div>
@@ -186,7 +202,12 @@ export default function Store() {
                 </div>
                 <div>
                   <button className="mt-5 w-full bg-primary-1 text-white py-3 rounded-md shadow-md shadow-black/10 hover:bg-primary-2 active:scale-95 transition-all">
-                    افزودن به سبد خرید
+                    <div className="flex items-center justify-center gap-2.5">
+                      <svg className="w-5 h-5 text-white">
+                        <use href="/sprite/hero.svg#shopping-cart"></use>
+                      </svg>
+                      <span>افزودن به سبد خرید</span>
+                    </div>
                   </button>
                 </div>
               </div>
@@ -209,7 +230,12 @@ export default function Store() {
                 </div>
                 <div>
                   <button className="mt-5 w-full bg-primary-1 text-white py-3 rounded-md shadow-md shadow-black/10 hover:bg-primary-2 active:scale-95 transition-all">
-                    افزودن به سبد خرید
+                    <div className="flex items-center justify-center gap-2.5">
+                      <svg className="w-5 h-5 text-white">
+                        <use href="/sprite/hero.svg#shopping-cart"></use>
+                      </svg>
+                      <span>افزودن به سبد خرید</span>
+                    </div>
                   </button>
                 </div>
               </div>
@@ -232,7 +258,12 @@ export default function Store() {
                 </div>
                 <div>
                   <button className="mt-5 w-full bg-primary-1 text-white py-3 rounded-md shadow-md shadow-black/10 hover:bg-primary-2 active:scale-95 transition-all">
-                    افزودن به سبد خرید
+                    <div className="flex items-center justify-center gap-2.5">
+                      <svg className="w-5 h-5 text-white">
+                        <use href="/sprite/hero.svg#shopping-cart"></use>
+                      </svg>
+                      <span>افزودن به سبد خرید</span>
+                    </div>
                   </button>
                 </div>
               </div>
@@ -255,7 +286,12 @@ export default function Store() {
                 </div>
                 <div>
                   <button className="mt-5 w-full bg-primary-1 text-white py-3 rounded-md shadow-md shadow-black/10 hover:bg-primary-2 active:scale-95 transition-all">
-                    افزودن به سبد خرید
+                    <div className="flex items-center justify-center gap-2.5">
+                      <svg className="w-5 h-5 text-white">
+                        <use href="/sprite/hero.svg#shopping-cart"></use>
+                      </svg>
+                      <span>افزودن به سبد خرید</span>
+                    </div>
                   </button>
                 </div>
               </div>

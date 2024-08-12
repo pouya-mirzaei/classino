@@ -29,7 +29,9 @@ export default function Header({ onOpenSidebar, onToggleDark, dark }) {
         <div className="flex items-center gap-2.5">
           <HeaderBox icon="chat-left" badge="0" />
           <HeaderBox icon="bell" badge="0" />
-          <HeaderBox icon="shopping-cart" badge="0" />
+          <Link to={'cart'}>
+            <HeaderBox icon="shopping-cart" badge="0" />
+          </Link>
           <Link to={'finance'}>
             <HeaderBox icon="wallet" text="اعتبار 0 ریال" breakpoint={{ full: true }} />
           </Link>

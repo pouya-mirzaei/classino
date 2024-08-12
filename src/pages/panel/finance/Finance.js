@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PrimaryHeading from '../../../components/panel/PrimaryHeading';
 
 export default function Finance() {
   const [titleIndex, setTitleIndex] = useState(0);
@@ -6,7 +7,7 @@ export default function Finance() {
   const titles = ['رسیدهای خرید', 'واریزی و پرداختی ', 'اقساط'];
 
   return (
-    <div className="m-5">
+    <div>
       <Breadcrumb title={titles[titleIndex]} />
 
       <div className="grid md:grid-cols-3 gap-8 [&>*]:dark:text-white [&>*]:rounded-xl">
@@ -60,10 +61,10 @@ export default function Finance() {
 function Breadcrumb({ title }) {
   return (
     <div className="block">
-      <h1 className="dark:text-white">
+      <PrimaryHeading>
         <span className="text-xl font-semibold ml-4">{title}</span>
         <span className="text-sm">امور مالی</span>
-      </h1>
+      </PrimaryHeading>
     </div>
   );
 }
