@@ -8,6 +8,7 @@ import Courses from './pages/panel/mycourses/Courses';
 import Finance from './pages/panel/finance/Finance';
 import Store from './pages/panel/store/Store';
 import CourseDetails from './pages/panel/mycourses/courseDetails/CourseDetails';
+import Cart from './pages/cart/Cart';
 
 const routes = [
   { path: '/', element: <Home /> },
@@ -27,6 +28,7 @@ const routes = [
       { path: 'finance', element: <Finance /> },
       { path: 'store', element: <Store /> },
       { path: 'courses/:id', element: <CourseDetails /> },
+      { path: 'cart', element: <Cart /> },
       { path: '*', element: <NotFound /> },
     ],
   },
