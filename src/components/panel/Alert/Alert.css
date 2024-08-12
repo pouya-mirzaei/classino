@@ -15,9 +15,13 @@
   box-shadow: 0 4px 15px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.1), inset 0 2px 0 0 #4caf50;
 }
 
-.alert-success .item-icon {
-  color: #beffdd;
+.alert-success .item-link {
   background-color: #20bf6b;
+  transition: all 0.2s;
+}
+
+.alert-success .item-link:hover {
+  background-color: #169250;
 }
 
 .alert.alert-warning {
@@ -27,9 +31,12 @@
   box-shadow: 0 4px 15px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.1), inset 0 2px 0 0 #ffc107;
 }
 
-.alert-warning .item-icon {
-  color: #ffeccb;
+.alert-warning .item-link {
   background-color: #ffaf20;
+  transition: all 0.2s;
+}
+.alert-warning .item-link:hover {
+  background-color: #e39816;
 }
 
 .alert.alert-info {
@@ -46,7 +53,11 @@
   box-shadow: 0 4px 15px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.1), inset 0 2px 0 0 #d22346;
 }
 
-.alert-danger .item-icon {
-  color: #f6d3da;
+.alert-danger .item-link {
   background-color: #eb3b5a;
+  transition: all 0.2s;
+}
+
+.alert-danger .item-link:hover {
+  background-color: #d12d4b;
 }
