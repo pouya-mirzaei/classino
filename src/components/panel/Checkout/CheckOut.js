@@ -34,7 +34,9 @@ export default function CheckOut() {
           </div>
           <div className="flex gap-5 mb-5">
             <span className="basis-1/2 text-xs font-bold text-gray-600 dark:text-white">قابل پرداخت</span>
-            <span className="basis-1/2 font-bold text-sm">{cart.finalPrice(TAX).toLocaleString('fa-ir')} ریال</span>
+            <span className="basis-1/2 font-bold text-sm border border-white p-2">
+              {cart.finalPrice(TAX).toLocaleString('fa-ir')} ریال
+            </span>
           </div>
         </div>
       </div>

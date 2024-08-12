@@ -4,6 +4,7 @@ import SideBar from '../../components/panel/side-bar/SideBar';
 import { Outlet } from 'react-router-dom';
 import Copyright from '../../components/Copyright';
 import { CartProvider } from '../../Contexts/CartContext';
+import { ToastContainer } from 'react-toastify';
 
 export default function Panel() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
@@ -46,6 +47,7 @@ export default function Panel() {
           </div>
         </div>
       </CartProvider>
+      <ToastContainer limit={4} pauseOnFocusLoss={false} pauseOnHover={false} className={'font-primary'} />
     </>
   );
 }

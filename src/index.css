@@ -9,7 +9,7 @@
   }
 
   .font-primary {
-    font-family: 'IranSans';
+    font-family: 'IranSans' !important;
   }
 
   body {

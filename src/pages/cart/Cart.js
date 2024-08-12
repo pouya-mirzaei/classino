@@ -15,6 +15,10 @@ export default function Cart() {
   const TAX = 10;
 
   useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
     if (cart.isEmpty()) {
       navigate('/panel/store');
     }

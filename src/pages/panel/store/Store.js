@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { getAllCourses } from '../../../functions/Utilities';
 import PrimaryHeading from '../../../components/panel/PrimaryHeading';
 import { useCart } from '../../../Contexts/CartContext';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function Store() {
   const [searchInput, setSearchInput] = useState('');
@@ -25,8 +27,16 @@ export default function Store() {
   const cart = useCart();
 
   const handleAdd = (course) => {
-    if (cart.contains(course.id)) console.log('error');
-    else cart.addToCart(course);
+    if (cart.contains(course.id)) {
+      toast.error('این محصول در سبد خرید شما موجود است', {
+        className: 'font-primary text-xs',
+      });
+    } else {
+      cart.addToCart(course);
+      toast.success('محصول مورد نظر به سبد خرید اضافه شد', {
+        className: 'font-primary text-xs',
+      });
+    }
   };
 
   return (
