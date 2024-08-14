@@ -39,30 +39,30 @@ export default function Header() {
         >
           <ul className="flex flex-col pt-2 [&>*]:border-y [&>*]:py-5">
             <li className="flex justify-center">
-              <a href="#">
+              <Link to="/panel/dashboard">
                 <img src="images/classino_Logo.08df55af.svg" alt="classni logo" />
-              </a>
+              </Link>
             </li>
             <li className="pr-5">
-              <a className="hover:text-primary-1 transition-all" href="#">
+              <Link className="hover:text-primary-1 transition-all" to="/panel/dashboard">
                 سال تحصیلی 1402-1403
-              </a>
+              </Link>
             </li>
             <li className="pr-5">
-              <a className="hover:text-primary-1 transition-all" a href="#">
+              <Link className="hover:text-primary-1 transition-all" to="/panel/dashboard">
                 انتخاب رشته کنکور 1402
-              </a>
+              </Link>
             </li>
             <li className="pr-5">
-              <a className="hover:text-primary-1 transition-all" href="#">
+              <Link className="hover:text-primary-1 transition-all" to="/panel/dashboard">
                 زبانینو
-              </a>
+              </Link>
             </li>
 
             <li className="flex justify-center items-center basis-full bg-white py-5">
               <button className="btn-panel bg-primary-1 text-white hover:bg-primary-2 w-4/5">دوره ها در یک نگاه</button>
             </li>
-            <Link to="/panel">
+            <Link to="/panel/dashboard">
               <li className="flex justify-center items-center">
                 <button className="btn-panel w-4/5">ورود به پنل کاربری</button>
               </li>
@@ -85,9 +85,9 @@ export default function Header() {
           {/* logo */}
 
           <div>
-            <a href="/">
+            <Link to="/">
               <img src="images/classinoLogo.08df55af.svg" alt="classino logo" />
-            </a>
+            </Link>
           </div>
 
           {/* courses */}
@@ -122,7 +122,7 @@ export default function Header() {
           >
             <use href="sprite/hero.svg#3-bars"></use>
           </svg>
-          <Link to="/panel">
+          <Link to="/panel/dashboard">
             <svg className="hover:border-b hover:border-black active:translate-y-0.5 inline-block transition-all">
               <use href="sprite/hero.svg#user-circle"></use>
             </svg>

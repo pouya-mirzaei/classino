@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 
 export default function Courses() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -18,7 +19,8 @@ export default function Courses() {
     <div className="hidden lg:inline-block relative">
       <button
         className="flex items-center gap-x-2.5 btn-panel bg-primary-1 text-white hover:bg-primary-2"
-        onClick={handleShowCourses}>
+        onClick={handleShowCourses}
+      >
         دوره ها
         <svg className="w-5">
           <use href="sprite/hero.svg#chevron-down"></use>
@@ -26,40 +28,34 @@ export default function Courses() {
       </button>
 
       {/* sub menu */}
-      <div
-        className={`absolute z-20 top-[110%] right-0 w-[440px] bg-white rounded-2xl border ${
-          isMenuOpen ? 'flex' : 'hidden'
-        }`}>
+      <div className={`absolute z-20 top-[110%] right-0 w-[440px] bg-white rounded-2xl border ${isMenuOpen ? 'flex' : 'hidden'}`}>
         <ul className="divide-y-2 w-full [&>*]:py-4 text-lg">
           <li className="text-primary-2 text-center">کلاسینو</li>
           <li className="pr-5">
-            <a className="hover:text-primary-1 transition-all" href="#">
+            <Link className="hover:text-primary-1 transition-all" to="/panel/dashboard">
               سال تحصیلی 1402-1403
-            </a>
+            </Link>
           </li>
           <li className="pr-5">
-            <a className="hover:text-primary-1 transition-all" a href="#">
+            <Link className="hover:text-primary-1 transition-all" to="/panel/dashboard">
               انتخاب رشته کنکور 1402
-            </a>
+            </Link>
           </li>
           <li className="pr-5">
-            <a className="hover:text-primary-1 transition-all" href="#">
+            <Link className="hover:text-primary-1 transition-all" to="/panel/dashboard">
               زبانینو
-            </a>
+            </Link>
           </li>
 
           <li className="flex justify-center">
-            <button className="text-center btn-panel bg-primary-1 text-white hover:bg-primary-2 w-4/5">
-              دوره ها در یک نگاه
-            </button>
+            <button className="text-center btn-panel bg-primary-1 text-white hover:bg-primary-2 w-4/5">دوره ها در یک نگاه</button>
           </li>
         </ul>
       </div>
       <div
-        className={`fixed bg-black/50 w-screen h-screen z-10 scale-150 backdrop-blur-sm ${
-          isMenuOpen ? 'block' : 'hidden'
-        }`}
-        onClick={closeMenu}></div>
+        className={`fixed bg-black/50 w-screen h-screen z-10 scale-150 backdrop-blur-sm ${isMenuOpen ? 'block' : 'hidden'}`}
+        onClick={closeMenu}
+      ></div>
     </div>
   );
 }
