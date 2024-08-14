@@ -4,6 +4,7 @@ import { Autoplay } from 'swiper/modules';
 import PreLoader from '../PreLoader';
 import 'swiper/css';
 import { getAllTeachers } from '../../functions/Utilities';
+import { Link } from 'react-router-dom';
 
 export default function TeachersSection() {
   const teachers = getAllTeachers();
@@ -28,27 +29,32 @@ export default function TeachersSection() {
             slidesPerView: 5,
           },
         }}
-        className="relative mt-12">
+        className="relative mt-12"
+      >
         <PreLoader title="استاید کلاسینو"></PreLoader>
 
         {teachers.map((teacher) => (
           <SwiperSlide className="w-48" key={teacher.id}>
-            <div className="relative min-h-[230px] bg-gray-100 rounded-xl overflow-hidden hover:shadow-xl hover:shadow-black/60 cursor-pointer transition-all">
-              <figure>
-                <img src={teacher.img} alt={teacher.name} className="w-full align-middle" />
-                <figcaption className="absolute bottom-0 right-0 left-0 p-2.5 text-white bg-gradient-to-b from-transparent to-[#1c1c21] [text-shadow:_0_1px_1px_rgba(0_0_0_/_90%)] text-center">
-                  <div className="font-extrabold text-lg">{teacher.name}</div>
-                  <div className="mt-1 text-base opacity-80 font-medium">{teacher.role}</div>
-                </figcaption>
-              </figure>
-            </div>
+            <Link to="/panel/dashboard">
+              <div className="relative min-h-[230px] bg-gray-100 rounded-xl overflow-hidden hover:shadow-xl hover:shadow-black/60 cursor-pointer transition-all">
+                <figure>
+                  <img src={teacher.img} alt={teacher.name} className="w-full align-middle" />
+                  <figcaption className="absolute bottom-0 right-0 left-0 p-2.5 text-white bg-gradient-to-b from-transparent to-[#1c1c21] [text-shadow:_0_1px_1px_rgba(0_0_0_/_90%)] text-center">
+                    <div className="font-extrabold text-lg">{teacher.name}</div>
+                    <div className="mt-1 text-base opacity-80 font-medium">{teacher.role}</div>
+                  </figcaption>
+                </figure>
+              </div>
+            </Link>
           </SwiperSlide>
         ))}
       </Swiper>
 
-      <button className="mt-10 mx-auto block btn-panel text-white bg-secondary-1 border border-[#da7c0c]">
-        مشاهده کادر استاد کلاسینو
-      </button>
+      <Link to="/panel/dashboard">
+        <button className="mt-10 mx-auto block btn-panel text-white bg-secondary-1 border border-[#da7c0c]">
+          مشاهده کادر استاد کلاسینو
+        </button>
+      </Link>
     </section>
   );
 }
