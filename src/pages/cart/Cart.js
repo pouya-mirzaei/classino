@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import CheckOut from '../../components/panel/Checkout/CheckOut';
 import SecondaryHeading from '../../components/panel/SecondaryHeading';
+import PreLoader from '../../components/PreLoader';
 
 export default function Cart() {
   const cart = useCart();
