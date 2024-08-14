@@ -1,5 +1,6 @@
 import React from 'react';
 import Copyright from '../Copyright';
+import { Link } from 'react-router-dom';
 
 export default function Footer() {
   return (
@@ -10,16 +11,16 @@ export default function Footer() {
           <h3 className="font-bold text-lg mb-7">لینک های مهم</h3>
           <ul className="space-y-5 [&>*]:text-black/70 hover:[&>*]:text-secondary-1 [&>*]:transition-all">
             <li>
-              <a href="#">دوره ها در یک نگاه</a>
+              <Link to="/">دوره ها در یک نگاه</Link>
             </li>
             <li>
-              <a href="#">شرایط و قوانین کلاسینو</a>
+              <Link to="/">شرایط و قوانین کلاسینو</Link>
             </li>
             <li>
-              <a href="#">نمونه کلاس های برگزار شده</a>
+              <Link to="/">نمونه کلاس های برگزار شده</Link>
             </li>
             <li>
-              <a href="#">نرم افزار های مورد نیاز</a>
+              <Link to="/">نرم افزار های مورد نیاز</Link>
             </li>
           </ul>
         </div>
@@ -27,13 +28,13 @@ export default function Footer() {
           <h3 className="font-bold text-lg mb-7">کلاسینو</h3>
           <ul className="space-y-5 [&>*]:text-black/70 hover:[&>*]:text-secondary-1 [&>*]:transition-all">
             <li>
-              <a href="#">درباره کلاسینو</a>
+              <Link to="/">درباره کلاسینو</Link>
             </li>
             <li>
-              <a href="#">تماس با کلاسینو</a>
+              <Link to="/">تماس با کلاسینو</Link>
             </li>
             <li>
-              <a href="#">کادر دبیران کلاسینو</a>
+              <Link to="/">کادر دبیران کلاسینو</Link>
             </li>
           </ul>
         </div>
