@@ -60,7 +60,7 @@ const courses = [
       },
       {
         id: 5,
-        title: '6',
+        title: 'جلسه اول first class  استاد امرایی+درس اول(انیمیشن))',
         isFree: false,
         isLocked: true,
         courseId: '',
