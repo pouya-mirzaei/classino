@@ -2,7 +2,7 @@ const courses = [
   {
     id: 1,
     name: 'کلاس آنلاین جامع مرداد کنکور1403 حسابان استاد آریان حیدری',
-    description: '',
+    description: 'این دوره بهترین دوره دنیاس',
     image: '/images/courses/3.png',
     teacherId: 1,
     teacherImage: '/images/teacher/arian.png',
@@ -70,7 +70,7 @@ const courses = [
       },
       {
         id: 6,
-        title: 'جلسه اول first class  استاد امرایی(خلاقیت نمایشی)(معرفی درس خلاقیت نمایشی+معرفی منابع مطالعاتی+درس اول(انیمیشن))',
+        title: 'جلسه اول first class  استاد امرایی+درس اول(انیمیشن))',
         isFree: false,
         isLocked: false,
         courseId: '',
@@ -121,7 +121,7 @@ const courses = [
     classes: [
       {
         id: 0,
-        title: '1',
+        title: 'جلسه اول درس استاد اریان حیدری ',
         isFree: false,
         isLocked: true,
         courseId: '',

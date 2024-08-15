@@ -1,6 +1,7 @@
 import React from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { getCourseData } from '../../../../functions/Utilities';
+import CourseDetailsHeader from '../../../../components/panel/Courses/CourseDetailsHeader';
 
 export default function CourseDetails() {
   const { id } = useParams();
@@ -11,7 +12,14 @@ export default function CourseDetails() {
 
   return (
     <div className="m-5">
-      <Header teacherImg={teacherImage} courseTitle={name} teacherName={teacherName} />
+      {/* <Header teacherImg={teacherImage} courseTitle={name} teacherName={teacherName} /> */}
+      <CourseDetailsHeader teacherImg={teacherImage} teacherName={teacherName} className="px-5">
+        <span className="xl:text-3xl lg:text-3xl md:text-2xl text-lg font-extrabold text-center">{name}</span>
+        <div className="flex items-center justify-evenly gap-5 mt-5">
+          <HoldingInfo title="زمان برگزاری" icon="/sprite/hero.svg#calendar" value="شنبه" />
+          <HoldingInfo title="ساعت برگزاری" icon="/sprite/hero.svg#clock" value=" 01:00 تا 01:00 " />
+        </div>
+      </CourseDetailsHeader>
 
       <table className="w-full mt-5 dark:text-white">
         <thead>
@@ -33,9 +41,11 @@ export default function CourseDetails() {
               <td className="text-base max-w-lg">{Class.title}</td>
               <td className="max-w-[100px] text-xs md:text-sm">{Class.holdingDate}</td>
               <td>
-                <button className="bg-primary-1 hover:bg-primary-2 text-white w-full h-[45px] px-0.5 text-[.8rem] font-medium rounded-md transition-all duration-200">
-                  نمایش کلاس
-                </button>
+                <Link to={'/panel/class/show/' + Class.id}>
+                  <button className="bg-primary-1 hover:bg-primary-2 text-white w-full h-[45px] px-0.5 text-[.8rem] font-medium rounded-md transition-all duration-200">
+                    نمایش کلاس
+                  </button>
+                </Link>
               </td>
             </tr>
           ))}
@@ -51,7 +61,7 @@ function Header({ courseTitle, holdingDays, holdingHours, teacherImg, teacherNam
       <div className="basis-1/6 mr-5">
         <img src={teacherImg} alt={teacherName} />
       </div>
-      <div className="grow flex flex-col justify-center gap-y-10 items-center text-white">
+      <div className="grow flex flex-col justify-center gap-y-10 it ems-center text-white">
         <span className="text-3xl font-extrabold">{courseTitle}</span>
         <div className="flex items-center gap-5">
           <HoldingInfo title="زمان برگزاری" icon="/sprite/hero.svg#calendar" value="شنبه" />
@@ -64,17 +74,17 @@ function Header({ courseTitle, holdingDays, holdingHours, teacherImg, teacherNam
 
 function HoldingInfo({ title, icon, value }) {
   return (
-    <div className="flex items-center gap-x-2.5">
+    <div className="flex flex-col md:flex-row  items-center gap-x-2.5">
       {/* icon */}
-      <div className="w-[50px] p-3 rounded-full text-primary-1 bg-white ">
+      <div className="md:w-[50px] w-12 md:p-3 p-2 rounded-full text-primary-1 bg-white ">
         <svg>
           <use href={icon}></use>
         </svg>
       </div>
       {/* info */}
-      <div className="flex flex-col gap-2.5 mr-2.5">
+      <div className="flex flex-col items-center gap-2.5 md:mr-2.5">
         <div className="text-base text-white  ">{title}</div>
-        <div>{value}</div>
+        <span className="w-max">{value}</span>
       </div>
     </div>
   );

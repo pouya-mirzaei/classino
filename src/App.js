@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import Home from './pages/Home/Home';
 import PreLoader from './components/PreLoader';
 import { useRoutes } from 'react-router-dom';
 import routes from './routes';

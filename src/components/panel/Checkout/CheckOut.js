@@ -9,10 +9,10 @@ export default function CheckOut() {
 
   return (
     <>
-      <div className="grow space-y-5 relative">
-        <PreLoader title="در حال محاسبه" />
+      <div className="grow space-y-5">
         <SecondaryHeading>صورت حساب</SecondaryHeading>
-        <div className="bg-[#f6f8fc] dark:bg-dark-1 dark:text-white rounded-md shadow-md shadow-black/20 p-5">
+        <div className="relative bg-[#f6f8fc] dark:bg-dark-1 dark:text-white rounded-md shadow-md shadow-black/20 p-5">
+          <PreLoader title="در حال محاسبه" />
           <div className="flex gap-5 my-5">
             <span className="basis-1/2 text-xs font-bold text-gray-600 dark:text-white">مجموع: </span>
             <span className="basis-1/2 font-bold text-sm">{cart.totalPrice().toLocaleString('fa-ir')} ریال</span>
