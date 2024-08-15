@@ -9,6 +9,7 @@ import Finance from './pages/panel/finance/Finance';
 import Store from './pages/panel/store/Store';
 import CourseDetails from './pages/panel/mycourses/courseDetails/CourseDetails';
 import Cart from './pages/cart/Cart';
+import Class from './pages/panel/Classes/ClassPreview';
 
 const routes = [
   { path: '/', element: <Home /> },
@@ -29,6 +30,7 @@ const routes = [
       { path: 'store', element: <Store /> },
       { path: 'courses/:id', element: <CourseDetails /> },
       { path: 'cart', element: <Cart /> },
+      { path: 'class/show/:id', element: <Class /> },
       { path: '*', element: <NotFound /> },
     ],
   },
