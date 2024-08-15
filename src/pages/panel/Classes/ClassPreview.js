@@ -16,14 +16,14 @@ export default function ClassPreview() {
       <CourseDetailsHeader
         teacherName={teacher.name}
         teacherImg={teacher.img}
-        className="w-full h-4/5 flex items- mr-10 justify-evenly flex-col font-extrabold"
+        className="w-full h-4/5 flex md:items-start items-center md:mr-10 justify-evenly flex-col font-extrabold"
       >
-        <h1 className="text-3xl">{course.name}</h1>
-        <h2 className="text-xl">{session.title}</h2>
-        <h2 className="text-xl">
+        <span className="md:text-3xl text-lg block text-center mb-5">{course.name}</span>
+        <span className="md:text-xl tel text-center mb-5">{session.title}</span>
+        <span className="md:text-xl tel text-center">
           <span>زمان برگزاری:</span>
           <span>{session.holdingDate}</span>
-        </h2>
+        </span>
       </CourseDetailsHeader>
     </section>
   );
