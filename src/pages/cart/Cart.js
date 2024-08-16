@@ -40,7 +40,7 @@ export default function Cart() {
               <span className="text-base font-bold">
                 پرداخت شما به صورت یکجا میباشد در صورت تمایل میتوانید به صورت قسطی پرداخت کنید
               </span>
-              <button className="h-12 px-5 item-link text-sm font-bold text-white rounded-3xl shadow-lg shadow-black/20">
+              <button className="h-12 px-5 item-link text-sm font-bold text-white rounded-3xl shadow-lg shadow-black/20 active:scale-95">
                 تغییر نحوه پرداخت به قسطی
               </button>
             </div>

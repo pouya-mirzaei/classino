@@ -55,21 +55,21 @@ function DesktopCourseTable({ classes, isLargeWindow }) {
       {classes.map((Class) => (
         <tr key={Class.id} className="[&>*]:px-4 bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2">
           <td className="flex md:table-cell items-center justify-between mt-4 md:mt-0">
-            {!isLargeWindow && <span className="text-sm font-semibold text-black/60">وضعیت</span>}
+            {!isLargeWindow && <span className="text-sm font-semibold text-black/60  dark:text-white/80">وضعیت</span>}
             <svg className="w-8 text-primary-1">
               <use href={`/sprite/hero.svg#lock-${Class.isLocked ? 'close' : 'open'}`}></use>
             </svg>
           </td>
           <td className="lg:w-8/12 w-full md:w-8/12 text-sm flex gap-2 md:table-cell items-center mt-3 md:mt-0">
-            {!isLargeWindow && <span className="text-sm font-semibold text-black/60">عنوان جلسه </span>}
-            <span className="text-black/90 font-bold">{Class.title}</span>
+            {!isLargeWindow && <span className="text-sm font-semibold text-black/60  dark:text-white/80">عنوان جلسه </span>}
+            <span className="text-black/90 font-bold dark:text-white/80">{Class.title}</span>
           </td>
           <td className="text-xs font-bold w-full md:w-1/5 mt-3 md:mt-0 flex md:table-cell items-center justify-between">
-            {!isLargeWindow && <span className="text-sm font-semibold text-black/60">تاریخ برگزاری</span>}
-            <span className="text-black/90 font-bold">{Class.holdingDate}</span>
+            {!isLargeWindow && <span className="text-sm font-semibold text-black/60 dark:text-white/80">تاریخ برگزاری</span>}
+            <span className="text-black/90 font-bold dark:text-white/80">{Class.holdingDate}</span>
           </td>
           <td className="w-full md:w-1/5 flex items-center justify-between md:table-cell">
-            {!isLargeWindow && <span className="text-sm font-semibold text-black/60">مشاهده</span>}
+            {!isLargeWindow && <span className="text-sm font-semibold text-black/60 dark:text-white/80">مشاهده</span>}
             <Link
               to={`/panel/class/show/${Class.id}`}
               className="inline-block basis-2/5 text-center align-middle leading-[45px] bg-primary-1 hover:bg-primary-2 text-white h-[45px] w-full mx-1 my-4 text-[.8rem] font-medium rounded-md transition-all duration-200"
