@@ -4,6 +4,8 @@ import CourseDetailsHeader from '../../../components/panel/Courses/CourseDetails
 import { getAllCourses, getAllTeachers } from '../../../functions/Utilities';
 import Alert from '../../../components/panel/Alert/Alert';
 import { toast } from 'react-toastify';
+import PanelDetail from '../../../components/panel/PanelDetail/PanelDetail';
+import Comment from '../../../components/panel/Comment/Comment';
 
 // for demo purposes, I'm getting the course from the props
 // but we're gonna fetch the course data from the backend later
@@ -30,7 +32,7 @@ export default function ClassPreview() {
   };
 
   return (
-    <section className="p-section space-y-10">
+    <section className="p-section space-y-12">
       <CourseDetailsHeader
         teacherName={teacher.name}
         teacherImg={teacher.img}
@@ -87,7 +89,7 @@ export default function ClassPreview() {
       {/* footer boxes */}
 
       <div className="flex flex-col items-start md:flex-row gap-8">
-        <HelperBoX headerTitle="راهنما" className={'basis-1/2'}>
+        <PanelDetail headerTitle="راهنما" className={'basis-1/2'}>
           <p className="text-[13px]">
             به منظور دسترسی به کلاس های آنلاین کلاسینو شما هم از طریق کامپیوتر و لپ تاپ شخصی میتوانید به راحتی وارد کامپیوتر شوید
             و یا اینکه از گوشی هوشمند و یا تبلت آندرویدی خود استفاده کنید.
@@ -103,11 +105,11 @@ export default function ClassPreview() {
           <p className="text-[13px]">
             نرم افزار ClassinoConnect نیاز به نصب هیچ گونه برنامه ای ندارد و فقط کافیست برروی ورود به کلاس کلیک کنید.
           </p>
-        </HelperBoX>
+        </PanelDetail>
 
-        <HelperBoX headerTitle="ارسال نظر" className="grow basis-1/2">
-          hello
-        </HelperBoX>
+        <PanelDetail headerTitle="ارسال نظر" className="grow basis-1/2">
+          <Comment />
+        </PanelDetail>
       </div>
     </section>
   );
@@ -124,16 +126,6 @@ function CourseFeatureBox({ text, icon, disabled = false, iconColor = 'text-prim
         <use href={`/sprite/hero.svg#${icon}`}></use>
       </svg>
       <span className="mx-auto text-sm">{text}</span>
-    </div>
-  );
-}
-
-function HelperBoX({ headerTitle, className, children }) {
-  return (
-    <div className={`${className} bg-white dark:bg-dark-1 dark:text-white rounded-lg shadow-md shadow-black/20 overflow-hidden`}>
-      {/* header */}
-      <div className="bg-[#f6f8fc] dark:bg-dark-2 px-5 py-3 text-lg font-semibold">{headerTitle}</div>
-      <div className="p-5">{children}</div>
     </div>
   );
 }
