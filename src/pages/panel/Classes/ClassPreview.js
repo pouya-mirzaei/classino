@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import CourseDetailsHeader from '../../../components/panel/Courses/CourseDetailsHeader';
 import { getAllCourses, getAllTeachers } from '../../../functions/Utilities';
 import Alert from '../../../components/panel/Alert/Alert';
+import { toast } from 'react-toastify';
 
 // for demo purposes, I'm getting the course from the props
 // but we're gonna fetch the course data from the backend later
@@ -21,6 +22,13 @@ export default function ClassPreview() {
       : session.status === 'not-started'
       ? 'warning'
       : 'danger';
+
+  const notYet = () => {
+    toast.error('این قابلیت هنوز پیاده سازی نشده است', {
+      className: 'font-primary text-xs',
+    });
+  };
+
   return (
     <section className="p-section">
       <CourseDetailsHeader
@@ -55,7 +63,10 @@ export default function ClassPreview() {
             </button>
           )}
           {session.status === 'live' && (
-            <button className="h-12 px-5 item-link text-sm font-bold text-white rounded-3xl shadow-lg shadow-black/20 active:scale-95">
+            <button
+              className="h-12 px-5 item-link text-sm font-bold text-white rounded-3xl shadow-lg shadow-black/20 active:scale-95"
+              onClick={notYet}
+            >
               ورود به کلاس
               <span className="text-xl font-semibold"> (classino content)</span>
             </button>
@@ -65,7 +76,7 @@ export default function ClassPreview() {
 
       {/* Class Features */}
 
-      <div className="flex flex-col lg:flex-row items-center justify-between flex-nowrap gap-5 mt-10">
+      <div className="flex flex-col lg:flex-row items-center justify-between flex-nowrap gap-8 mt-10">
         <CourseFeatureBox text={'دریافت جزوه'} icon="file-download" />
         <CourseFeatureBox text={'آزمون کلاسی'} icon="pencil" disabled iconColor="text-[#ffa600]" />
         <CourseFeatureBox text={'ارسال تکلیف برای این کلاس غیر فعال است'} icon="pencil-square" disabled />
@@ -81,7 +92,7 @@ function CourseFeatureBox({ text, icon, disabled = false, iconColor = 'text-prim
   if (disabled) bgStyles = 'bg-[#e4e4e4] dark:bg-[#4d5863] cursor-not-allowed';
   return (
     <div
-      className={`${bgStyles} dark:text-white lg:basis-1/5 w-full h-40 rounded-lg shadow-md shadow-black/20 flex flex-col items-start justify-center gap-4 p-3`}
+      className={`${bgStyles} dark:text-white lg:basis-1/5 w-full h-40 rounded-xl shadow-md shadow-black/20 flex flex-col items-start justify-center gap-4 p-3`}
     >
       <svg className={`w-[50px] h-auto ${iconColor} mx-auto`}>
         <use href={`/sprite/hero.svg#${icon}`}></use>
