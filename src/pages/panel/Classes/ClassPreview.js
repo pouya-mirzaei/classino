@@ -30,7 +30,7 @@ export default function ClassPreview() {
   };
 
   return (
-    <section className="p-section">
+    <section className="p-section space-y-10">
       <CourseDetailsHeader
         teacherName={teacher.name}
         teacherImg={teacher.img}
@@ -45,7 +45,7 @@ export default function ClassPreview() {
       </CourseDetailsHeader>
 
       {/* Class status */}
-      <Alert status={classStatus} className="mt-10">
+      <Alert status={classStatus}>
         <div className="flex items-center gap-4 flex-col md:flex-row">
           <div className="flex items-center gap-4">
             <span className="rounded-full item-link text-white w-9 h-9 flex items-center justify-center align-middle font-extrabold">
@@ -76,12 +76,38 @@ export default function ClassPreview() {
 
       {/* Class Features */}
 
-      <div className="flex flex-col lg:flex-row items-center justify-between flex-nowrap gap-8 mt-10">
+      <div className="flex flex-col lg:flex-row items-center justify-between flex-nowrap gap-8">
         <CourseFeatureBox text={'دریافت جزوه'} icon="file-download" />
         <CourseFeatureBox text={'آزمون کلاسی'} icon="pencil" disabled iconColor="text-[#ffa600]" />
         <CourseFeatureBox text={'ارسال تکلیف برای این کلاس غیر فعال است'} icon="pencil-square" disabled />
         <CourseFeatureBox text={'ارسال کارنامه'} icon="pencil-square" />
         <CourseFeatureBox text={'رفع اشکال آفلاین (پرسش و پاسخ)'} icon="pencil-square" disabled />
+      </div>
+
+      {/* footer boxes */}
+
+      <div className="flex flex-col items-start md:flex-row gap-8">
+        <HelperBoX headerTitle="راهنما" className={'basis-1/2'}>
+          <p className="text-[13px]">
+            به منظور دسترسی به کلاس های آنلاین کلاسینو شما هم از طریق کامپیوتر و لپ تاپ شخصی میتوانید به راحتی وارد کامپیوتر شوید
+            و یا اینکه از گوشی هوشمند و یا تبلت آندرویدی خود استفاده کنید.
+          </p>
+          <p className="text-[13px]">
+            بهترین روش برای دسترسی به کلاس از طریف لپتاپ یا کامپیوتر شخصی ویندوزی، استفاده از مرورگر کروم می باشد البته از
+            فایرفاکس هم میتوانید استفاده نمایید
+          </p>
+          <p className="text-[13px]">
+            برای ورود به کلاس کافیست در زمان شروع کلاس به این بخش مراجعه کرده و برروی دکمه "ورود به کلاس (ClassinoConnect)" کلیک
+            کنید تا وارد کلاس شوید.
+          </p>
+          <p className="text-[13px]">
+            نرم افزار ClassinoConnect نیاز به نصب هیچ گونه برنامه ای ندارد و فقط کافیست برروی ورود به کلاس کلیک کنید.
+          </p>
+        </HelperBoX>
+
+        <HelperBoX headerTitle="ارسال نظر" className="grow basis-1/2">
+          hello
+        </HelperBoX>
       </div>
     </section>
   );
@@ -98,6 +124,16 @@ function CourseFeatureBox({ text, icon, disabled = false, iconColor = 'text-prim
         <use href={`/sprite/hero.svg#${icon}`}></use>
       </svg>
       <span className="mx-auto text-sm">{text}</span>
+    </div>
+  );
+}
+
+function HelperBoX({ headerTitle, className, children }) {
+  return (
+    <div className={`${className} bg-white dark:bg-dark-1 dark:text-white rounded-lg shadow-md shadow-black/20 overflow-hidden`}>
+      {/* header */}
+      <div className="bg-[#f6f8fc] dark:bg-dark-2 px-5 py-3 text-lg font-semibold">{headerTitle}</div>
+      <div className="p-5">{children}</div>
     </div>
   );
 }
