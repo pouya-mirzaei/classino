@@ -1,0 +1,48 @@
+:root {
+  --comment-height: 100px;
+}
+
+.rating {
+  @apply w-52 mx-auto mb-96 relative overflow-hidden;
+  height: var(--comment-height);
+}
+
+.rating-slider {
+  @apply absolute left-1/2 -translate-x-1/2 top-0 duration-300 flex flex-col;
+}
+.rating-slider > * {
+  @apply flex items-center justify-center;
+  height: var(--comment-height);
+}
+
+.rating input[type='radio'] {
+  display: none;
+  visibility: hidden;
+}
+
+.rating label {
+  position: relative;
+  z-index: 20;
+}
+
+.rating input[type='radio']:checked ~ label,
+.rating label:hover,
+.rating label:hover ~ label {
+  color: yellow;
+}
+
+.rating-5:checked ~ .rating-slider {
+  transform: translate(-50%, calc(-5 * var(--comment-height)));
+}
+.rating-4:checked ~ .rating-slider {
+  transform: translate(-50%, calc(-4 * var(--comment-height)));
+}
+.rating-3:checked ~ .rating-slider {
+  transform: translate(-50%, calc(-3 * var(--comment-height)));
+}
+.rating-2:checked ~ .rating-slider {
+  transform: translate(-50%, calc(-2 * var(--comment-height)));
+}
+.rating-1:checked ~ .rating-slider {
+  transform: translate(-50%, calc(-1 * var(--comment-height)));
+}

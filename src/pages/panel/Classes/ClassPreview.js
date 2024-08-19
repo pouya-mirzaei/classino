@@ -108,7 +108,7 @@ export default function ClassPreview() {
         </PanelDetail>
 
         <PanelDetail headerTitle="ارسال نظر" className="grow basis-1/2">
-          <Comment />
+          <Comment session={session} />
         </PanelDetail>
       </div>
     </section>
