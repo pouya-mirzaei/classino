@@ -3,7 +3,7 @@
 }
 
 .rating {
-  @apply w-52 mx-auto mb-96 relative overflow-hidden flex items-end;
+  @apply w-52 mx-auto relative overflow-hidden flex items-end;
   height: var(--comment-height);
 }
 
@@ -26,6 +26,7 @@
   display: flex;
   width: 40px;
   height: 40px;
+  color: #e3e3e3;
 
   transition: all 0.2s;
 }
