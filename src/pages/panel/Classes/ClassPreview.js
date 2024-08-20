@@ -107,7 +107,7 @@ export default function ClassPreview() {
           </p>
         </PanelDetail>
 
-        <PanelDetail headerTitle="ارسال نظر" className="grow basis-1/2">
+        <PanelDetail headerTitle="ارسال نظر" className="w-full basis-1/2">
           <Comment session={session} />
         </PanelDetail>
       </div>

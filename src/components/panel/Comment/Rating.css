@@ -1,16 +1,16 @@
 :root {
-  --comment-height: 100px;
+  --comment-height: 150px;
 }
 
 .rating {
-  @apply w-52 mx-auto mb-96 relative overflow-hidden;
+  @apply w-52 mx-auto mb-96 relative overflow-hidden flex items-end;
   height: var(--comment-height);
 }
 
 .rating-slider {
   @apply absolute left-1/2 -translate-x-1/2 top-0 duration-300 flex flex-col;
 }
-.rating-slider > * {
+.rating-slider svg {
   @apply flex items-center justify-center;
   height: var(--comment-height);
 }
@@ -22,13 +22,24 @@
 
 .rating label {
   position: relative;
-  z-index: 20;
+  z-index: 40;
+  display: flex;
+  width: 40px;
+  height: 40px;
+
+  transition: all 0.2s;
 }
 
-.rating input[type='radio']:checked ~ label,
+.rating label svg {
+  @apply w-full z-30 cursor-pointer;
+}
+
+.rating input[type='radio']:checked ~ label {
+  color: #fcd93a;
+}
 .rating label:hover,
 .rating label:hover ~ label {
-  color: yellow;
+  color: #d8b11e !important;
 }
 
 .rating-5:checked ~ .rating-slider {

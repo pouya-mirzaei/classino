@@ -20,35 +20,35 @@ function Rating() {
     <div className="rating">
       <input type="radio" name="rating" className="rating-5" id="rating-5" />
       <label htmlFor="rating-5">
-        <svg className="w-5 z-30 ">
+        <svg>
           <use href="/sprite/hero.svg#rating-star"></use>
         </svg>
       </label>
 
       <input type="radio" name="rating" className="rating-4" id="rating-4" />
       <label htmlFor="rating-4">
-        <svg className="w-5 z-30 ">
+        <svg>
           <use href="/sprite/hero.svg#rating-star"></use>
         </svg>
       </label>
 
       <input type="radio" name="rating" className="rating-3" id="rating-3" />
       <label htmlFor="rating-3">
-        <svg className="w-5 z-30 ">
+        <svg>
           <use href="/sprite/hero.svg#rating-star"></use>
         </svg>
       </label>
 
       <input type="radio" name="rating" className="rating-2" id="rating-2" />
       <label htmlFor="rating-2">
-        <svg className="w-5 z-30 ">
+        <svg>
           <use href="/sprite/hero.svg#rating-star"></use>
         </svg>
       </label>
 
       <input type="radio" name="rating" className="rating-1" id="rating-1" />
       <label htmlFor="rating-1">
-        <svg className="w-5 z-30 ">
+        <svg>
           <use href="/sprite/hero.svg#rating-star"></use>
         </svg>
       </label>
