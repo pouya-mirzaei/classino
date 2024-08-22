@@ -15,7 +15,8 @@ export default function ClassPreview() {
   const course = getAllCourses()[1];
   const session = course.classes.find((session) => session.id == id);
   let teacher = getAllTeachers().find((tech) => tech.id == course.teacherId);
-  session.status = 'live';
+  session.status = 'not-started';
+
   const classStatus =
     session.status === 'live'
       ? 'success'

@@ -1,8 +1,9 @@
 import React from 'react';
 
-export default function HeaderBox({ icon, text, breakpoint, badge }) {
+export default function HeaderBox({ icon, text, breakpoint, badge, onClick = null }) {
   return (
     <div
+      onClick={onClick}
       className={`relative px-2 py-2.5 border rounded-md flex items-center gap-2 text-[#70657b] dark:text-white hover:bg-gray-200 dark:hover:bg-dark-2 focus:bg-gray-200 hover:text-black focus:text-black transition-all cursor-pointer ${
         breakpoint && breakpoint.full && 'hidden sm:flex'
       } ${breakpoint && 'dark:bg-dark-3 dark:border-none'}`}
