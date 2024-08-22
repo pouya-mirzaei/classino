@@ -1,26 +1,30 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import HeaderBox from './HeaderBox';
 import { useCart } from '../../../Contexts/CartContext';
 
 export default function Header({ onOpenSidebar, onToggleDark, dark }) {
   const [isDropDownOpen, setIsDropDownOpen] = useState(false);
+  const navigate = useNavigate();
 
   const { cartItems } = useCart();
 
   useEffect(() => {
-    document.body.addEventListener(
-      'click',
-      () => {
-        setIsDropDownOpen(false);
-      },
-      { once: true }
-    );
+    if (isDropDownOpen)
+      document.body.addEventListener(
+        'click',
+        (e) => {
+          setIsDropDownOpen(false);
+          if (e.target.dataset.link) {
+            navigate(`/panel/${e.target.dataset.link}`);
+          }
+        },
+        { once: true, capture: true }
+      );
   }, [isDropDownOpen]);
 
   const openDropDown = () => {
     setIsDropDownOpen(true);
-    console.log('jello');
   };
 
   return (
@@ -59,12 +63,15 @@ export default function Header({ onOpenSidebar, onToggleDark, dark }) {
           {isDropDownOpen && (
             <div
               className="absolute left-5 top-5 bg-white dar:bg-dark-2 rounded-lg shadow-md shadow-black/10 w-44"
-              onClick={() => setIsDropDownOpen(false)}
+              // onClick={() => setIsDropDownOpen(false)}
             >
               <div className="w-full h-full flex flex-col items-start justify-between py-5">
                 <span className="text-xs py-3 px-5">پویا میزایی</span>
                 <span className="text-xs py-3 px-5">اعتبار 0 ریال</span>
-                <span className="text-xs py-3 px-5 hover:bg-gray-100 w-full transition-all duration-200 cursor-pointer">
+                <span
+                  className="text-xs py-3 px-5 hover:bg-gray-100 w-full transition-all duration-200 cursor-pointer"
+                  data-link="profile"
+                >
                   پروفایل
                 </span>
                 <span className="text-xs py-3 px-5 hover:bg-gray-100 w-full transition-all duration-200 cursor-pointer">

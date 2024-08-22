@@ -10,6 +10,7 @@ import Store from './pages/panel/store/Store';
 import CourseDetails from './pages/panel/mycourses/courseDetails/CourseDetails';
 import Cart from './pages/cart/Cart';
 import Class from './pages/panel/Classes/ClassPreview';
+import Profile from './pages/panel/Profile/Profile';
 
 const routes = [
   { path: '/', element: <Home /> },
@@ -31,6 +32,7 @@ const routes = [
       { path: 'courses/:id', element: <CourseDetails /> },
       { path: 'cart', element: <Cart /> },
       { path: 'class/show/:id', element: <Class /> },
+      { path: 'profile', element: <Profile /> },
       { path: '*', element: <NotFound /> },
     ],
   },
