@@ -1,10 +1,23 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PrimaryHeading from '../../../components/panel/PrimaryHeading';
 import PanelDetail from '../../../components/panel/PanelDetail/PanelDetail';
 import './Profile.css';
 import BtnSuccess from '../../../components/panel/Button/BtnSuccess';
 import { useFormik } from 'formik';
+import { getAllStates, getCitiesWithStateId } from '../../../api/cities';
 export default function Profile() {
+  const [states, setStates] = useState([]);
+  const [cities, setCities] = useState([]);
+
+  useEffect(() => {
+    const fetchStates = async () => {
+      const { data } = await getAllStates();
+      setStates(data);
+    };
+
+    fetchStates();
+  }, []);
+
   const form = useFormik({
     initialValues: {
       mobile: '09123456789',
@@ -30,11 +43,23 @@ export default function Profile() {
     },
   });
 
+  useEffect(() => {
+    if (form.values.state !== -1) {
+      const fetchCities = async () => {
+        const { data } = await getCitiesWithStateId(form.values.state);
+
+        setCities(data);
+      };
+
+      fetchCities();
+    }
+  }, [form.values.state]);
+
   return (
     <section className="p-section">
       <PrimaryHeading>ویرایش پروفایل</PrimaryHeading>
 
-      <div className="flex flex-col items-start md:flex-row gap-8 w-full">
+      <div className="flex flex-col items-start lg:flex-row gap-8 w-full">
         <PanelDetail headerTitle="تغییر مشخصات کاربری" className="basis-1/2 w-full">
           <form className="space-y-8" onSubmit={form.handleSubmit}>
             <div>
@@ -89,19 +114,24 @@ export default function Profile() {
               </label>
               <select name="state" id="state" className="form-control" onChange={form.handleChange} value={form.values.state}>
                 <option value="-1">انتخاب استان</option>
-                <option value="tehran">تهران</option>
-                <option value="esfahan">اصفهان</option>
-                <option value="shiraz">شیراز</option>
-                <option value="mashhad">مشهد</option>
-                <option value="tabriz">تبریز</option>
+                {states.map((state) => (
+                  <option key={state.id} value={state.id}>
+                    {state.name}
+                  </option>
+                ))}
               </select>
             </div>
             <div>
               <label htmlFor="city" className="text-xs text-gray-500 mb-2 inline-block">
                 شهر:
               </label>
-              <select name="state" id="city" className="form-control" value={form.values.city} onChange={form.handleChange}>
+              <select name="city" id="city" className="form-control" value={form.values.city} onChange={form.handleChange}>
                 <option value="-1">لطفا استان را انتخاب کنید</option>
+                {cities.map((city) => (
+                  <option key={city.id} value={city.id}>
+                    {city.name}
+                  </option>
+                ))}
               </select>
             </div>
 
@@ -141,8 +171,8 @@ export default function Profile() {
         </PanelDetail>
         <PanelDetail headerTitle="تغییر رمز عبور" className="basis-1/2 w-full">
           <form className="space-y-8" onSubmit={updatePassForm.handleSubmit}>
-            <div className="flex items-center justify-between gap-5">
-              <div className="basis-1/2">
+            <div className="flex flex-col md:flex-row items-center justify-between gap-5">
+              <div className="basis-1/2 w-full">
                 <label htmlFor="password" className="text-xs text-gray-500 mb-2 inline-block">
                   رمز عبور :
                 </label>
@@ -156,7 +186,7 @@ export default function Profile() {
                   onChange={updatePassForm.handleChange}
                 />
               </div>
-              <div className="basis-1/2">
+              <div className="basis-1/2 w-full">
                 <label htmlFor="confirmPass" className="text-xs text-gray-500 mb-2 inline-block">
                   تکرار رمز عبور :
                 </label>
