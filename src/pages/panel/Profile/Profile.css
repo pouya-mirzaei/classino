@@ -1,0 +1,19 @@
+.form-control {
+  @apply focus:bg-white focus:border-[#a679d2] dark:bg-gray-700 dark:border-gray-600  dark:placeholder-gray-400 dark:text-white disabled:bg-[#eaeaea];
+
+  background-color: #f8f9fa;
+  border: 1px solid #d1d5db;
+  font-size: 0.75rem;
+  border-radius: 0.5rem;
+  color: #47404f;
+  width: 100%;
+  padding: 0.5rem;
+}
+
+.form-control:focus {
+  box-shadow: 0 0 0 0.2rem rgba(102, 51, 153, 0.25);
+}
+
+select.form-control {
+  outline: none;
+}

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import CourseDetailsHeader from '../../../components/panel/Courses/CourseDetailsHeader';
 import { getAllCourses, getAllTeachers } from '../../../functions/Utilities';
@@ -11,6 +11,15 @@ import Comment from '../../../components/panel/Comment/Comment';
 // but we're gonna fetch the course data from the backend later
 export default function ClassPreview() {
   const { id } = useParams();
+
+  useEffect(() => {
+    console.log('handling');
+
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
+  }, []);
 
   const course = getAllCourses()[1];
   const session = course.classes.find((session) => session.id == id);
