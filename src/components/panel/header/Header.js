@@ -56,7 +56,7 @@ export default function Header({ onOpenSidebar, onToggleDark, dark }) {
           <Link to={'cart'}>
             <HeaderBox icon="shopping-cart" badge={cartItems.length} />
           </Link>
-          <Link to={'finance'}>
+          <Link to={'finance'} className="hidden sm:inline-block">
             <HeaderBox icon="wallet" text="اعتبار 0 ریال" breakpoint={{ full: true }} />
           </Link>
           <HeaderBox icon="user-circle" text="پویا میرزایی" breakpoint={{ full: false }} onClick={openDropDown} />
