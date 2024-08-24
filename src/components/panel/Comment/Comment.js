@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './Rating.css';
+import BtnSuccess from '../Button/BtnSuccess';
 
 export default function Comment({ session }) {
   const [comment, setComment] = useState('');
@@ -27,9 +28,7 @@ export default function Comment({ session }) {
           onChange={(e) => setComment(e.target.value)}
         ></textarea>
 
-        <button className=" w-full text-center bg-[#4caf50] text-white hover:bg-[#3d8b40] active:bg-[#397e3c] active:scale-95 duration-200 rounded-lg py-3 text-sm">
-          ارسال نظر
-        </button>
+        <BtnSuccess type="submit">ارسال نظر</BtnSuccess>
       </div>
     </div>
   );
