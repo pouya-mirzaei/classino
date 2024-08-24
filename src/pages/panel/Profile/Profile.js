@@ -20,6 +20,16 @@ export default function Profile() {
     },
   });
 
+  const updatePassForm = useFormik({
+    initialValues: {
+      password: '',
+      confirmPass: '',
+    },
+    onSubmit: (data) => {
+      console.log(data);
+    },
+  });
+
   return (
     <section className="p-section">
       <PrimaryHeading>ویرایش پروفایل</PrimaryHeading>
@@ -119,7 +129,7 @@ export default function Profile() {
               <label htmlFor="gender" className="text-xs text-gray-500 mb-2 inline-block">
                 جنسیت:
               </label>
-              <select name="gender" id="grade" className="form-control" value={form.values.gender} onChange={form.handleChange}>
+              <select name="gender" id="gender" className="form-control" value={form.values.gender} onChange={form.handleChange}>
                 <option value="-1">انتخاب نشده</option>
                 <option value="boy">پسر</option>
                 <option value="girl">دختر</option>
@@ -129,7 +139,41 @@ export default function Profile() {
             <BtnSuccess type="submit">تغییر مشخصات کاربری</BtnSuccess>
           </form>
         </PanelDetail>
-        <PanelDetail headerTitle="تغییر رمز عبور" className="basis-1/2 w-full"></PanelDetail>
+        <PanelDetail headerTitle="تغییر رمز عبور" className="basis-1/2 w-full">
+          <form className="space-y-8" onSubmit={updatePassForm.handleSubmit}>
+            <div className="flex items-center justify-between gap-5">
+              <div className="basis-1/2">
+                <label htmlFor="password" className="text-xs text-gray-500 mb-2 inline-block">
+                  رمز عبور :
+                </label>
+                <input
+                  type="password"
+                  className="form-control"
+                  placeholder="رمز عبور"
+                  id="password"
+                  name="password"
+                  value={updatePassForm.values.password}
+                  onChange={updatePassForm.handleChange}
+                />
+              </div>
+              <div className="basis-1/2">
+                <label htmlFor="confirmPass" className="text-xs text-gray-500 mb-2 inline-block">
+                  تکرار رمز عبور :
+                </label>
+                <input
+                  type="password"
+                  className="form-control"
+                  placeholder="تکرار رمز عبور"
+                  id="confirmPass"
+                  name="confirmPass"
+                  value={updatePassForm.values.confirmPass}
+                  onChange={updatePassForm.handleChange}
+                />
+              </div>
+            </div>
+            <BtnSuccess type="submit">تغییر رمز عبور</BtnSuccess>
+          </form>
+        </PanelDetail>
       </div>
     </section>
   );
