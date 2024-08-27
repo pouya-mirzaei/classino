@@ -1,18 +1,19 @@
-import { useFormik } from 'formik';
 import React, { useState } from 'react';
-
+import './glow.css';
+import SecondaryHeading from '../../components/panel/SecondaryHeading';
+import { useFormik } from 'formik';
 export default function LoginForm({ onToggleLoginWithPassword: toggle }) {
-  const [isFormSubmited, setIsFormSubmited] = useState(false);
-
   const form = useFormik({
     initialValues: {
       email: '',
       password: '',
     },
-    onSubmit: (data) => handleSubmit(data),
+    onSubmit: (data) => {
+      console.log(data);
+      form.errors.email = 'fuck you';
+    },
     validate: (values) => {
       const errors = {};
-
       if (!values.email) {
         errors.email = 'وارد کردن ایمیل الزامی است';
       }
@@ -24,85 +25,94 @@ export default function LoginForm({ onToggleLoginWithPassword: toggle }) {
       return errors;
     },
   });
-
-  const handleSubmit = (data) => {
-    console.log(data);
-
-    setIsFormSubmited(true);
-
-    setTimeout(() => {
-      setIsFormSubmited(false);
-    }, 2500);
-  };
-
   const showError = (title) => <span className="text-red-500 text-xs">{title}</span>;
 
   return (
-    <div className="w-[690px] max-w-[90%] rounded-lg overflow-hidden relative z-20">
-      {/* login form */}
-      <div className="flex flex-col lg:flex-row">
-        {/* form  */}
-        <form
-          className="grow bg-white flex items-center justify-center flex-col gap-y-3 py-10"
-          autoComplete="off"
-          onSubmit={form.handleSubmit}
-        >
-          <div>
-            <img src="images/classino_Logo.08df55af.svg" alt="classino logo" />
-          </div>
-
-          <h1 className="text-lg font-medium">ورود کاربران کلاسینو</h1>
-
-          <div className="form-group">
-            <label className="block text-xs pr-2 mb-1 text-[#70657b]" htmlFor="email">
-              شماره موبایل یا نام کاربری
-            </label>
+    <div className="bg-[#f6f8fc] max-w-md w-[400px] mx-5 relative z-20 rounded-lg">
+      <div className="relative w-full z-10 rounded-lg bg-white flex items-center flex-col gap-5 p-5">
+        <SecondaryHeading>ورود / عضویت</SecondaryHeading>
+        <p className="text-xs text-center font-bold">برای ورود به سایت، ایمل و رمز عبور خود را وارد کنید</p>
+        <form onSubmit={form.handleSubmit} className="w-full flex flex-col items-center gap-2.5" autoComplete="off">
+          <div className="form-group w-full">
             <input
-              type="text"
-              value={form.values.email}
+              type="email"
+              className="placeholder:text-center text-center"
+              placeholder="ایمیل"
               name="email"
               onChange={form.handleChange}
-              id="email"
-              placeholder="شماره موبایل یا نام کاربری"
+              onBlur={form.handleBlur}
+              value={form.values.email}
             />
           </div>
-          <div className="form-group">
-            <label className="block text-xs pr-2 mb-1 text-[#70657b]" htmlFor="password">
-              رمز عبور
-            </label>
+          <div className="form-group w-full">
             <input
               type="password"
-              name="password"
-              value={form.values.password}
-              onChange={form.handleChange}
-              id="password"
+              className="placeholder:text-center text-center"
               placeholder="رمز عبور"
+              name="password"
+              onChange={form.handleChange}
+              onBlur={form.handleBlur}
+              value={form.values.password}
             />
           </div>
-          {(form.touched.email || form.touched.password) && showError(form.errors.email || form.errors.password)}
-          <div className="form-group">
-            <button className="submit-btn" type="submit" disabled={isFormSubmited}>
-              {isFormSubmited ? <div className="submit-btn-loader"></div> : <span>ورود</span>}
-            </button>
-          </div>
-          <button className="text-primary-1 font-bold text-sm" onClick={toggle}>
-            ورود با رمز یک بار مصرف
+          {form.touched.email && form.touched.password && showError(form.errors.email || form.errors.password)}
+
+          <button
+            type="submit"
+            className="group transition-all overflow-hidden duration-200 bg-secondary-1 hover:bg-secondary-1/90 text-white w-full py-2.5 rounded-full flex items-center justify-center relative"
+          >
+            ادامه
+            <svg className="w-5 h-5 -translate-x-52 group-hover:-translate-x-10 transition-all duration-200 absolute">
+              <use href="/sprite/hero.svg#arrow-left"></use>
+            </svg>
           </button>
         </form>
 
-        {/* informations */}
-        <div className="login-bg">
-          <div className="login-bg__des">
-            <p>
-              در صورتیکه رمز عبور ندارید ، ابتدا از طریق "ورود با رمز یکبار مصرف" (ورود با SMS) وارد پنل کاربری خود شوید سپس به
-              قسمت "ویرایش پروفایل" بروید و در انجا میتوانید برای خود رمز عبور تعیین کنید.
-            </p>
-          </div>
-          <div className="w-[90%]">
-            <button className="login-bg__btn"> تماس با پشتیبانی: 02191008020 </button>
-          </div>
-        </div>
+        <div className="w-full h-[1px] bg-slate-300"></div>
+
+        <button className="flex items-center justify-center gap-2 text-sm font-bold text-[#4285F4] bg-white border border-[#4285F4] w-full py-2.5 rounded-full hover:bg-gray-100 focus:outline-none focus:ring-4 focus:ring-[#8AB4F8]">
+          <svg
+            className="w-6 h-6"
+            stroke="currentColor"
+            fill="currentColor"
+            strokeWidth="0"
+            version="1.1"
+            x="0px"
+            y="0px"
+            viewBox="0 0 48 48"
+            enableBackground="new 0 0 48 48"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              fill="#FFC107"
+              d="M43.611,20.083H42V20H24v8h11.303c-1.649,4.657-6.08,8-11.303,8c-6.627,0-12-5.373-12-12
+	c0-6.627,5.373-12,12-12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C12.955,4,4,12.955,4,24
+	c0,11.045,8.955,20,20,20c11.045,0,20-8.955,20-20C44,22.659,43.862,21.35,43.611,20.083z"
+            ></path>
+            <path
+              fill="#FF3D00"
+              d="M6.306,14.691l6.571,4.819C14.655,15.108,18.961,12,24,12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657
+	C34.046,6.053,29.268,4,24,4C16.318,4,9.656,8.337,6.306,14.691z"
+            ></path>
+            <path
+              fill="#4CAF50"
+              d="M24,44c5.166,0,9.86-1.977,13.409-5.192l-6.19-5.238C29.211,35.091,26.715,36,24,36
+	c-5.202,0-9.619-3.317-11.283-7.946l-6.522,5.025C9.505,39.556,16.227,44,24,44z"
+            ></path>
+            <path
+              fill="#1976D2"
+              d="M43.611,20.083H42V20H24v8h11.303c-0.792,2.237-2.231,4.166-4.087,5.571
+	c0.001-0.001,0.002-0.001,0.003-0.002l6.19,5.238C36.971,39.205,44,34,44,24C44,22.659,43.862,21.35,43.611,20.083z"
+            ></path>
+          </svg>
+          ادامه با Google
+        </button>
+        <button className="text-primary-1 font-bold text-sm" onClick={toggle}>
+          ثبت نام
+        </button>
       </div>
+
+      <div className="glow-box -z-10"></div>
     </div>
   );
 }

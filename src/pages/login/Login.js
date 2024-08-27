@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import LoginForm from './LoginForm';
+import SignUpForm from './SignUpForm';
 import { useNavigate } from 'react-router-dom';
 import { isUserLoggedIn } from '../../functions/Utilities';
-import OTP_FORM from './OTP_FORM';
+import LoginForm from './LoginForm';
 
 export default function Login() {
   let navigate = useNavigate();
@@ -30,9 +30,9 @@ export default function Login() {
         <div></div>
       </div>
       {loginWithPassword ? (
-        <LoginForm onToggleLoginWithPassword={toggleLoginWithPassword} />
+        <SignUpForm onToggleLoginWithPassword={toggleLoginWithPassword} />
       ) : (
-        <OTP_FORM onToggleLoginWithPassword={toggleLoginWithPassword} />
+        <LoginForm onToggleLoginWithPassword={toggleLoginWithPassword} />
       )}
     </div>
   );

@@ -6,6 +6,6 @@
   height: 40px;
   border-radius: 50%;
   background-color: #fff;
-  box-shadow: 0 0 60px 30px rgba(255, 255, 255, 1), /* Soft white */ 0 0 100px 60px rgba(173, 216, 230, 1),
-    /* Light sky blue */ 0 0 140px 90px rgba(255, 182, 193, 1); /* Light pink */
+  box-shadow: 0 0 120px 60px rgba(255, 255, 255, 0.5), /* Larger white glow */ 0 0 200px 120px rgba(173, 216, 230, 0.7),
+    /* Larger light sky blue glow */ 0 0 280px 180px rgba(255, 182, 193, 0.7); /* Larger light pink glow */
 }
