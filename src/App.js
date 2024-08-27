@@ -2,9 +2,11 @@ import { useEffect, useState } from 'react';
 import PreLoader from './components/PreLoader';
 import { useRoutes } from 'react-router-dom';
 import routes from './routes';
+import useAuth from './hooks/useAuth';
 
 function App() {
   const [isContentLoaded, setIsContentLoaded] = useState(false);
+  useAuth();
 
   useEffect(() => {
     // appling the font

@@ -21,7 +21,7 @@ const setDataLocalStorage = (key, data) => localStorage.setItem(key, JSON.string
 
 const getItemFromLocalStorage = (key) => localStorage.getItem(key);
 
-const isUserLoggedIn = () => (!getItemFromLocalStorage('userId') ? true : false);
+const isUserLoggedIn = () => (getItemFromLocalStorage('userId') ? true : false);
 
 const logout = () => localStorage.removeItem('userId');
 

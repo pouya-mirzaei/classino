@@ -7,7 +7,7 @@ export default function Login() {
   let navigate = useNavigate();
 
   useEffect(() => {
-    isUserLoggedIn() && navigate('/panel', { replace: true });
+    isUserLoggedIn() && navigate('/panel/dashboard', { replace: true });
   }, []);
   return (
     <div className="flex items-center justify-center bg-[#eaeaea] w-full min-h-screen relative">
