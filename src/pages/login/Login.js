@@ -1,10 +1,16 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import LoginForm from './LoginForm';
 import { useNavigate } from 'react-router-dom';
 import { isUserLoggedIn } from '../../functions/Utilities';
+import OTP_FORM from './OTP_FORM';
 
 export default function Login() {
   let navigate = useNavigate();
+  const [loginWithPassword, setLoginWithPassword] = useState(false);
+
+  const toggleLoginWithPassword = () => {
+    setLoginWithPassword(!loginWithPassword);
+  };
 
   useEffect(() => {
     isUserLoggedIn() && navigate('/panel/dashboard', { replace: true });
@@ -23,7 +29,11 @@ export default function Login() {
         <div></div>
         <div></div>
       </div>
-      <LoginForm />
+      {loginWithPassword ? (
+        <LoginForm onToggleLoginWithPassword={toggleLoginWithPassword} />
+      ) : (
+        <OTP_FORM onToggleLoginWithPassword={toggleLoginWithPassword} />
+      )}
     </div>
   );
 }

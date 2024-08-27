@@ -1,0 +1,11 @@
+.glow-box {
+  position: absolute;
+  top: calc(50% - 20px);
+  left: calc(50% - 20px);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #fff;
+  box-shadow: 0 0 60px 30px rgba(255, 255, 255, 1), /* Soft white */ 0 0 100px 60px rgba(173, 216, 230, 1),
+    /* Light sky blue */ 0 0 140px 90px rgba(255, 182, 193, 1); /* Light pink */
+}

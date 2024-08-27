@@ -1,28 +1,32 @@
+import { useFormik } from 'formik';
 import React, { useState } from 'react';
 
-export default function LoginForm() {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+export default function LoginForm({ onToggleLoginWithPassword: toggle }) {
   const [isFormSubmited, setIsFormSubmited] = useState(false);
-  const [shouldShowError, setShouldShowError] = useState(false);
-  const [errorText, setErrorText] = useState('');
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const form = useFormik({
+    initialValues: {
+      email: '',
+      password: '',
+    },
+    onSubmit: (data) => handleSubmit(data),
+    validate: (values) => {
+      const errors = {};
 
-    if (!username) {
-      setErrorText('وارد کردن شماره تماس الزامی است');
-      setShouldShowError(true);
-      return;
-    }
+      if (!values.email) {
+        errors.email = 'وارد کردن ایمیل الزامی است';
+      }
 
-    if (!password) {
-      setErrorText('وارد کردن رمز عبور الزامی است');
-      setShouldShowError(true);
-      return;
-    }
+      if (!values.password) {
+        errors.password = 'وارد کردن رمز عبور الزامی است';
+      }
 
-    setShouldShowError(false);
+      return errors;
+    },
+  });
+
+  const handleSubmit = (data) => {
+    console.log(data);
 
     setIsFormSubmited(true);
 
@@ -41,7 +45,8 @@ export default function LoginForm() {
         <form
           className="grow bg-white flex items-center justify-center flex-col gap-y-3 py-10"
           autoComplete="off"
-          onSubmit={handleSubmit}>
+          onSubmit={form.handleSubmit}
+        >
           <div>
             <img src="images/classino_Logo.08df55af.svg" alt="classino logo" />
           </div>
@@ -49,14 +54,15 @@ export default function LoginForm() {
           <h1 className="text-lg font-medium">ورود کاربران کلاسینو</h1>
 
           <div className="form-group">
-            <label className="block text-xs pr-2 mb-1 text-[#70657b]" htmlFor="username">
+            <label className="block text-xs pr-2 mb-1 text-[#70657b]" htmlFor="email">
               شماره موبایل یا نام کاربری
             </label>
             <input
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
               type="text"
-              id="username"
+              value={form.values.email}
+              name="email"
+              onChange={form.handleChange}
+              id="email"
               placeholder="شماره موبایل یا نام کاربری"
             />
           </div>
@@ -65,27 +71,31 @@ export default function LoginForm() {
               رمز عبور
             </label>
             <input
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
               type="password"
+              name="password"
+              value={form.values.password}
+              onChange={form.handleChange}
               id="password"
               placeholder="رمز عبور"
             />
           </div>
-          {shouldShowError && showError(errorText)}
+          {(form.touched.email || form.touched.password) && showError(form.errors.email || form.errors.password)}
           <div className="form-group">
             <button className="submit-btn" type="submit" disabled={isFormSubmited}>
               {isFormSubmited ? <div className="submit-btn-loader"></div> : <span>ورود</span>}
             </button>
           </div>
+          <button className="text-primary-1 font-bold text-sm" onClick={toggle}>
+            ورود با رمز یک بار مصرف
+          </button>
         </form>
 
         {/* informations */}
         <div className="login-bg">
           <div className="login-bg__des">
             <p>
-              در صورتیکه رمز عبور ندارید ، ابتدا از طریق "ورود با رمز یکبار مصرف" (ورود با SMS) وارد پنل کاربری خود شوید
-              سپس به قسمت "ویرایش پروفایل" بروید و در انجا میتوانید برای خود رمز عبور تعیین کنید.
+              در صورتیکه رمز عبور ندارید ، ابتدا از طریق "ورود با رمز یکبار مصرف" (ورود با SMS) وارد پنل کاربری خود شوید سپس به
+              قسمت "ویرایش پروفایل" بروید و در انجا میتوانید برای خود رمز عبور تعیین کنید.
             </p>
           </div>
           <div className="w-[90%]">
