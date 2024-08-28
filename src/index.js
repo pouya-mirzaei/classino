@@ -5,6 +5,7 @@ import App from './App';
 import { BrowserRouter } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import { ToastContainer } from 'react-toastify';
 
 const client = new QueryClient({
   defaultOptions: {
@@ -20,6 +21,8 @@ root.render(
     <BrowserRouter>
       <QueryClientProvider client={client}>
         <App />
+        <ToastContainer limit={4} pauseOnFocusLoss={false} pauseOnHover={false} className={'font-primary'} />
+
         <ReactQueryDevtools initialIsOpen={false} />
       </QueryClientProvider>
     </BrowserRouter>

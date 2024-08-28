@@ -1,8 +1,11 @@
 import { useFormik } from 'formik';
 import React, { useState } from 'react';
+import useAuth from '../../hooks/useAuth';
+import { toast } from 'react-toastify';
 
 export default function SignUpForm({ onToggleLoginWithPassword: toggle }) {
   const [registerState, setRegisterState] = useState(1);
+  const { signUpWithEmailAndPassword } = useAuth();
 
   const form = useFormik({
     initialValues: {
@@ -12,6 +15,7 @@ export default function SignUpForm({ onToggleLoginWithPassword: toggle }) {
       name: '',
       grade: '-1',
       fieldOfStudy: '-1',
+      gender: '-1',
     },
     onSubmit: (data) => handleSubmit(data),
     validate: (values) => {
@@ -50,12 +54,32 @@ export default function SignUpForm({ onToggleLoginWithPassword: toggle }) {
         errors.fieldOfStudy = 'وارد کردن رشته تحصیلی الزامی است';
       }
 
+      if (values.gender === '-1') {
+        errors.gender = 'وارد کردن جنسیت الزامی است';
+      }
+
       return errors;
     },
   });
 
-  const handleSubmit = (data) => {
-    console.log(data);
+  const handleSubmit = async (data) => {
+    const { email, password, name, grade, fieldOfStudy, gender } = data;
+
+    signUpWithEmailAndPassword.mutate(
+      { email, password, metaData: { name, grade, gender, fieldOfStudy } },
+      {
+        onSuccess: (data) => {
+          toast.success('ثبت نام با موفقیت انجام شد', {
+            className: 'font-primary text-xs',
+          });
+        },
+        onError: (error) => {
+          toast.error(error.message, {
+            className: 'font-primary text-xs',
+          });
+        },
+      }
+    );
   };
 
   const nextStep = () => {
@@ -83,6 +107,7 @@ function UserInformationForm({ form }) {
             <input
               type="text"
               name="name"
+              style={{ fontSize: '14px' }}
               value={form.values.name}
               onChange={form.handleChange}
               onBlur={form.handleBlur}
@@ -139,11 +164,30 @@ function UserInformationForm({ form }) {
               <option value="honar">رشته هنر</option>
             </select>
           </div>
+          <div className="form-group w-full">
+            <label className="block text-xs pr-2 mb-1 text-[#70657b]" htmlFor="gender">
+              جنسیت
+            </label>
+
+            <select
+              name="gender"
+              value={form.values.gender}
+              onChange={form.handleChange}
+              onBlur={form.handleBlur}
+              id="gender"
+              className="w-full form-control"
+            >
+              <option value="-1">جنسیت</option>
+              <option value="male">پسر</option>
+              <option value="female">دختر</option>
+            </select>
+          </div>
 
           {form.touched.name &&
             form.touched.grade &&
             form.touched.fieldOfStudy &&
-            ShowError(form.errors.name || form.errors.grade || form.errors.fieldOfStudy)}
+            form.touched.gender &&
+            ShowError(form.errors.name || form.errors.grade || form.errors.fieldOfStudy || form.errors.gender)}
 
           <button
             type="submit"

@@ -47,7 +47,6 @@ export default function Panel() {
           </div>
         </div>
       </CartProvider>
-      <ToastContainer limit={4} pauseOnFocusLoss={false} pauseOnHover={false} className={'font-primary'} />
     </>
   );
 }

@@ -7,11 +7,24 @@ export default function useAuth() {
   const { data: user, isFetching } = useQuery({
     queryKey: ['user'],
     queryFn: async () => {
-      const { data } = await supabase.auth.getSession();
-      if (!data.session) {
-        return null;
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
+
+      if (!session) return null;
+
+      const id = session.user.id;
+
+      // console.log(error);
+      const { data, error: Error } = await supabase.from('users').select().eq('id', id).single();
+
+      if (Error) {
+        //   return null;
+        console.log(Error);
+        throw Error;
       }
-      return user;
+
+      return data;
     },
   });
 
