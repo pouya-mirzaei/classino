@@ -5,9 +5,9 @@ import { useFormik } from 'formik';
 import useAuth from '../../hooks/useAuth';
 import { supabase } from '../../supabase/supabaseConfig';
 import { toast } from 'react-toastify';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useQueryClient } from '@tanstack/react-query';
-export default function LoginForm({ onToggleLoginWithPassword: toggle }) {
+export default function LoginForm() {
   const navigate = useNavigate();
   const { loginWithProvider } = useAuth();
   const query = useQueryClient();
@@ -137,9 +137,9 @@ export default function LoginForm({ onToggleLoginWithPassword: toggle }) {
           </svg>
           ادامه با Google
         </button>
-        <button className="text-primary-1 font-bold text-sm" onClick={toggle}>
-          ثبت نام
-        </button>
+        <Link to="/auth/register">
+          <button className="text-primary-1 font-bold text-sm">ثبت نام</button>
+        </Link>
       </div>
 
       <div className="glow-box -z-10"></div>

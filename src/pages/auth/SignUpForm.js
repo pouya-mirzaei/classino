@@ -229,7 +229,7 @@ function EmailForm({ form, toggle, nextStep }) {
           // }}
         >
           <div>
-            <img src="images/classino_Logo.08df55af.svg" alt="classino logo" />
+            <img src="/images/classino_Logo.08df55af.svg" alt="classino logo" />
           </div>
 
           <h1 className="text-lg font-medium">ورود کاربران کلاسینو</h1>

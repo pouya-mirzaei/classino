@@ -1,5 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '../supabase/supabaseConfig';
+import { toast } from 'react-toastify';
 
 export default function useAuth() {
   const queryClient = useQueryClient();
@@ -19,8 +20,9 @@ export default function useAuth() {
       const { data, error: Error } = await supabase.from('users').select().eq('id', id).single();
 
       if (Error) {
-        //   return null;
-        console.log(Error);
+        toast.error('خطا در بارگذاری اطلاعات کاربر', {
+          className: 'font-primary text-xs',
+        });
         throw Error;
       }
 
@@ -32,7 +34,7 @@ export default function useAuth() {
     supabase.auth.signInWithOAuth({
       provider,
       options: {
-        redirectTo: window.location.origin + '/login',
+        redirectTo: window.location.origin + '/auth/callback',
       },
     });
   };

@@ -1,7 +1,7 @@
 import PrivateRoutes from './PrivateRoutes';
 import NotFound from './pages/404/NotFound';
 import Home from './pages/Home/Home';
-import Login from './pages/login/Login';
+import Login from './pages/auth/Login';
 import Panel from './pages/panel/Panel';
 import Dashboard from './pages/panel/dashboard/Dashboard';
 import Courses from './pages/panel/mycourses/Courses';
@@ -11,11 +11,23 @@ import CourseDetails from './pages/panel/mycourses/courseDetails/CourseDetails';
 import Cart from './pages/cart/Cart';
 import Class from './pages/panel/Classes/ClassPreview';
 import Profile from './pages/panel/Profile/Profile';
+import LoginForm from './pages/auth/LoginForm';
+import SignUpForm from './pages/auth/SignUpForm';
+import Callback from './pages/auth/Callback';
 
 const routes = [
   { path: '/', element: <Home /> },
   { path: '/home', element: <Home /> },
-  { path: '/login', element: <Login /> },
+  {
+    path: '/auth',
+    element: <Login />,
+    children: [
+      { index: true, element: <NotFound /> },
+      { path: 'login', element: <LoginForm /> },
+      { path: 'register', element: <SignUpForm /> },
+    ],
+  },
+  { path: '/auth/callback', element: <Callback /> },
   {
     path: '/panel',
     element: (
