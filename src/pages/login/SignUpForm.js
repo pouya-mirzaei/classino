@@ -5,6 +5,7 @@ import { toast } from 'react-toastify';
 
 export default function SignUpForm({ onToggleLoginWithPassword: toggle }) {
   const [registerState, setRegisterState] = useState(1);
+  const [isFormSubmitting, setIsFormSubmitting] = useState(false);
   const { signUpWithEmailAndPassword } = useAuth();
 
   const form = useFormik({
@@ -65,6 +66,8 @@ export default function SignUpForm({ onToggleLoginWithPassword: toggle }) {
   const handleSubmit = async (data) => {
     const { email, password, name, grade, fieldOfStudy, gender } = data;
 
+    setIsFormSubmitting(true);
+
     signUpWithEmailAndPassword.mutate(
       { email, password, metaData: { name, grade, gender, fieldOfStudy } },
       {
@@ -78,6 +81,9 @@ export default function SignUpForm({ onToggleLoginWithPassword: toggle }) {
             className: 'font-primary text-xs',
           });
         },
+        onSettled: () => {
+          setIsFormSubmitting(false);
+        },
       }
     );
   };
@@ -89,12 +95,12 @@ export default function SignUpForm({ onToggleLoginWithPassword: toggle }) {
   return registerState === 1 ? (
     <EmailForm form={form} toggle={toggle} nextStep={nextStep} />
   ) : (
-    <UserInformationForm form={form} />
+    <UserInformationForm form={form} isFormSubmitting={isFormSubmitting} />
   );
 }
 const ShowError = (title) => <span className="text-red-500 text-xs">{title}</span>;
 
-function UserInformationForm({ form }) {
+function UserInformationForm({ form, isFormSubmitting }) {
   return (
     <div className="bg-[#f6f8fc] max-w-md w-[400px] mx-5 relative z-20 rounded-lg">
       <div className="relative w-full z-10 rounded-lg bg-white flex items-center flex-col gap-5 p-5">
@@ -187,14 +193,15 @@ function UserInformationForm({ form }) {
             form.touched.grade &&
             form.touched.fieldOfStudy &&
             form.touched.gender &&
+            !form.isValid &&
             ShowError(form.errors.name || form.errors.grade || form.errors.fieldOfStudy || form.errors.gender)}
 
           <button
             type="submit"
             className="group transition-all overflow-hidden duration-200 bg-secondary-1 hover:bg-secondary-1/90 text-white w-full py-2.5 rounded-full flex items-center justify-center relative"
           >
-            {/* {isFormSubmited ? <div className="submit-btn-loader"></div> : <span>ثبت نام</span>} */}
-            ثبت نام
+            {isFormSubmitting ? <div className="submit-btn-loader"></div> : <span>ثبت نام</span>}
+            {/* ثبت نام */}
             <svg className="w-5 h-5 -translate-x-52 group-hover:-translate-x-10 transition-all duration-200 absolute">
               <use href="/sprite/hero.svg#arrow-left"></use>
             </svg>
@@ -208,6 +215,7 @@ function UserInformationForm({ form }) {
 }
 
 function EmailForm({ form, toggle, nextStep }) {
+  const { loginWithProvider } = useAuth();
   return (
     <div className="w-[690px] max-w-[90%] rounded-lg overflow-hidden relative z-20">
       {/* login form */}
@@ -281,6 +289,7 @@ function EmailForm({ form, toggle, nextStep }) {
             <div className="mt-5 w-full h-[1px] bg-slate-300"></div>
 
             <button
+              onClick={() => loginWithProvider('google')}
               type="button"
               className="mt-5 flex items-center justify-center gap-2 text-sm font-bold text-[#4285F4] bg-white border border-[#4285F4] w-full py-2.5 rounded-full hover:bg-gray-100 focus:outline-none focus:ring-4 focus:ring-[#8AB4F8]"
             >

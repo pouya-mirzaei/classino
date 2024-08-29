@@ -2,15 +2,36 @@ import React, { useState } from 'react';
 import './glow.css';
 import SecondaryHeading from '../../components/panel/SecondaryHeading';
 import { useFormik } from 'formik';
+import useAuth from '../../hooks/useAuth';
+import { supabase } from '../../supabase/supabaseConfig';
+import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
+import { useQueryClient } from '@tanstack/react-query';
 export default function LoginForm({ onToggleLoginWithPassword: toggle }) {
+  const navigate = useNavigate();
+  const { loginWithProvider } = useAuth();
+  const query = useQueryClient();
+
   const form = useFormik({
     initialValues: {
       email: '',
       password: '',
     },
-    onSubmit: (data) => {
-      console.log(data);
-      form.errors.email = 'fuck you';
+    onSubmit: ({ email, password }) => {
+      supabase.auth.signInWithPassword({ email, password }).then(async (res) => {
+        if (res.error) {
+          toast.error(res.error.message, {
+            className: 'font-primary text-xs',
+          });
+        } else {
+          toast.success('با موفقیت وارد شدید', {
+            className: 'font-primary text-xs',
+          });
+          query.invalidateQueries({ queryKey: ['user'] });
+
+          // console.log(auth.user, auth.isFetching);
+        }
+      });
     },
     validate: (values) => {
       const errors = {};
@@ -20,6 +41,12 @@ export default function LoginForm({ onToggleLoginWithPassword: toggle }) {
 
       if (!values.password) {
         errors.password = 'وارد کردن رمز عبور الزامی است';
+      }
+
+      const emailRegex =
+        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      if (!emailRegex.test(values.email)) {
+        errors.email = 'ایمیل نامعتبر است';
       }
 
       return errors;
@@ -55,7 +82,7 @@ export default function LoginForm({ onToggleLoginWithPassword: toggle }) {
               value={form.values.password}
             />
           </div>
-          {form.touched.email && form.touched.password && showError(form.errors.email || form.errors.password)}
+          {form.touched.email && form.touched.password && !form.isValid && showError(form.errors.email || form.errors.password)}
 
           <button
             type="submit"
@@ -70,7 +97,10 @@ export default function LoginForm({ onToggleLoginWithPassword: toggle }) {
 
         <div className="w-full h-[1px] bg-slate-300"></div>
 
-        <button className="flex items-center justify-center gap-2 text-sm font-bold text-[#4285F4] bg-white border border-[#4285F4] w-full py-2.5 rounded-full hover:bg-gray-100 focus:outline-none focus:ring-4 focus:ring-[#8AB4F8]">
+        <button
+          onClick={() => loginWithProvider('google')}
+          className="flex items-center justify-center gap-2 text-sm font-bold text-[#4285F4] bg-white border border-[#4285F4] w-full py-2.5 rounded-full hover:bg-gray-100 focus:outline-none focus:ring-4 focus:ring-[#8AB4F8]"
+        >
           <svg
             className="w-6 h-6"
             stroke="currentColor"

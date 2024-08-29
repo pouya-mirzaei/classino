@@ -2,9 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import HeaderBox from './HeaderBox';
 import { useCart } from '../../../Contexts/CartContext';
+import useAuth from '../../../hooks/useAuth';
 
 export default function Header({ onOpenSidebar, onToggleDark, dark }) {
   const [isDropDownOpen, setIsDropDownOpen] = useState(false);
+  const { signOut, user } = useAuth();
   const navigate = useNavigate();
 
   const { cartItems } = useCart();
@@ -15,6 +17,9 @@ export default function Header({ onOpenSidebar, onToggleDark, dark }) {
         'click',
         (e) => {
           setIsDropDownOpen(false);
+          if (e.target.dataset.signOut) {
+            signOut();
+          }
           if (e.target.dataset.link) {
             navigate(`/panel/${e.target.dataset.link}`);
           }
@@ -59,14 +64,14 @@ export default function Header({ onOpenSidebar, onToggleDark, dark }) {
           <Link to={'finance'} className="hidden sm:inline-block">
             <HeaderBox icon="wallet" text="اعتبار 0 ریال" breakpoint={{ full: true }} />
           </Link>
-          <HeaderBox icon="user-circle" text="پویا میرزایی" breakpoint={{ full: false }} onClick={openDropDown} />
+          <HeaderBox icon="user-circle" text={user.name} breakpoint={{ full: false }} onClick={openDropDown} />
           {isDropDownOpen && (
             <div
               className="absolute left-5 top-5 bg-white dar:bg-dark-2 rounded-lg shadow-md shadow-black/10 w-44"
               // onClick={() => setIsDropDownOpen(false)}
             >
               <div className="w-full h-full flex flex-col items-start justify-between py-5">
-                <span className="text-xs py-3 px-5">پویا میزایی</span>
+                <span className="text-xs py-3 px-5">{user.name}</span>
                 <span className="text-xs py-3 px-5">اعتبار 0 ریال</span>
                 <span
                   className="text-xs py-3 px-5 hover:bg-gray-100 w-full transition-all duration-200 cursor-pointer"
@@ -74,7 +79,10 @@ export default function Header({ onOpenSidebar, onToggleDark, dark }) {
                 >
                   پروفایل
                 </span>
-                <span className="text-xs py-3 px-5 hover:bg-gray-100 w-full transition-all duration-200 cursor-pointer">
+                <span
+                  className="text-xs py-3 px-5 hover:bg-gray-100 w-full transition-all duration-200 cursor-pointer"
+                  data-sign-out
+                >
                   خروج
                 </span>
               </div>

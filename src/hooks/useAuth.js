@@ -29,7 +29,12 @@ export default function useAuth() {
   });
 
   const loginWithProvider = async (provider) => {
-    supabase.auth.signInWithOAuth({ provider });
+    supabase.auth.signInWithOAuth({
+      provider,
+      options: {
+        redirectTo: window.location.origin + '/login',
+      },
+    });
   };
 
   const signUpWithEmailAndPassword = useMutation({
@@ -48,8 +53,8 @@ export default function useAuth() {
   });
 
   const signOut = () => {
-    queryClient.setQueryData(['user'], null);
     supabase.auth.signOut();
+    queryClient.invalidateQueries({ queryKey: ['user'] });
   };
 
   return {
