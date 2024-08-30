@@ -9,7 +9,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useQueryClient } from '@tanstack/react-query';
 export default function LoginForm() {
   const navigate = useNavigate();
-  const { loginWithProvider } = useAuth();
+  const { loginWithProvider, signInWithEmailAndPassword } = useAuth();
   const query = useQueryClient();
 
   const form = useFormik({
@@ -18,21 +18,24 @@ export default function LoginForm() {
       password: '',
     },
     onSubmit: ({ email, password }) => {
-      supabase.auth.signInWithPassword({ email, password }).then(async (res) => {
-        if (res.error) {
-          toast.error(res.error.message, {
-            className: 'font-primary text-xs',
-          });
-        } else {
-          toast.success('با موفقیت وارد شدید', {
-            className: 'font-primary text-xs',
-          });
-          query.invalidateQueries({ queryKey: ['user'] });
-
-          // console.log(auth.user, auth.isFetching);
+      signInWithEmailAndPassword.mutate(
+        { email, password },
+        {
+          onSuccess: (data) => {
+            toast.success('با موفقیت وارد شدید', {
+              className: 'font-primary text-xs',
+            });
+            query.invalidateQueries({ queryKey: ['user'] });
+          },
+          onError: (error) => {
+            toast.error(error.message, {
+              className: 'font-primary text-xs',
+            });
+          },
         }
-      });
+      );
     },
+
     validate: (values) => {
       const errors = {};
       if (!values.email) {

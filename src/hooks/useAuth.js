@@ -58,6 +58,19 @@ export default function useAuth() {
     },
   });
 
+  const signInWithEmailAndPassword = useMutation({
+    mutationFn: async ({ email, password }) => {
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
+
+      if (error) throw error;
+
+      return data;
+    },
+  });
+
   const signOut = () => {
     supabase.auth.signOut();
     queryClient.invalidateQueries({ queryKey: ['user'] });
@@ -70,5 +83,6 @@ export default function useAuth() {
     signOut,
     signUpWithEmailAndPassword,
     refetchUser,
+    signInWithEmailAndPassword,
   };
 }

@@ -62,7 +62,7 @@ export default function Header({ onOpenSidebar, onToggleDark, dark }) {
             <HeaderBox icon="shopping-cart" badge={cartItems.length} />
           </Link>
           <Link to={'finance'} className="hidden sm:inline-block">
-            <HeaderBox icon="wallet" text="اعتبار 0 ریال" breakpoint={{ full: true }} />
+            <HeaderBox icon="wallet" text={user.credit_balance.toLocaleString() + ' ریال'} breakpoint={{ full: true }} />
           </Link>
           <HeaderBox icon="user-circle" text={user.name} breakpoint={{ full: false }} onClick={openDropDown} />
           {isDropDownOpen && (
@@ -72,7 +72,7 @@ export default function Header({ onOpenSidebar, onToggleDark, dark }) {
             >
               <div className="w-full h-full flex flex-col items-start justify-between py-5">
                 <span className="text-xs py-3 px-5">{user.name}</span>
-                <span className="text-xs py-3 px-5">اعتبار 0 ریال</span>
+                <span className="text-xs py-3 px-5">اعتبار : {user.credit_balance.toLocaleString()} ریال</span>
                 <span
                   className="text-xs py-3 px-5 hover:bg-gray-100 w-full transition-all duration-200 cursor-pointer"
                   data-link="profile"
