@@ -2,12 +2,13 @@ import { useFormik } from 'formik';
 import React, { useState } from 'react';
 import useAuth from '../../hooks/useAuth';
 import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 
 export default function SignUpForm({ onToggleLoginWithPassword: toggle }) {
   const [registerState, setRegisterState] = useState(1);
   const [isFormSubmitting, setIsFormSubmitting] = useState(false);
   const { signUpWithEmailAndPassword } = useAuth();
-
+  const navigate = useNavigate();
   const form = useFormik({
     initialValues: {
       email: '',
@@ -75,6 +76,7 @@ export default function SignUpForm({ onToggleLoginWithPassword: toggle }) {
           toast.success('ثبت نام با موفقیت انجام شد', {
             className: 'font-primary text-xs',
           });
+          navigate('/auth/confirm-email');
         },
         onError: (error) => {
           toast.error(error.message, {
@@ -89,21 +91,38 @@ export default function SignUpForm({ onToggleLoginWithPassword: toggle }) {
   };
 
   const nextStep = () => {
-    if (!form.errors.email && !form.errors.password && !form.errors.confirmPassword) setRegisterState(2);
+    if (
+      !form.errors.email &&
+      !form.errors.password &&
+      !form.errors.confirmPassword &&
+      !form.errors?.init &&
+      (form.touched.email || form.touched.password || form.touched.confirmPassword)
+    ) {
+      setRegisterState(2);
+    }
+  };
+  const previousStep = () => {
+    setRegisterState(1);
   };
 
   return registerState === 1 ? (
     <EmailForm form={form} toggle={toggle} nextStep={nextStep} />
   ) : (
-    <UserInformationForm form={form} isFormSubmitting={isFormSubmitting} />
+    <UserInformationForm form={form} isFormSubmitting={isFormSubmitting} previousStep={previousStep} />
   );
 }
 const ShowError = (title) => <span className="text-red-500 text-xs">{title}</span>;
 
-function UserInformationForm({ form, isFormSubmitting }) {
+function UserInformationForm({ form, isFormSubmitting, previousStep }) {
   return (
     <div className="bg-[#f6f8fc] max-w-md w-[400px] mx-5 relative z-20 rounded-lg">
       <div className="relative w-full z-10 rounded-lg bg-white flex items-center flex-col gap-5 p-5">
+        <span className="text-primary-1 underline self-start flex items-center cursor-pointer" onClick={previousStep}>
+          <svg className="w-4 h-4 rotate-180">
+            <use href="/sprite/hero.svg#arrow-left"></use>
+          </svg>
+          بازگشت
+        </span>
         <form onSubmit={form.handleSubmit} className="w-full flex flex-col items-center gap-5" autoComplete="off">
           <div className="form-group w-full">
             <label className="block text-xs pr-2 mb-1 text-[#70657b]" htmlFor="name">
@@ -217,7 +236,7 @@ function UserInformationForm({ form, isFormSubmitting }) {
 function EmailForm({ form, toggle, nextStep }) {
   const { loginWithProvider } = useAuth();
   return (
-    <div className="w-[690px] max-w-[90%] rounded-lg overflow-hidden relative z-20">
+    <div className="w-[900px] max-w-[90%] rounded-lg overflow-hidden relative z-20">
       {/* login form */}
       <div className="flex flex-col lg:flex-row">
         {/* form  */}

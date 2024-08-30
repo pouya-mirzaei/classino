@@ -40,7 +40,7 @@ export default function Header() {
           <ul className="flex flex-col pt-2 [&>*]:border-y [&>*]:py-5">
             <li className="flex justify-center">
               <Link to="/panel/dashboard">
-                <img src="images/classino_Logo.08df55af.svg" alt="classni logo" />
+                <img src="/images/classino_Logo.08df55af.svg" alt="classni logo" />
               </Link>
             </li>
             <li className="pr-5">
@@ -86,7 +86,7 @@ export default function Header() {
 
           <div>
             <Link to="/">
-              <img src="images/classinoLogo.08df55af.svg" alt="classino logo" />
+              <img src="/images/classinoLogo.08df55af.svg" alt="classino logo" />
             </Link>
           </div>
 
@@ -104,7 +104,7 @@ export default function Header() {
               className="w-80 xl:w-[400px] rounded-[34px] outline-none py-2 px-5 bg-[#f0f0f1] shadow-lg placeholder:text-sm hover:bg-white focus:bg-white transition-all"
             />
             <svg className="h-full p-2 rounded-full bg-primary-2 cursor-pointer text-white absolute left-0">
-              <use href="sprite/hero.svg#magnifying-glass"></use>
+              <use href="/sprite/hero.svg#magnifying-glass"></use>
             </svg>
           </div>
         </div>
@@ -120,11 +120,11 @@ export default function Header() {
             className="hover:border-b hover:border-black active:translate-y-0.5 inline-block transition-all"
             onClick={toggleMobileMenu}
           >
-            <use href="sprite/hero.svg#3-bars"></use>
+            <use href="/sprite/hero.svg#3-bars"></use>
           </svg>
           <Link to="/panel/dashboard">
             <svg className="hover:border-b hover:border-black active:translate-y-0.5 inline-block transition-all">
-              <use href="sprite/hero.svg#user-circle"></use>
+              <use href="/sprite/hero.svg#user-circle"></use>
             </svg>
           </Link>
         </div>

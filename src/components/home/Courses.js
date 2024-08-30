@@ -23,7 +23,7 @@ export default function Courses() {
       >
         دوره ها
         <svg className="w-5">
-          <use href="sprite/hero.svg#chevron-down"></use>
+          <use href="/sprite/hero.svg#chevron-down"></use>
         </svg>
       </button>
 

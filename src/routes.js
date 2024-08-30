@@ -14,6 +14,7 @@ import Profile from './pages/panel/Profile/Profile';
 import LoginForm from './pages/auth/LoginForm';
 import SignUpForm from './pages/auth/SignUpForm';
 import Callback from './pages/auth/Callback';
+import EmailConfirmation from './pages/auth/EmailConfirmation';
 
 const routes = [
   { path: '/', element: <Home /> },
@@ -28,6 +29,7 @@ const routes = [
     ],
   },
   { path: '/auth/callback', element: <Callback /> },
+  { path: '/auth/confirm-email', element: <EmailConfirmation /> },
   {
     path: '/panel',
     element: (

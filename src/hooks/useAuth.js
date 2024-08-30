@@ -5,7 +5,11 @@ import { toast } from 'react-toastify';
 export default function useAuth() {
   const queryClient = useQueryClient();
 
-  const { data: user, isFetching } = useQuery({
+  const {
+    data: user,
+    isFetching,
+    refetch: refetchUser,
+  } = useQuery({
     queryKey: ['user'],
     queryFn: async () => {
       const {
@@ -65,5 +69,6 @@ export default function useAuth() {
     loginWithProvider,
     signOut,
     signUpWithEmailAndPassword,
+    refetchUser,
   };
 }

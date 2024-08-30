@@ -1,0 +1,30 @@
+.card {
+  perspective: 100rem;
+  position: relative;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.side {
+  backface-visibility: hidden;
+  transition: transform 0.8s ease;
+  position: relative;
+}
+
+.side-front {
+  background-color: red;
+}
+
+.side-back {
+  transform: rotateY(180deg);
+}
+
+.card:hover .side-back {
+  transform: rotateY(0);
+}
+.card:hover .side-front {
+  transform: rotateY(-180deg);
+}
