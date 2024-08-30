@@ -14,7 +14,7 @@ export default function Profile() {
   const [isLoading, setIsLoading] = useState(false);
 
   const {
-    user: { phone_number, name, province, city, grade, gender },
+    user: { phone_number, name, province, city, grade, gender, field_of_study },
     updateUser,
     refetchUser,
   } = useAuth();
@@ -37,12 +37,14 @@ export default function Profile() {
       city: city || '-1',
       grade: grade || '-1',
       gender: gender || '-1',
+      field_of_study: field_of_study || '-1',
     },
     validate: (values) => {
       const errors = {};
 
-      if (!values.mobile) {
-        errors.mobile = 'وارد کردن شماره موبایل الزامی است';
+      const mobileRegex = /^09\d{9}$/;
+      if (!mobileRegex.test(values.mobile)) {
+        errors.mobile = 'شماره موبایل باید 11 رقم باشد و با 09 شروع شود';
       }
 
       if (!values.name) {
@@ -65,13 +67,17 @@ export default function Profile() {
         errors.gender = 'وارد کردن جنسیت الزامی است';
       }
 
+      if (values.field_of_study === '-1') {
+        errors.field_of_study = 'وارد کردن رشته تحصیلی الزامی است';
+      }
+
       if (!values['en-name']) {
         errors['en-name'] = 'وارد کردن نام خانوادگی الزامی است';
       }
 
       return errors;
     },
-    onSubmit: ({ name, mobile, state, grade, gender }) => {
+    onSubmit: ({ name, mobile, state, grade, gender, city, field_of_study }) => {
       const updatedUser = {
         name: name,
         phone_number: mobile,
@@ -79,6 +85,7 @@ export default function Profile() {
         city: city,
         grade: grade,
         gender: gender,
+        field_of_study,
       };
       setIsLoading(true);
 
@@ -247,6 +254,28 @@ export default function Profile() {
             </div>
 
             <div>
+              <label htmlFor="field_of_study" className="text-xs text-gray-500 mb-2 inline-block">
+                رشته تحصیلی:
+              </label>
+              <select
+                name="field_of_study"
+                id="field_of_study"
+                className="form-control"
+                value={form.values.field_of_study}
+                onChange={form.handleChange}
+                onBlur={form.handleBlur}
+              >
+                <option value="-1">لطفا رشته تحصیلی را انتخاب کنید</option>
+                <option value="riazi">رشته ریاضی</option>
+                <option value="tajrobi">رشته تجربی</option>
+                <option value="honar">رشته هنر</option>
+              </select>
+              {form.touched.field_of_study && form.errors.field_of_study && (
+                <span className="text-red-500 text-[10px]">{form.errors.field_of_study}</span>
+              )}
+            </div>
+
+            <div>
               <label htmlFor="grade" className="text-xs text-gray-500 mb-2 inline-block">
                 پایه تحصیلی:
               </label>
@@ -288,8 +317,8 @@ export default function Profile() {
                 onBlur={form.handleBlur}
               >
                 <option value="-1">انتخاب نشده</option>
-                <option value="boy">پسر</option>
-                <option value="girl">دختر</option>
+                <option value="male">پسر</option>
+                <option value="female">دختر</option>
               </select>{' '}
               {form.touched.gender && form.errors.gender && (
                 <span className="text-red-500 text-[10px]">{form.errors.gender}</span>
@@ -300,7 +329,7 @@ export default function Profile() {
           </form>
         </PanelDetail>
         <PanelDetail headerTitle="تغییر رمز عبور" className="basis-1/2 w-full relative">
-          <PreLoader loading={isLoading} title={'در حال ارسال درخواست...'} />
+          <PreLoader loading={isLoading} title={'در حال بارگذاری...'} />
           <form className="space-y-8" onSubmit={updatePassForm.handleSubmit}>
             <div className="flex flex-col md:flex-row items-center justify-between gap-5">
               <div className="basis-1/2 w-full">
