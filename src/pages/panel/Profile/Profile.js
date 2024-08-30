@@ -17,6 +17,7 @@ export default function Profile() {
     user: { phone_number, name, province, city, grade, gender, field_of_study },
     updateUser,
     refetchUser,
+    changePassword,
   } = useAuth();
 
   useEffect(() => {
@@ -131,7 +132,25 @@ export default function Profile() {
 
       return errors;
     },
-    onSubmit: (data) => {},
+    onSubmit: (data) => {
+      setIsLoading(true);
+      changePassword.mutate(data.password, {
+        onSuccess: () => {
+          toast.success('رمز عبور با موفقیت تغییر کرد', {
+            className: 'font-primary text-xs',
+          });
+        },
+        onError: (error) => {
+          toast.error(error.message, {
+            className: 'font-primary text-xs',
+          });
+        },
+        onSettled: () => {
+          refetchUser();
+          setIsLoading(false);
+        },
+      });
+    },
   });
 
   useEffect(() => {
@@ -329,7 +348,7 @@ export default function Profile() {
           </form>
         </PanelDetail>
         <PanelDetail headerTitle="تغییر رمز عبور" className="basis-1/2 w-full relative">
-          <PreLoader loading={isLoading} title={'در حال بارگذاری...'} />
+          <PreLoader pending={isLoading} title={'تغییر رمز عبور...'} />
           <form className="space-y-8" onSubmit={updatePassForm.handleSubmit}>
             <div className="flex flex-col md:flex-row items-center justify-between gap-5">
               <div className="basis-1/2 w-full">

@@ -2,7 +2,7 @@ import { useFormik } from 'formik';
 import React, { useState } from 'react';
 import useAuth from '../../hooks/useAuth';
 import { toast } from 'react-toastify';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 export default function SignUpForm({ onToggleLoginWithPassword: toggle }) {
   const [registerState, setRegisterState] = useState(1);
@@ -349,9 +349,11 @@ function EmailForm({ form, toggle, nextStep }) {
               ثبت نام با Google
             </button>
           </div>
-          <button className="text-primary-1 font-bold text-xs" onClick={toggle} type="button">
-            اکانت دارید ؟ ورود
-          </button>
+          <Link to={'/auth/login'}>
+            <button className="text-primary-1 font-bold text-xs" onClick={toggle} type="button">
+              اکانت دارید ؟ ورود
+            </button>
+          </Link>
         </form>
 
         {/* informations */}
