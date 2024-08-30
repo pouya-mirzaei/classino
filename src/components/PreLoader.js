@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useState } from 'react';
-export default function PreLoader({ duration = 3000, title }) {
+export default function PreLoader({ duration = 3000, title, pending = '-1' }) {
   const [displayLoader, setDisplayLoader] = useState(true);
 
   useEffect(() => {
@@ -11,7 +11,7 @@ export default function PreLoader({ duration = 3000, title }) {
 
   return (
     <>
-      {displayLoader && (
+      {(pending == '-1' ? displayLoader : pending) && (
         <div className="flex flex-col justify-center items-center absolute z-50 inset-0">
           <div className="w-[60px] h-[60px] relative z-[60] flex items-center justify-center ">
             <div className="loader loader--1"></div>

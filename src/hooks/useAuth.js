@@ -71,6 +71,16 @@ export default function useAuth() {
     },
   });
 
+  const updateUser = useMutation({
+    mutationFn: async (updates) => {
+      const { data, error } = await supabase.from('users').update(updates).eq('id', user?.id).single();
+
+      if (error) throw error;
+
+      return data;
+    },
+  });
+
   const signOut = () => {
     supabase.auth.signOut();
     queryClient.invalidateQueries({ queryKey: ['user'] });
@@ -84,5 +94,6 @@ export default function useAuth() {
     signUpWithEmailAndPassword,
     refetchUser,
     signInWithEmailAndPassword,
+    updateUser,
   };
 }

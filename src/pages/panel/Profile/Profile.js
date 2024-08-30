@@ -5,9 +5,19 @@ import './Profile.css';
 import BtnSuccess from '../../../components/panel/Button/BtnSuccess';
 import { useFormik } from 'formik';
 import { getAllStates, getCitiesWithStateId } from '../../../api/cities';
+import useAuth from '../../../hooks/useAuth';
+import { toast } from 'react-toastify';
+import PreLoader from '../../../components/PreLoader';
 export default function Profile() {
   const [states, setStates] = useState([]);
   const [cities, setCities] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const {
+    user: { phone_number, name, province, city, grade, gender },
+    updateUser,
+    refetchUser,
+  } = useAuth();
 
   useEffect(() => {
     const fetchStates = async () => {
@@ -20,16 +30,74 @@ export default function Profile() {
 
   const form = useFormik({
     initialValues: {
-      mobile: '09123456789',
-      name: 'پویا میرزائی',
-      'en-name': '',
-      state: '-1',
-      city: '-1',
-      grade: 'old',
-      gender: '-1',
+      mobile: phone_number || '',
+      name,
+      'en-name': name,
+      state: province || '-1',
+      city: city || '-1',
+      grade: grade || '-1',
+      gender: gender || '-1',
     },
-    onSubmit: (data) => {
-      console.log(data);
+    validate: (values) => {
+      const errors = {};
+
+      if (!values.mobile) {
+        errors.mobile = 'وارد کردن شماره موبایل الزامی است';
+      }
+
+      if (!values.name) {
+        errors.name = 'وارد کردن نام الزامی است';
+      }
+
+      if (values.state === '-1') {
+        errors.state = 'وارد کردن استان الزامی است';
+      }
+
+      if (values.city === '-1') {
+        errors.city = 'وارد کردن شهر الزامی است';
+      }
+
+      if (values.grade === '-1') {
+        errors.grade = 'وارد کردن مقطع تحصیلی الزامی است';
+      }
+
+      if (values.gender === '-1') {
+        errors.gender = 'وارد کردن جنسیت الزامی است';
+      }
+
+      if (!values['en-name']) {
+        errors['en-name'] = 'وارد کردن نام خانوادگی الزامی است';
+      }
+
+      return errors;
+    },
+    onSubmit: ({ name, mobile, state, grade, gender }) => {
+      const updatedUser = {
+        name: name,
+        phone_number: mobile,
+        province: state,
+        city: city,
+        grade: grade,
+        gender: gender,
+      };
+      setIsLoading(true);
+
+      updateUser.mutate(updatedUser, {
+        onSuccess: () => {
+          toast.success('ویرایش با موفقیت انجام شد', {
+            className: 'font-primary text-xs',
+          });
+        },
+        onError: (error) => {
+          toast.error(error.message, {
+            className: 'font-primary text-xs',
+          });
+        },
+        onSettled: () => {
+          refetchUser();
+          setIsLoading(false);
+        },
+      });
     },
   });
 
@@ -38,9 +106,25 @@ export default function Profile() {
       password: '',
       confirmPass: '',
     },
-    onSubmit: (data) => {
-      console.log(data);
+    validate: (values) => {
+      const errors = {};
+
+      const passRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
+      if (!values.password) {
+        errors.password = 'وارد کردن رمز عبور الزامی است';
+      } else if (!passRegex.test(values.password)) {
+        errors.password = 'رمز عبور باید حداقل 8 کاراکتر داشته باشد و شامل حروف بزرگ، کوچک و اعداد باشد';
+      }
+
+      if (!values.confirmPass) {
+        errors.confirmPass = 'تکرار رمز عبور الزامی است';
+      } else if (values.password !== values.confirmPass) {
+        errors.confirmPass = 'رمز عبور و تکرار آن یکسان نیست';
+      }
+
+      return errors;
     },
+    onSubmit: (data) => {},
   });
 
   useEffect(() => {
@@ -60,7 +144,8 @@ export default function Profile() {
       <PrimaryHeading>ویرایش پروفایل</PrimaryHeading>
 
       <div className="flex flex-col items-start lg:flex-row gap-8 w-full">
-        <PanelDetail headerTitle="تغییر مشخصات کاربری" className="basis-1/2 w-full">
+        <PanelDetail headerTitle="تغییر مشخصات کاربری" className="basis-1/2 w-full relative">
+          <PreLoader pending={isLoading} title="لطفا صبر کنید ..." />
           <form className="space-y-8" onSubmit={form.handleSubmit}>
             <div>
               <label htmlFor="mobile" className="text-xs text-gray-500 mb-2 inline-block">
@@ -74,10 +159,14 @@ export default function Profile() {
                 name="mobile"
                 value={form.values.mobile}
                 onChange={form.handleChange}
+                onBlur={form.handleBlur}
                 autoComplete="off"
-                disabled
               />
+              {form.touched.mobile && form.errors.mobile && (
+                <span className="text-red-500 text-[10px]">{form.errors.mobile}</span>
+              )}
             </div>
+
             <div>
               <label htmlFor="name" className="text-xs text-gray-500 mb-2 inline-block">
                 نام و نام خانوادگی (فارسی):
@@ -91,7 +180,9 @@ export default function Profile() {
                 name="name"
                 value={form.values.name}
                 onChange={form.handleChange}
+                onBlur={form.handleBlur}
               />
+              {form.touched.name && form.errors.name && <span className="text-red-500 text-[10px]">{form.errors.name}</span>}
             </div>
             <div>
               <label htmlFor="en-name" className="text-xs text-gray-500 mb-2 inline-block">
@@ -106,13 +197,24 @@ export default function Profile() {
                 name="en-name"
                 value={form.values['en-name']}
                 onChange={form.handleChange}
+                onBlur={form.handleBlur}
               />
+              {form.touched['en-name'] && form.errors['en-name'] && (
+                <span className="text-red-500 text-[10px]">{form.errors['en-name']}</span>
+              )}
             </div>
             <div>
               <label htmlFor="state" className="text-xs text-gray-500 mb-2 inline-block">
                 استان:
               </label>
-              <select name="state" id="state" className="form-control" onChange={form.handleChange} value={form.values.state}>
+              <select
+                name="state"
+                id="state"
+                className="form-control"
+                onChange={form.handleChange}
+                value={form.values.state}
+                onBlur={form.handleBlur}
+              >
                 <option value="-1">انتخاب استان</option>
                 {states.map((state) => (
                   <option key={state.id} value={state.id}>
@@ -120,12 +222,20 @@ export default function Profile() {
                   </option>
                 ))}
               </select>
+              {form.touched.state && form.errors.state && <span className="text-red-500 text-[10px]">{form.errors.state}</span>}
             </div>
             <div>
               <label htmlFor="city" className="text-xs text-gray-500 mb-2 inline-block">
                 شهر:
               </label>
-              <select name="city" id="city" className="form-control" value={form.values.city} onChange={form.handleChange}>
+              <select
+                name="city"
+                id="city"
+                className="form-control"
+                value={form.values.city}
+                onChange={form.handleChange}
+                onBlur={form.handleBlur}
+              >
                 <option value="-1">لطفا استان را انتخاب کنید</option>
                 {cities.map((city) => (
                   <option key={city.id} value={city.id}>
@@ -133,13 +243,22 @@ export default function Profile() {
                   </option>
                 ))}
               </select>
+              {form.touched.city && form.errors.city && <span className="text-red-500 text-[10px]">{form.errors.city}</span>}
             </div>
 
             <div>
               <label htmlFor="grade" className="text-xs text-gray-500 mb-2 inline-block">
                 پایه تحصیلی:
               </label>
-              <select name="grade" id="grade" className="form-control" value={form.values.grade} onChange={form.handleChange}>
+              <select
+                name="grade"
+                id="grade"
+                className="form-control"
+                value={form.values.grade}
+                onChange={form.handleChange}
+                onBlur={form.handleBlur}
+              >
+                <option value="-1">لطفا پایه تحصیلی را انتخاب کنید</option>
                 <option value="1">اول</option>
                 <option value="2">دوم</option>
                 <option value="3">سوم</option>
@@ -154,22 +273,34 @@ export default function Profile() {
                 <option value="12">دوازدهم</option>
                 <option value="old">فارغ التحصیل</option>
               </select>
+              {form.touched.grade && form.errors.grade && <span className="text-red-500 text-[10px]">{form.errors.grade}</span>}
             </div>
             <div>
               <label htmlFor="gender" className="text-xs text-gray-500 mb-2 inline-block">
                 جنسیت:
               </label>
-              <select name="gender" id="gender" className="form-control" value={form.values.gender} onChange={form.handleChange}>
+              <select
+                name="gender"
+                id="gender"
+                className="form-control"
+                value={form.values.gender}
+                onChange={form.handleChange}
+                onBlur={form.handleBlur}
+              >
                 <option value="-1">انتخاب نشده</option>
                 <option value="boy">پسر</option>
                 <option value="girl">دختر</option>
               </select>{' '}
+              {form.touched.gender && form.errors.gender && (
+                <span className="text-red-500 text-[10px]">{form.errors.gender}</span>
+              )}
             </div>
 
             <BtnSuccess type="submit">تغییر مشخصات کاربری</BtnSuccess>
           </form>
         </PanelDetail>
-        <PanelDetail headerTitle="تغییر رمز عبور" className="basis-1/2 w-full">
+        <PanelDetail headerTitle="تغییر رمز عبور" className="basis-1/2 w-full relative">
+          <PreLoader loading={isLoading} title={'در حال ارسال درخواست...'} />
           <form className="space-y-8" onSubmit={updatePassForm.handleSubmit}>
             <div className="flex flex-col md:flex-row items-center justify-between gap-5">
               <div className="basis-1/2 w-full">
@@ -184,7 +315,11 @@ export default function Profile() {
                   name="password"
                   value={updatePassForm.values.password}
                   onChange={updatePassForm.handleChange}
+                  onBlur={updatePassForm.handleBlur}
                 />
+                {updatePassForm.touched.password && updatePassForm.errors.password && (
+                  <span className="text-red-500 text-[10px]">{updatePassForm.errors.password}</span>
+                )}
               </div>
               <div className="basis-1/2 w-full">
                 <label htmlFor="confirmPass" className="text-xs text-gray-500 mb-2 inline-block">
@@ -198,7 +333,11 @@ export default function Profile() {
                   name="confirmPass"
                   value={updatePassForm.values.confirmPass}
                   onChange={updatePassForm.handleChange}
+                  onBlur={updatePassForm.handleBlur}
                 />
+                {updatePassForm.touched.confirmPass && updatePassForm.errors.confirmPass && (
+                  <span className="text-red-500 text-[10px]">{updatePassForm.errors.confirmPass}</span>
+                )}
               </div>
             </div>
             <BtnSuccess type="submit">تغییر رمز عبور</BtnSuccess>
