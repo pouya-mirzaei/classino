@@ -24,6 +24,8 @@ export default function useAuth() {
       const { data, error: Error } = await supabase.from('users').select().eq('id', id).single();
 
       if (Error) {
+        console.log(Error);
+
         toast.error('خطا در بارگذاری اطلاعات کاربر', {
           className: 'font-primary text-xs',
         });

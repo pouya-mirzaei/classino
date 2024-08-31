@@ -8,17 +8,20 @@ import { getAllStates, getCitiesWithStateId } from '../../../api/cities';
 import useAuth from '../../../hooks/useAuth';
 import { toast } from 'react-toastify';
 import PreLoader from '../../../components/PreLoader';
+import { useStorage } from '../../../hooks/useStorage';
 export default function Profile() {
   const [states, setStates] = useState([]);
   const [cities, setCities] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [avatarUrl, setAvatarUrl] = useState(null);
 
   const {
-    user: { phone_number, name, province, city, grade, gender, field_of_study },
+    user: { phone_number, name, province, city, grade, gender, field_of_study, avatar_url },
     updateUser,
     refetchUser,
     changePassword,
   } = useAuth();
+  const { uploadFile, getImagePublicUrl, deleteFile } = useStorage();
 
   useEffect(() => {
     const fetchStates = async () => {
@@ -28,6 +31,31 @@ export default function Profile() {
 
     fetchStates();
   }, []);
+
+  const handleError = (error) => {
+    toast.error(error.message, {
+      className: 'font-primary text-xs',
+    });
+  };
+
+  const handleUpdateUser = async (values) => {
+    updateUser.mutate(values, {
+      onSuccess: () => {
+        toast.success('ویرایش با موفقیت انجام شد', {
+          className: 'font-primary text-xs',
+        });
+      },
+      onError: (error) => {
+        toast.error(error.message, {
+          className: 'font-primary text-xs',
+        });
+      },
+      onSettled: () => {
+        refetchUser();
+        setIsLoading(false);
+      },
+    });
+  };
 
   const form = useFormik({
     initialValues: {
@@ -78,7 +106,7 @@ export default function Profile() {
 
       return errors;
     },
-    onSubmit: ({ name, mobile, state, grade, gender, city, field_of_study }) => {
+    onSubmit: async ({ name, mobile, state, grade, gender, city, field_of_study, avatar }) => {
       const updatedUser = {
         name: name,
         phone_number: mobile,
@@ -88,24 +116,36 @@ export default function Profile() {
         gender: gender,
         field_of_study,
       };
-      setIsLoading(true);
+      // setIsLoading(true);
 
-      updateUser.mutate(updatedUser, {
-        onSuccess: () => {
-          toast.success('ویرایش با موفقیت انجام شد', {
-            className: 'font-primary text-xs',
-          });
-        },
-        onError: (error) => {
-          toast.error(error.message, {
-            className: 'font-primary text-xs',
-          });
-        },
-        onSettled: () => {
-          refetchUser();
-          setIsLoading(false);
-        },
+      toast.warning('در حال ارسال اطلاعات...', {
+        className: 'font-primary text-xs',
       });
+
+      if (avatar) {
+        uploadFile.mutate(
+          {
+            file: avatar,
+            bucket: 'avatars',
+          },
+          {
+            onSuccess: async (data) => {
+              const url = await getImagePublicUrl({
+                filePath: data.path,
+                bucket: 'avatars',
+              });
+
+              updatedUser.avatar_url = url;
+
+              handleUpdateUser(updatedUser);
+            },
+
+            onError: handleError,
+          }
+        );
+      } else {
+        handleUpdateUser(updatedUser);
+      }
     },
   });
 
@@ -140,11 +180,7 @@ export default function Profile() {
             className: 'font-primary text-xs',
           });
         },
-        onError: (error) => {
-          toast.error(error.message, {
-            className: 'font-primary text-xs',
-          });
-        },
+        onError: handleError,
         onSettled: () => {
           refetchUser();
           setIsLoading(false);
@@ -342,6 +378,34 @@ export default function Profile() {
               {form.touched.gender && form.errors.gender && (
                 <span className="text-red-500 text-[10px]">{form.errors.gender}</span>
               )}
+            </div>
+            <div>
+              <div className="w-44 aspect-square">
+                <img src={avatarUrl || avatar_url || '/images/default-user.png'} alt={'user profile'} className="w-full" />
+              </div>
+              <span className="text-xs text-gray-500 mt-3 inline-block">تصویر (ابعاد تصویر مربعی باشد):</span>
+
+              <div>
+                <label
+                  htmlFor="avatar"
+                  className="w-full h-20 bg-slate-200 border-dashed border-gray-400 border-2 flex items-center justify-center"
+                >
+                  <span className="text-gray-500">
+                    جهت درج تصویر جدید <span className="underline cursor-pointer">اینجا</span> کلیک کنید
+                  </span>
+                </label>
+                <input
+                  type="file"
+                  name="avatar"
+                  id="avatar"
+                  accept="image/*"
+                  className="hidden"
+                  onChange={(e) => {
+                    form.setFieldValue('avatar', e.target.files[0]);
+                    setAvatarUrl(URL.createObjectURL(e.target.files[0]));
+                  }}
+                />
+              </div>
             </div>
 
             <BtnSuccess type="submit">تغییر مشخصات کاربری</BtnSuccess>

@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function HeaderBox({ icon, text, breakpoint, badge, onClick = null }) {
+export default function HeaderBox({ icon, text, breakpoint, badge, onClick = null, avatar = null }) {
   return (
     <div
       onClick={onClick}
@@ -9,9 +9,13 @@ export default function HeaderBox({ icon, text, breakpoint, badge, onClick = nul
       } ${breakpoint && 'dark:bg-dark-3 dark:border-none'}`}
     >
       <div className="w-6 sm:w-7">
-        <svg>
-          <use href={`/sprite/hero.svg#${icon}`}></use>
-        </svg>
+        {avatar ? (
+          <img src={avatar} alt="avatar" className="rounded-full w-8 h-8 object-cover" />
+        ) : (
+          <svg>
+            <use href={`/sprite/hero.svg#${icon}`}></use>
+          </svg>
+        )}
       </div>
       {text && <div className={`text-[13px] dark:text-white ${breakpoint && !breakpoint.full && 'hidden sm:block'}`}>{text}</div>}
       {badge != undefined && (

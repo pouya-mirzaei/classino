@@ -64,7 +64,13 @@ export default function Header({ onOpenSidebar, onToggleDark, dark }) {
           <Link to={'finance'} className="hidden sm:inline-block">
             <HeaderBox icon="wallet" text={user.credit_balance.toLocaleString() + ' ریال'} breakpoint={{ full: true }} />
           </Link>
-          <HeaderBox icon="user-circle" text={user.name} breakpoint={{ full: false }} onClick={openDropDown} />
+          <HeaderBox
+            icon="user-circle"
+            text={user.name}
+            breakpoint={{ full: false }}
+            onClick={openDropDown}
+            avatar={user.avatar_url}
+          />
           {isDropDownOpen && (
             <div
               className="absolute left-5 top-5 bg-white dar:bg-dark-2 rounded-lg shadow-md shadow-black/10 w-44"
