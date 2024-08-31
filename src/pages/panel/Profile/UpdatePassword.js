@@ -1,9 +1,9 @@
 import { useFormik } from 'formik';
 import React, { useState } from 'react';
 import PreLoader from '../../../components/PreLoader';
-import useAuth from '../../../hooks/useAuth';
 import { toast } from 'react-toastify';
 import BtnSuccess from '../../../components/panel/Button/BtnSuccess';
+import useAuth from '../../../hooks/api/useAuth';
 
 export default function UpdatePassword() {
   const [isLoading, setIsLoading] = useState(false);

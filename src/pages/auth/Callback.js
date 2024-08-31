@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import PreLoader from '../../components/PreLoader';
-import useAuth from '../../hooks/useAuth';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import useAuth from '../../hooks/api/useAuth';
 
 export default function Callback() {
   const { user, refetchUser } = useAuth();

@@ -1,11 +1,11 @@
 import { useFormik } from 'formik';
 import React, { useEffect, useState } from 'react';
-import useAuth from '../../../hooks/useAuth';
 import BtnSuccess from '../../../components/panel/Button/BtnSuccess';
-import { useStorage } from '../../../hooks/useStorage';
 import { getAllStates, getCitiesWithStateId } from '../../../api/cities';
 import { toast } from 'react-toastify';
 import PreLoader from '../../../components/PreLoader';
+import useStorage from '../../../hooks/api/useStorage';
+import useAuth from '../../../hooks/api/useAuth';
 
 export default function EditProfile() {
   const [states, setStates] = useState([]);

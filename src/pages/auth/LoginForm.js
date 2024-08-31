@@ -2,11 +2,10 @@ import React, { useState } from 'react';
 import './glow.css';
 import SecondaryHeading from '../../components/panel/SecondaryHeading';
 import { useFormik } from 'formik';
-import useAuth from '../../hooks/useAuth';
-import { supabase } from '../../supabase/supabaseConfig';
 import { toast } from 'react-toastify';
 import { Link, useNavigate } from 'react-router-dom';
 import { useQueryClient } from '@tanstack/react-query';
+import useAuth from '../../hooks/api/useAuth';
 export default function LoginForm() {
   const navigate = useNavigate();
   const { loginWithProvider, signInWithEmailAndPassword } = useAuth();

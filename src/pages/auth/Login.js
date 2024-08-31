@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import SignUpForm from './SignUpForm';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
-import LoginForm from './LoginForm';
-import useAuth from '../../hooks/useAuth';
+import useAuth from '../../hooks/api/useAuth';
 
 export default function Login() {
   const navigate = useNavigate();

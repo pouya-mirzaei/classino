@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from '../../components/home/Header';
-import useAuth from '../../hooks/useAuth';
+import useAuth from '../../hooks/api/useAuth';
 
 export default function EmailConfirmation() {
   const navigate = useNavigate();

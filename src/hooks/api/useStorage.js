@@ -1,7 +1,7 @@
 import { useMutation } from '@tanstack/react-query';
-import { supabase } from '../supabase/supabaseConfig';
+import { supabase } from '../../supabase/supabaseConfig';
 
-export const useStorage = () => {
+export default function useStorage() {
   const uploadFile = useMutation({
     mutationFn: async ({ bucket, file }) => {
       if (!file) {
@@ -51,4 +51,4 @@ export const useStorage = () => {
     getImagePublicUrl,
     deleteFile,
   };
-};
+}

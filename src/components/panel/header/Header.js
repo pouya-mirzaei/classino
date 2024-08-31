@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import HeaderBox from './HeaderBox';
 import { useCart } from '../../../Contexts/CartContext';
-import useAuth from '../../../hooks/useAuth';
+import useAuth from '../../../hooks/api/useAuth';
 
 export default function Header({ onOpenSidebar, onToggleDark, dark }) {
   const [isDropDownOpen, setIsDropDownOpen] = useState(false);
