@@ -5,6 +5,8 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import useCourses from '../../../hooks/api/useCourses';
 import PreLoader from '../../../components/PreLoader';
+import { useCourseCategories } from '../../../hooks/api/uesCourseCategories';
+import Alert from '../../../components/panel/Alert/Alert';
 
 export default function Store() {
   const [searchInput, setSearchInput] = useState('');
@@ -12,22 +14,16 @@ export default function Store() {
   const [gradeInput, setGradeInput] = useState('');
   const [lessonInput, setLessonInput] = useState('');
   const [teacherInput, setTeacherInput] = useState('');
-  const { courses, isFetching, isError } = useCourses();
+
+  // queries
+  const { courses, isFetching, isError } = useCourses({ title: searchInput, category: courseInput });
+  const { courseCategories, isLoading: isCategoryLoading } = useCourseCategories();
 
   if (isError) {
     toast.error('مشکلی پیش آمد، لطفا بعدا تلاش کنید', {
       className: 'font-primary text-xs',
     });
   }
-
-  const badgeData = [
-    { id: 0, img: '/images/doreh/DoreJameDahomEshteraki1403-Big.8fd2f5b9.png' },
-    { id: 1, img: '/images/doreh/DoreJameDahomYazdahom1403-Big.d762d1a1.png' },
-    { id: 2, img: '/images/doreh/DoreJameDavazdahom1403-Big.e2f16463.png' },
-    { id: 3, img: '/images/doreh/DoreJameKonkoor1403-Big.4ddc5616.png' },
-    { id: 4, img: '/images/doreh/DoreJamePanjomTaNohom1403-Big.81a8226b.png' },
-    { id: 5, img: '/images/doreh/zabaninopng.png' },
-  ];
 
   const formatNumber = (num) => num.toLocaleString('fa-ir');
 
@@ -48,14 +44,15 @@ export default function Store() {
 
   return (
     <section className="p-section relative">
-      <PreLoader pending={isFetching} title={'در حال بارگذاری...'} />
       <PrimaryHeading>فروشگاه</PrimaryHeading>
 
       {/* badge section */}
-      <section className="m-0 flex flex-wrap items-center justify-around">
-        {badgeData.map((box) => (
-          <BadgeBox key={box.id} {...box} />
-        ))}
+      <section className="m-0 flex flex-wrap items-center justify-around relative">
+        <PreLoader pending={isCategoryLoading} title={'دسته بندی ها را انتخاب کنید'} />
+        {!isCategoryLoading &&
+          courseCategories.map((box) => (
+            <BadgeBox key={box.id} cover_image_url={box.cover_image_url} onClick={() => setCourseInput(box.id)} />
+          ))}
       </section>
 
       {/* store */}
@@ -75,16 +72,14 @@ export default function Store() {
           {/* sorting */}
           <div className="flex flex-wrap gap-5 items-center justify-center">
             <div className="store-sorting-input">
-              <input
-                type="text"
-                placeholder="دوره"
-                className="w-full py-2.5 px-5 rounded-lg shadow-md shadow-black/10"
-                value={courseInput}
-                onChange={(e) => setCourseInput(e.target.value)}
-              />
-              <svg className="absolute w-3 left-5 top-1/2 -translate-y-1/2 text-gray-600">
-                <use href="/sprite/hero.svg#chevron-down"></use>
-              </svg>
+              <select className="form-control" onChange={(e) => setCourseInput(e.target.value)} value={courseInput}>
+                <option value="">همه دوره ها</option>
+                {courseCategories?.map((category) => (
+                  <option key={category.id} value={category.id}>
+                    {category.name}
+                  </option>
+                ))}
+              </select>
             </div>
             <div className="store-sorting-input">
               <input
@@ -93,6 +88,7 @@ export default function Store() {
                 className="w-full py-2.5 px-5 rounded-lg shadow-md shadow-black/10"
                 value={gradeInput}
                 onChange={(e) => setGradeInput(e.target.value)}
+                disabled
               />
               <svg className="absolute w-3 left-5 top-1/2 -translate-y-1/2 text-gray-600">
                 <use href="/sprite/hero.svg#chevron-down"></use>
@@ -105,6 +101,7 @@ export default function Store() {
                 className="w-full py-2.5 px-5 rounded-lg shadow-md shadow-black/10"
                 value={lessonInput}
                 onChange={(e) => setLessonInput(e.target.value)}
+                disabled
               />
               <svg className="absolute w-3 left-5 top-1/2 -translate-y-1/2 text-gray-600">
                 <use href="/sprite/hero.svg#chevron-down"></use>
@@ -117,6 +114,7 @@ export default function Store() {
                 className="w-full py-2.5 px-5 rounded-lg shadow-md shadow-black/10"
                 value={teacherInput}
                 onChange={(e) => setTeacherInput(e.target.value)}
+                disabled
               />
               <svg className="absolute w-3 left-5 top-1/2 -translate-y-1/2 text-gray-600">
                 <use href="/sprite/hero.svg#chevron-down"></use>
@@ -126,14 +124,21 @@ export default function Store() {
         </div>
 
         {/* results */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 mt-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 mt-10 relative">
+          {!isFetching && courses.length === 0 && (
+            <Alert status="warning" className="col-span-full">
+              دوره ای برای نمایش وجود ندارد{' '}
+            </Alert>
+          )}
+
+          <PreLoader pending={isFetching} title={'در حال بارگذاری...'} />
+
           {!isFetching &&
             !isError &&
             courses.map((course) => (
               <div
                 key={course.id}
                 className="bg-white dark:bg-dark-2 dark:text-white shadow-md shadow-black/10 overflow-hidden rounded-xl cursor-pointer hover:shadow-xl hover:scale-105 transition-all duration-200"
-                onClick={() => console.log(course)}
               >
                 <div>
                   <img src={course.course_image_url} alt={course.title} className="w-full h-80 bg-cover" />
@@ -170,9 +175,12 @@ export default function Store() {
   );
 }
 
-function BadgeBox({ img }) {
+function BadgeBox({ cover_image_url: img, ...props }) {
   return (
-    <div className="lg:basis-[200px]  md:basis-1/2 l0g:m-2.5 my-2.5 transition-all duration-300 rounded-md overflow-hidden shadow-md hover:shadow-lg shadow-black/20 hover:scale-110 cursor-pointer">
+    <div
+      {...props}
+      className="lg:basis-[200px]  md:basis-1/2 l0g:m-2.5 my-2.5 transition-all duration-300 rounded-md overflow-hidden shadow-md hover:shadow-lg shadow-black/20 hover:scale-110 cursor-pointer"
+    >
       <img src={img} alt="course box" className="w-full h-full bg-cover" />
     </div>
   );
