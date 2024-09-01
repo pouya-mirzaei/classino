@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { getAllCourses } from '../../../functions/Utilities';
 import PrimaryHeading from '../../../components/panel/PrimaryHeading';
 import { useCart } from '../../../Contexts/CartContext';
-import { toast, ToastContainer } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import useCourses from '../../../hooks/api/useCourses';
+import PreLoader from '../../../components/PreLoader';
 
 export default function Store() {
   const [searchInput, setSearchInput] = useState('');
@@ -11,6 +12,13 @@ export default function Store() {
   const [gradeInput, setGradeInput] = useState('');
   const [lessonInput, setLessonInput] = useState('');
   const [teacherInput, setTeacherInput] = useState('');
+  const { courses, isFetching, isError } = useCourses();
+
+  if (isError) {
+    toast.error('مشکلی پیش آمد، لطفا بعدا تلاش کنید', {
+      className: 'font-primary text-xs',
+    });
+  }
 
   const badgeData = [
     { id: 0, img: '/images/doreh/DoreJameDahomEshteraki1403-Big.8fd2f5b9.png' },
@@ -21,7 +29,6 @@ export default function Store() {
     { id: 5, img: '/images/doreh/zabaninopng.png' },
   ];
 
-  const results = getAllCourses();
   const formatNumber = (num) => num.toLocaleString('fa-ir');
 
   const cart = useCart();
@@ -40,7 +47,8 @@ export default function Store() {
   };
 
   return (
-    <section className="p-section">
+    <section className="p-section relative">
+      <PreLoader pending={isFetching} title={'در حال بارگذاری...'} />
       <PrimaryHeading>فروشگاه</PrimaryHeading>
 
       {/* badge section */}
@@ -51,7 +59,7 @@ export default function Store() {
       </section>
 
       {/* store */}
-      <section className="">
+      <section>
         {/* filtering */}
         <div className="flex items-center justify-center flex-col gap-5">
           {/* search */}
@@ -119,40 +127,43 @@ export default function Store() {
 
         {/* results */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 mt-10">
-          {results.map((course) => (
-            <div
-              key={course.id}
-              className="bg-white dark:bg-dark-2 dark:text-white shadow-md shadow-black/10 overflow-hidden rounded-xl cursor-pointer hover:shadow-xl hover:scale-105 transition-all duration-200"
-            >
-              <div>
-                <img src={course.image} alt={course.name} className="w-full h-80 bg-cover" />
-              </div>
-              <div className="py-5 px-2.5">
-                <span className="text-sm font-semibold">{course.name}</span>
-                {/* course details */}
-                <div className="flex items-center justify-between">
-                  <div>
-                    <span className="text-xs">قیمت : </span>
-                    <span className="text-xs font-bold">{formatNumber(course.price)} ریال</span>
-                  </div>
-                  <span className="text-xs text-blue-800 underline">بیشتر</span>
-                </div>
+          {!isFetching &&
+            !isError &&
+            courses.map((course) => (
+              <div
+                key={course.id}
+                className="bg-white dark:bg-dark-2 dark:text-white shadow-md shadow-black/10 overflow-hidden rounded-xl cursor-pointer hover:shadow-xl hover:scale-105 transition-all duration-200"
+                onClick={() => console.log(course)}
+              >
                 <div>
-                  <button
-                    className="mt-5 w-full bg-primary-1 text-white py-3 rounded-md shadow-md shadow-black/10 hover:bg-primary-2 active:scale-95 transition-all"
-                    onClick={() => handleAdd(course)}
-                  >
-                    <div className="flex items-center justify-center gap-2.5">
-                      <svg className="w-5 h-5 text-white">
-                        <use href="/sprite/hero.svg#shopping-cart"></use>
-                      </svg>
-                      <span>افزودن به سبد خرید</span>
+                  <img src={course.course_image_url} alt={course.title} className="w-full h-80 bg-cover" />
+                </div>
+                <div className="py-5 px-2.5">
+                  <span className="text-sm font-semibold">{course.title}</span>
+                  {/* course details */}
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <span className="text-xs">قیمت : </span>
+                      <span className="text-xs font-bold">{formatNumber(course.price)} ریال</span>
                     </div>
-                  </button>
+                    <span className="text-xs text-blue-800 underline">بیشتر</span>
+                  </div>
+                  <div>
+                    <button
+                      className="mt-5 w-full bg-primary-1 text-white py-3 rounded-md shadow-md shadow-black/10 hover:bg-primary-2 active:scale-95 transition-all"
+                      onClick={() => handleAdd(course)}
+                    >
+                      <div className="flex items-center justify-center gap-2.5">
+                        <svg className="w-5 h-5 text-white">
+                          <use href="/sprite/hero.svg#shopping-cart"></use>
+                        </svg>
+                        <span>افزودن به سبد خرید</span>
+                      </div>
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            ))}
         </div>
       </section>
     </section>
