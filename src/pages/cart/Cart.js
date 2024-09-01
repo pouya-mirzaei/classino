@@ -9,7 +9,7 @@ import PreLoader from '../../components/PreLoader';
 import { toast } from 'react-toastify';
 
 export default function Cart() {
-  const { cart, isFetching, isEmpty, finalPrice, removeFromCart } = useCart();
+  const cart = useCart();
   const [isUpdating, setUpdating] = useState(false);
   const navigate = useNavigate();
 
@@ -20,7 +20,7 @@ export default function Cart() {
       top: 0,
       behavior: 'smooth',
     });
-    if (isEmpty()) {
+    if (cart.isEmpty()) {
       navigate('/panel/store');
     }
   }, []);
@@ -31,9 +31,14 @@ export default function Cart() {
       {/* cart items */}
       <div className="flex justify-evenly flex-col lg:flex-row gap-5">
         <div className="basis-2/3 space-y-7 relative">
-          <PreLoader pending={isFetching || isUpdating} title={'در حال بارگذاری...'} />
-          {cart?.map((course) => (
-            <CoursePreview {...course.courses} key={course.id} removeFromCart={removeFromCart} handleUpdating={setUpdating} />
+          <PreLoader pending={cart.isFetching || isUpdating} title={'در حال بارگذاری...'} />
+          {cart.cart?.map((course) => (
+            <CoursePreview
+              {...course.courses}
+              key={course.id}
+              removeFromCart={cart.removeFromCart}
+              handleUpdating={setUpdating}
+            />
           ))}
         </div>
         <div className="basis-1/3">
@@ -52,12 +57,12 @@ export default function Cart() {
 
       {/* checkout */}
       <div className="flex flex-col md:flex-row gap-10">
-        <CheckOut isPending={isUpdating} />
-        <OffBox />
+        <CheckOut isPending={isUpdating} cart={cart} />
+        <DiscountBox cart={cart} isPending={isUpdating} handleUpdating={setUpdating} />
       </div>
       <Alert status="success" className="flex-wrap">
         <span className="basis-full mb-2 text-center md:basis-auto">قابل پرداخت از طریق درگاه:</span>
-        <span className="">{finalPrice(TAX)?.toLocaleString('fa-ir')} ریال</span>
+        <span className="">{cart.finalPrice(TAX)?.toLocaleString('fa-ir')} ریال</span>
         <button className="h-12 min-w-[80px] px-5 item-link text-sm text-white rounded-3xl shadow-lg shadow-black/20">
           تایید نهایی خرید
         </button>
@@ -66,16 +71,31 @@ export default function Cart() {
   );
 }
 
-const OffBox = () => {
+const DiscountBox = ({ cart: { applyDiscount }, isPending, handleUpdating }) => {
   const [offInput, setOffInput] = useState('');
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('submitted');
+    if (!offInput) return;
+    handleUpdating(true);
+    try {
+      await applyDiscount(offInput);
+
+      toast.success('کد تخفیف با موفقیت اعمال شد', {
+        className: 'font-primary text-xs',
+      });
+      setOffInput('');
+    } catch (err) {
+      toast.error(err.message, {
+        className: 'font-primary text-xs',
+      });
+    }
+    handleUpdating(false);
   };
 
   return (
     <div className="grow space-y-5">
+      <PreLoader pending={isPending} title={'در حال اعتبارسنجی...'} />
       <SecondaryHeading>کد تخفیف</SecondaryHeading>
       <div className="bg-[#f6f8fc] dark:bg-dark-1 dark:text-white rounded-md shadow-md shadow-black/20 p-5">
         <p className="mb-7 font-bold">اگر کد تخفیفی دارید، اعمال کنید</p>
@@ -84,6 +104,7 @@ const OffBox = () => {
           <input
             type="text"
             value={offInput}
+            name="classino-discount"
             onChange={(e) => setOffInput(e.target.value)}
             className="h-10 md:w-72 w-full bg-white text-black pr-2 py-2 md:rounded-l-none rounded-lg shadow-lg shadow-black/30 text-xl"
           />
@@ -109,6 +130,7 @@ const CoursePreview = ({ id, price, title, course_image_url, removeFromCart, cou
             className: 'font-primary text-xs',
           });
         },
+
         onError: (error) => {
           toast.error(error.message, {
             className: 'font-primary text-xs',
