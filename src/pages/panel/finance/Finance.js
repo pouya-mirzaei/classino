@@ -1,8 +1,12 @@
 import React, { useState } from 'react';
 import PrimaryHeading from '../../../components/panel/PrimaryHeading';
+import useAuth from '../../../hooks/api/useAuth';
 
 export default function Finance() {
   const [titleIndex, setTitleIndex] = useState(0);
+  const {
+    user: { credit_balance },
+  } = useAuth();
 
   const titles = ['رسیدهای خرید', 'واریزی و پرداختی ', 'اقساط'];
 
@@ -17,7 +21,7 @@ export default function Finance() {
             <button className="text-white bg-tertiary-1 p-2.5 rounded-3xl text-sm">+ افزایش اعتبار</button>
             <div className="text-tertiary-1 text-2xl">
               <span> اعتبار (تراز مالی): </span>
-              <span className="font-semibold">0 ریال</span>
+              <span className="font-semibold">{credit_balance.toLocaleString('fa-ir')} ریال</span>
             </div>
           </div>
 

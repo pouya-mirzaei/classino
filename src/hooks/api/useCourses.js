@@ -12,7 +12,7 @@ export default function useCourses({ title = '', category = '' } = {}) {
   } = useQuery({
     queryKey: ['courses', debounceTitle, category],
     queryFn: async () => {
-      let query = supabase.from('courses').select('*, teachers(*)');
+      let query = supabase.from('courses').select('*, teachers(*)').eq('is_purchasable', true);
 
       if (title) {
         query = query.ilike('title', `%${title}%`);

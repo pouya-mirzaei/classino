@@ -17,6 +17,7 @@ export function useCart() {
       if (error) throw error;
       return data;
     },
+    staleTime: 0,
   });
 
   const addToCart = useMutation({

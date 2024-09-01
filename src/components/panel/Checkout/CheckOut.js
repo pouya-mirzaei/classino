@@ -2,9 +2,13 @@ import React, { useContext } from 'react';
 import SecondaryHeading from '../SecondaryHeading';
 import PreLoader from '../../PreLoader';
 import { useCart } from '../../../hooks/api/useCart';
+import useAuth from '../../../hooks/api/useAuth';
 
 export default function CheckOut({ isPending }) {
   const { totalPrice, taxToPay, finalPrice } = useCart();
+  const {
+    user: { credit_balance },
+  } = useAuth();
   const TAX = 10;
 
   return (
@@ -28,7 +32,7 @@ export default function CheckOut({ isPending }) {
           </div>
           <div className="flex gap-5 mb-5">
             <span className="basis-1/2 text-xs font-bold text-gray-600 dark:text-white">اعتبار شما:</span>
-            <span className="basis-1/2 font-bold text-sm">{parseInt('0')?.toLocaleString('fa-ir')} ریال</span>
+            <span className="basis-1/2 font-bold text-sm">{credit_balance.toLocaleString('fa-ir')} ریال</span>
           </div>
           <div className="flex gap-5 mb-5">
             <span className="basis-1/2 text-xs font-bold text-gray-600 dark:text-white">قابل پرداخت</span>
