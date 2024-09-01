@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import PrimaryHeading from '../../../components/panel/PrimaryHeading';
-import { useCart } from '../../../Contexts/CartContext';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import useCourses from '../../../hooks/api/useCourses';
 import PreLoader from '../../../components/PreLoader';
 import { useCourseCategories } from '../../../hooks/api/uesCourseCategories';
 import Alert from '../../../components/panel/Alert/Alert';
+import { useCart } from '../../../hooks/api/useCart';
 
 export default function Store() {
   const [searchInput, setSearchInput] = useState('');
@@ -14,7 +14,7 @@ export default function Store() {
   const [gradeInput, setGradeInput] = useState('');
   const [lessonInput, setLessonInput] = useState('');
   const [teacherInput, setTeacherInput] = useState('');
-
+  const [isAdding, setIsAdding] = useState(false);
   // queries
   const { courses, isFetching, isError } = useCourses({ title: searchInput, category: courseInput });
   const { courseCategories, isLoading: isCategoryLoading } = useCourseCategories();
@@ -27,18 +27,33 @@ export default function Store() {
 
   const formatNumber = (num) => num.toLocaleString('fa-ir');
 
-  const cart = useCart();
+  const { addToCart, contains } = useCart();
 
   const handleAdd = (course) => {
-    if (cart.contains(course.id)) {
+    if (contains(course.id)) {
       toast.error('این محصول در سبد خرید شما موجود است', {
         className: 'font-primary text-xs',
       });
     } else {
-      cart.addToCart(course);
-      toast.success('محصول مورد نظر به سبد خرید اضافه شد', {
-        className: 'font-primary text-xs',
-      });
+      setIsAdding(true);
+      addToCart.mutate(
+        { courseId: course.id },
+        {
+          onSuccess: () => {
+            toast.success('محصول مورد نظر به سبد خرید اضافه شد', {
+              className: 'font-primary text-xs',
+            });
+          },
+          onError: (error) => {
+            toast.error(error.message, {
+              className: 'font-primary text-xs',
+            });
+          },
+          onSettled: () => {
+            setIsAdding(false);
+          },
+        }
+      );
     }
   };
 
@@ -49,10 +64,9 @@ export default function Store() {
       {/* badge section */}
       <section className="m-0 flex flex-wrap items-center justify-around relative">
         <PreLoader pending={isCategoryLoading} title={'دسته بندی ها را انتخاب کنید'} />
-        {!isCategoryLoading &&
-          courseCategories.map((box) => (
-            <BadgeBox key={box.id} cover_image_url={box.cover_image_url} onClick={() => setCourseInput(box.id)} />
-          ))}
+        {courseCategories?.map((box) => (
+          <BadgeBox key={box.id} cover_image_url={box.cover_image_url} onClick={() => setCourseInput(box.id)} />
+        ))}
       </section>
 
       {/* store */}
@@ -132,6 +146,7 @@ export default function Store() {
           )}
 
           <PreLoader pending={isFetching} title={'در حال بارگذاری...'} />
+          <PreLoader pending={isAdding} title={'در حال اضافه کردن...'} />
 
           {!isFetching &&
             !isError &&

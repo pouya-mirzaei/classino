@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import HeaderBox from './HeaderBox';
-import { useCart } from '../../../Contexts/CartContext';
 import useAuth from '../../../hooks/api/useAuth';
+import { useCart } from '../../../hooks/api/useCart';
 
 export default function Header({ onOpenSidebar, onToggleDark, dark }) {
   const [isDropDownOpen, setIsDropDownOpen] = useState(false);
   const { signOut, user } = useAuth();
   const navigate = useNavigate();
 
-  const { cartItems } = useCart();
+  const { size } = useCart();
 
   useEffect(() => {
     if (isDropDownOpen)
@@ -59,7 +59,7 @@ export default function Header({ onOpenSidebar, onToggleDark, dark }) {
           <HeaderBox icon="chat-left" badge="0" />
           <HeaderBox icon="bell" badge="0" />
           <Link to={'cart'}>
-            <HeaderBox icon="shopping-cart" badge={cartItems.length} />
+            <HeaderBox icon="shopping-cart" badge={size()} />
           </Link>
           <Link to={'finance'} className="hidden sm:inline-block">
             <HeaderBox icon="wallet" text={user.credit_balance.toLocaleString() + ' ریال'} breakpoint={{ full: true }} />

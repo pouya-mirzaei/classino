@@ -1,14 +1,16 @@
 import PrimaryHeading from '../../components/panel/PrimaryHeading';
 import Alert from '../../components/panel/Alert/Alert';
-import { useCart } from '../../Contexts/CartContext';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import CheckOut from '../../components/panel/Checkout/CheckOut';
 import SecondaryHeading from '../../components/panel/SecondaryHeading';
+import { useCart } from '../../hooks/api/useCart';
+import PreLoader from '../../components/PreLoader';
+import { toast } from 'react-toastify';
 
 export default function Cart() {
-  const cart = useCart();
-  const courses = cart.cartItems;
+  const { cart, isFetching, isEmpty, finalPrice, removeFromCart } = useCart();
+  const [isUpdating, setUpdating] = useState(false);
   const navigate = useNavigate();
 
   const TAX = 10;
@@ -18,7 +20,7 @@ export default function Cart() {
       top: 0,
       behavior: 'smooth',
     });
-    if (cart.isEmpty()) {
+    if (isEmpty()) {
       navigate('/panel/store');
     }
   }, []);
@@ -26,12 +28,12 @@ export default function Cart() {
   return (
     <section className="p-section space-y-10">
       <PrimaryHeading>سبد خرید</PrimaryHeading>
-
       {/* cart items */}
       <div className="flex justify-evenly flex-col lg:flex-row gap-5">
-        <div className="basis-2/3 space-y-7">
-          {courses.map((course) => (
-            <CoursePreview {...course} key={course.id} cart={cart} />
+        <div className="basis-2/3 space-y-7 relative">
+          <PreLoader pending={isFetching || isUpdating} title={'در حال بارگذاری...'} />
+          {cart?.map((course) => (
+            <CoursePreview {...course.courses} key={course.id} removeFromCart={removeFromCart} handleUpdating={setUpdating} />
           ))}
         </div>
         <div className="basis-1/3">
@@ -50,13 +52,12 @@ export default function Cart() {
 
       {/* checkout */}
       <div className="flex flex-col md:flex-row gap-10">
-        <CheckOut />
+        <CheckOut isPending={isUpdating} />
         <OffBox />
       </div>
-
       <Alert status="success" className="flex-wrap">
         <span className="basis-full mb-2 text-center md:basis-auto">قابل پرداخت از طریق درگاه:</span>
-        <span className="">{cart.finalPrice(TAX).toLocaleString('fa-ir')} ریال</span>
+        <span className="">{finalPrice(TAX)?.toLocaleString('fa-ir')} ریال</span>
         <button className="h-12 min-w-[80px] px-5 item-link text-sm text-white rounded-3xl shadow-lg shadow-black/20">
           تایید نهایی خرید
         </button>
@@ -97,29 +98,51 @@ const OffBox = () => {
   );
 };
 
-const CoursePreview = ({ id, price, name, image, cart }) => {
+const CoursePreview = ({ id, price, title, course_image_url, removeFromCart, course_id, handleUpdating }) => {
+  const handleRemove = () => {
+    handleUpdating(true);
+    removeFromCart.mutate(
+      { courseId: id },
+      {
+        onSuccess: () => {
+          toast.success('دوره با موفقیت از سبد خرید حذف شد', {
+            className: 'font-primary text-xs',
+          });
+        },
+        onError: (error) => {
+          toast.error(error.message, {
+            className: 'font-primary text-xs',
+          });
+        },
+        onSettled: () => {
+          handleUpdating(false);
+        },
+      }
+    );
+  };
+
   return (
     <div className="bg-white dark:bg-dark-1 dark:text-white rounded-lg shadow-md shadow-black/10 px-5 py-2 flex flex-col md:flex-row items-center gap-10">
       {/* delete icon and image */}
       <div className="basis-1/4 w-full flex items-center md:justify-around justify-between flex-row-reverse md:flex-row">
-        <span className="cursor-pointer" onClick={() => cart.removeFromCart(id)}>
+        <span className="cursor-pointer" onClick={handleRemove}>
           <svg className="text-red-600 w-8 h-8">
             <use href="/sprite/hero.svg#trash"></use>
           </svg>
         </span>
         <div className="w-[85px] h-[85px] overflow-hidden rounded-lg">
-          <img src={image} alt={name} />
+          <img src={course_image_url} alt={title} />
         </div>
       </div>
 
       {/* course details */}
       <div className="basis-2/3 self-start">
         <span className="text-xs font-bold text-gray-400">نام دوره :</span>
-        <div className="mb-5 text-sm font-bold">{name}</div>
+        <div className="mb-5 text-sm font-bold">{title}</div>
 
         <div>
           <span className="text-xs font-bold text-gray-400">کد محصول : </span>
-          <span className="text-sm text-gray-700 dark:text-white">{id.toLocaleString('fa-ir')}</span>
+          <span className="text-sm text-gray-700 dark:text-white">{course_id}</span>
         </div>
         <div>
           <span className="text-xs font-bold text-gray-400">قیمت دوره : </span>
