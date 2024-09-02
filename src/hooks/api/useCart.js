@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import useAuth from './useAuth';
 import { supabase } from '../../supabase/supabaseConfig';
 import { useEffect, useState } from 'react';
@@ -7,6 +7,7 @@ export function useCart() {
   const { user, updateCreditBalance } = useAuth();
   const [discountCode, setDiscountCode] = useState('');
   const [discount, setDiscount] = useState(0);
+  const queryClient = useQueryClient();
 
   const {
     data: cart,
@@ -39,6 +40,7 @@ export function useCart() {
     onSuccess: () => {
       updateCreditBalance.mutate(finalPrice(10));
       clearCart.mutate();
+      queryClient.invalidateQueries({ queryKey: ['userCourses', user.id] });
     },
   });
 
@@ -98,7 +100,7 @@ export function useCart() {
     setDiscount(0);
   };
 
-  const contains = (courseId) => cart.some((course) => course.course_id === courseId);
+  const contains = (courseId) => cart.some((course) => course.courses.id === courseId);
   const isEmpty = () => cart?.length === 0;
   const totalPrice = () => cart?.reduce((sum, item) => sum + item.courses.price, 0) || 0;
   const discountAmount = (tax) => ((totalPrice() + taxToPay(tax)) * discount) / 100;

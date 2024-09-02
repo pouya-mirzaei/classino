@@ -1,21 +1,40 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { useEnrollments } from '../../../hooks/api/useEnrollments';
+import PreLoader from '../../../components/PreLoader';
+import Alert from '../../../components/panel/Alert/Alert';
 
 export default function Courses() {
+  const { userCourses, isUserCoursesFetching } = useEnrollments();
+
   return (
-    <section className="p-section">
-      <ul className="space-y-2.5 dark:text-white">
-        <CourseBox id="1" title="کلاس آنلاین جامع مرداد کنکور1403 حسابان استاد آریان حیدری" image="/images/courses/3.png" />
-        <CourseBox id="2" title="کلاس آنلاین جاست تست 1403 حسابان استاد آریان حیدری" image="/images/courses/2.png" />
-      </ul>
+    <section className="p-section relative h-full">
+      <PreLoader pending={isUserCoursesFetching} title={'در حال بارگذاری...'} />
+      {!isUserCoursesFetching && !userCourses?.length ? (
+        <Alert status={'warning'}>
+          <p>موردی برای نمایش وجود ندارد</p>
+        </Alert>
+      ) : (
+        <ul className="space-y-2.5 dark:text-white relative">
+          {userCourses?.map(({ courses: course }) => (
+            <CourseBox
+              key={course.id}
+              id={course.id}
+              title={course.title}
+              image={course.course_image_url}
+              slug={course.course_id}
+            />
+          ))}
+        </ul>
+      )}
     </section>
   );
 }
 
-function CourseBox({ id, title, image }) {
+function CourseBox({ id, title, image, slug }) {
   return (
     <li className="w-full bg-white dark:bg-dark-1 rounded-xl shadow shadow-black/10">
-      <Link to={`/panel/courses/${id}`} className="w-full h-full inline-block p-5">
+      <Link to={`/panel/courses/${slug}`} className="w-full h-full inline-block p-5">
         <div className="flex items-center flex-wrap gap-y-10">
           {/* course title and image */}
           <div className="flex flex-col md:flex-row items-center justify-center md:justify-start basis-full lg:basis-2/5 gap-5">

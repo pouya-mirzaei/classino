@@ -7,6 +7,7 @@ import PreLoader from '../../../components/PreLoader';
 import { useCourseCategories } from '../../../hooks/api/uesCourseCategories';
 import Alert from '../../../components/panel/Alert/Alert';
 import { useCart } from '../../../hooks/api/useCart';
+import { useEnrollments } from '../../../hooks/api/useEnrollments';
 
 export default function Store() {
   const [searchInput, setSearchInput] = useState('');
@@ -18,6 +19,7 @@ export default function Store() {
   // queries
   const { courses, isFetching, isError } = useCourses({ title: searchInput, category: courseInput });
   const { courseCategories, isLoading: isCategoryLoading } = useCourseCategories();
+  const { hasCourse } = useEnrollments();
 
   if (isError) {
     toast.error('مشکلی پیش آمد، لطفا بعدا تلاش کنید', {
@@ -29,32 +31,42 @@ export default function Store() {
 
   const { addToCart, contains } = useCart();
 
-  const handleAdd = (course) => {
+  const handleAdd = async (course) => {
+    setIsAdding(true);
+
     if (contains(course.id)) {
       toast.error('این محصول در سبد خرید شما موجود است', {
         className: 'font-primary text-xs',
       });
-    } else {
-      setIsAdding(true);
-      addToCart.mutate(
-        { courseId: course.id },
-        {
-          onSuccess: () => {
-            toast.success('محصول مورد نظر به سبد خرید اضافه شد', {
-              className: 'font-primary text-xs',
-            });
-          },
-          onError: (error) => {
-            toast.error(error.message, {
-              className: 'font-primary text-xs',
-            });
-          },
-          onSettled: () => {
-            setIsAdding(false);
-          },
-        }
-      );
+      return;
     }
+
+    const hasThisCourse = await hasCourse(course.id);
+    if (hasThisCourse) {
+      toast.error('شما این محصول را خریداری کرده اید', {
+        className: 'font-primary text-xs',
+      });
+      return;
+    }
+
+    addToCart.mutate(
+      { courseId: course.id },
+      {
+        onSuccess: () => {
+          toast.success('محصول مورد نظر به سبد خرید اضافه شد', {
+            className: 'font-primary text-xs',
+          });
+        },
+        onError: (error) => {
+          toast.error(error.message, {
+            className: 'font-primary text-xs',
+          });
+        },
+        onSettled: () => {
+          setIsAdding(false);
+        },
+      }
+    );
   };
 
   return (
