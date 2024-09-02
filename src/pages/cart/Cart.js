@@ -7,8 +7,12 @@ import SecondaryHeading from '../../components/panel/SecondaryHeading';
 import { useCart } from '../../hooks/api/useCart';
 import PreLoader from '../../components/PreLoader';
 import { toast } from 'react-toastify';
+import useAuth from '../../hooks/api/useAuth';
 
 export default function Cart() {
+  const {
+    user: { credit_balance },
+  } = useAuth();
   const cart = useCart();
   const [isUpdating, setUpdating] = useState(false);
   const navigate = useNavigate();
@@ -25,6 +29,34 @@ export default function Cart() {
     }
   }, []);
 
+  const handleEnroll = () => {
+    setUpdating(true);
+    if (cart.isEmpty()) {
+      toast.warning('سبد خرید خالی است', {
+        className: 'font-primary text-xs',
+      });
+      setUpdating(false);
+      return;
+    }
+
+    cart.enroll.mutate(cart.cart, {
+      onSuccess: () => {
+        toast.success('خرید شما با موفقیت انجام شد', {
+          className: 'font-primary text-xs',
+        });
+        // navigate('/panel/mycourselist');
+      },
+      onError: (error) => {
+        toast.error(error.message, {
+          className: 'font-primary text-xs text-right',
+        });
+      },
+      onSettled: () => {
+        setUpdating(false);
+      },
+    });
+  };
+
   return (
     <section className="p-section space-y-10">
       <PrimaryHeading>سبد خرید</PrimaryHeading>
@@ -35,7 +67,7 @@ export default function Cart() {
           {cart.cart?.map((course) => (
             <CoursePreview
               {...course.courses}
-              key={course.id}
+              key={course.courses.id}
               removeFromCart={cart.removeFromCart}
               handleUpdating={setUpdating}
             />
@@ -62,8 +94,13 @@ export default function Cart() {
       </div>
       <Alert status="success" className="flex-wrap">
         <span className="basis-full mb-2 text-center md:basis-auto">قابل پرداخت از طریق درگاه:</span>
-        <span className="">{cart.finalPrice(TAX)?.toLocaleString('fa-ir')} ریال</span>
-        <button className="h-12 min-w-[80px] px-5 item-link text-sm text-white rounded-3xl shadow-lg shadow-black/20">
+        <span className="">
+          {(cart.finalPrice(TAX) - credit_balance < 0 ? '0' : cart.finalPrice(TAX) - credit_balance).toLocaleString('fa-ir')} ریال
+        </span>
+        <button
+          className="h-12 min-w-[80px] px-5 item-link text-sm text-white rounded-3xl shadow-lg shadow-black/20 focus:scale-95 hover:scale-105"
+          onClick={handleEnroll}
+        >
           تایید نهایی خرید
         </button>
       </Alert>

@@ -28,7 +28,7 @@ export default function CheckOut({ isPending, cart }) {
           <div className="flex gap-5 mb-6">
             <span className="basis-1/2 text-sm font-bold text-primary-1 dark:text-white">مبلغ نهایی:</span>
             <span className="basis-1/2 font-bold text-base text-primary-1">
-              {cart.finalPrice(TAX)?.toLocaleString('fa-ir')} ریال
+              {(cart.totalPrice() + cart.taxToPay(TAX))?.toLocaleString('fa-ir')} ریال
             </span>
           </div>
           {cart.discount > 0 && (
@@ -43,7 +43,7 @@ export default function CheckOut({ isPending, cart }) {
                 </span>
               </span>
               <div className="basis-1/2 flex flex-col text-secondary-1">
-                <span className="font-bold text-sm">{cart.discountAmount().toLocaleString('fa-ir')} ریال</span>
+                <span className="font-bold text-sm">{cart.discountAmount(TAX).toLocaleString('fa-ir')} ریال</span>
                 <span className="text-xs">({cart.discount}% تخفیف)</span>
               </div>
             </div>
@@ -56,7 +56,8 @@ export default function CheckOut({ isPending, cart }) {
           <div className="flex gap-5 mb-5">
             <span className="basis-1/2 text-xs font-bold text-gray-600 dark:text-white">قابل پرداخت</span>
             <span className="basis-1/2 font-bold text-sm border border-black dark:border-white p-2">
-              {cart.finalPrice(TAX).toLocaleString('fa-ir')} ریال
+              {(cart.finalPrice(TAX) - credit_balance < 0 ? '0' : cart.finalPrice(TAX) - credit_balance).toLocaleString('fa-ir')}{' '}
+              ریال
             </span>
           </div>
         </div>

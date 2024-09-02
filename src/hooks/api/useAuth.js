@@ -96,6 +96,20 @@ export default function useAuth() {
     },
   });
 
+  const updateCreditBalance = useMutation({
+    mutationFn: async (enrolledAmount) => {
+      const updates = { credit_balance: user.credit_balance - enrolledAmount };
+      const { data, error } = await supabase.from('users').update(updates).eq('id', user?.id).single();
+      if (error) throw error;
+
+      return data;
+    },
+
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['user'] });
+    },
+  });
+
   const signOut = () => {
     supabase.auth.signOut();
     queryClient.invalidateQueries({ queryKey: ['user'] });
@@ -111,5 +125,6 @@ export default function useAuth() {
     signInWithEmailAndPassword,
     updateUser,
     changePassword,
+    updateCreditBalance,
   };
 }
