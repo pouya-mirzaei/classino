@@ -110,6 +110,20 @@ export default function useAuth() {
     },
   });
 
+  const increaseCreditBalance = useMutation({
+    mutationKey: ['increaseCreditBalance'],
+    mutationFn: async (amount) => {
+      const newBalance = user.credit_balance + amount;
+      if (newBalance > 100_000_000) throw new Error('حداکثر میزان اعتبار شما 100 میلیون ریال است');
+
+      const updates = { credit_balance: newBalance };
+      const { data, error } = await supabase.from('users').update(updates).eq('id', user?.id).single();
+      if (error) throw error;
+
+      return data;
+    },
+  });
+
   const signOut = () => {
     supabase.auth.signOut();
     queryClient.invalidateQueries({ queryKey: ['user'] });
@@ -126,5 +140,6 @@ export default function useAuth() {
     updateUser,
     changePassword,
     updateCreditBalance,
+    increaseCreditBalance,
   };
 }

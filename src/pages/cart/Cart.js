@@ -98,7 +98,7 @@ export default function Cart() {
           {(cart.finalPrice(TAX) - credit_balance < 0 ? '0' : cart.finalPrice(TAX) - credit_balance).toLocaleString('fa-ir')} ریال
         </span>
         <button
-          className="h-12 min-w-[80px] px-5 item-link text-sm text-white rounded-3xl shadow-lg shadow-black/20 focus:scale-95 hover:scale-105"
+          className="h-12 min-w-[80px] px-5 item-link text-sm text-white rounded-3xl shadow-lg shadow-black/20 active:scale-95 hover:scale-105"
           onClick={handleEnroll}
         >
           تایید نهایی خرید

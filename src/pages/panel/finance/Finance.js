@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import PrimaryHeading from '../../../components/panel/PrimaryHeading';
 import useAuth from '../../../hooks/api/useAuth';
+import { Link } from 'react-router-dom';
 
 export default function Finance() {
   const [titleIndex, setTitleIndex] = useState(0);
@@ -18,7 +19,11 @@ export default function Finance() {
         {/*  */}
         <div className="md:col-span-2 bg-white dark:bg-dark-1 flex flex-col lg:flex-row items-center justify-center p-5 gap-10">
           <div className="lg:basis-1/2 h-4/5 flex flex-col items-center justify-around  gap-10 lg:border-l">
-            <button className="text-white bg-tertiary-1 p-2.5 rounded-3xl text-sm">+ افزایش اعتبار</button>
+            <Link to="/panel/increase-credit">
+              <button className="h-12 min-w-[80px] px-5 item-link text-sm bg-[#20bf6b] hover:bg-[#169250] text-white rounded-3xl shadow-lg shadow-black/20 active:scale-95 hover:scale-105 transition-all duration-200">
+                + افزایش اعتبار
+              </button>
+            </Link>
             <div className="text-tertiary-1 text-2xl">
               <span> اعتبار (تراز مالی): </span>
               <span className="font-semibold">{credit_balance.toLocaleString('fa-ir')} ریال</span>

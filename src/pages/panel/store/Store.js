@@ -38,6 +38,7 @@ export default function Store() {
       toast.error('این محصول در سبد خرید شما موجود است', {
         className: 'font-primary text-xs',
       });
+      setIsAdding(false);
       return;
     }
 
@@ -46,6 +47,7 @@ export default function Store() {
       toast.error('شما این محصول را خریداری کرده اید', {
         className: 'font-primary text-xs',
       });
+      setIsAdding(false);
       return;
     }
 

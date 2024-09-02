@@ -15,6 +15,7 @@ import LoginForm from './pages/auth/LoginForm';
 import SignUpForm from './pages/auth/SignUpForm';
 import Callback from './pages/auth/Callback';
 import EmailConfirmation from './pages/auth/EmailConfirmation';
+import IncreaseCredit from './pages/panel/finance/IncreaseCredit';
 
 const routes = [
   { path: '/', element: <Home /> },
@@ -42,6 +43,7 @@ const routes = [
       { path: 'dashboard', element: <Dashboard /> },
       { path: 'mycourselist', element: <Courses /> },
       { path: 'finance', element: <Finance /> },
+      { path: 'increase-credit', element: <IncreaseCredit /> },
       { path: 'store', element: <Store /> },
       { path: 'courses/:id', element: <CourseDetails /> },
       { path: 'cart', element: <Cart /> },
