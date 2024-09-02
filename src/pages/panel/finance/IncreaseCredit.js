@@ -1,17 +1,39 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import PanelDetail from '../../../components/panel/PanelDetail/PanelDetail';
 import SecondaryHeading from '../../../components/panel/SecondaryHeading';
 import { useFormik } from 'formik';
+import PreLoader from '../../../components/PreLoader';
+import useAuth from '../../../hooks/api/useAuth';
+import { toast } from 'react-toastify';
 
 export default function IncreaseCredit() {
+  const [isUpdating, setUpdating] = useState(false);
+
+  const { increaseCreditBalance } = useAuth();
+
   const { handleSubmit, handleChange, handleBlur, values, errors, touched } = useFormik({
     initialValues: {
       amount: '',
     },
     onSubmit: (values, { resetForm }) => {
-      console.log(values);
-      resetForm();
+      setUpdating(true);
+      increaseCreditBalance.mutate(values.amount, {
+        onSuccess: () => {
+          toast.success('اعتبار شما با موفقیت افزایش یافت', {
+            className: 'font-primary text-xs',
+          });
+        },
+        onError: (error) => {
+          toast.error(error.message, {
+            className: 'font-primary text-xs',
+          });
+        },
+        onSettled: () => {
+          setUpdating(false);
+          resetForm();
+        },
+      });
     },
     validate: (values) => {
       let errors = {};
@@ -23,7 +45,8 @@ export default function IncreaseCredit() {
   });
 
   return (
-    <section className="p-section">
+    <section className="p-section relative">
+      <PreLoader pending={isUpdating} title={'در حال افزایش اعتبار'} />
       <PanelDetail headerTitle={'افزایش اعتبار'}>
         <div className="py-2 flex items-center justify-between flex-col md:flex-row gap-5">
           <SecondaryHeading>میزان اعتبار مورد نظر (به ریال وارد شود):</SecondaryHeading>

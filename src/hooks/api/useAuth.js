@@ -122,6 +122,10 @@ export default function useAuth() {
 
       return data;
     },
+
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['user'] });
+    },
   });
 
   const signOut = () => {

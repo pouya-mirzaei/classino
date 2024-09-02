@@ -8,6 +8,7 @@ import { useCourseCategories } from '../../../hooks/api/uesCourseCategories';
 import Alert from '../../../components/panel/Alert/Alert';
 import { useCart } from '../../../hooks/api/useCart';
 import { useEnrollments } from '../../../hooks/api/useEnrollments';
+import { useTeachers } from '../../../hooks/api/useTeachers';
 
 export default function Store() {
   const [searchInput, setSearchInput] = useState('');
@@ -17,8 +18,9 @@ export default function Store() {
   const [teacherInput, setTeacherInput] = useState('');
   const [isAdding, setIsAdding] = useState(false);
   // queries
-  const { courses, isFetching, isError } = useCourses({ title: searchInput, category: courseInput });
+  const { courses, isFetching, isError } = useCourses({ title: searchInput, category: courseInput, teacher: teacherInput });
   const { courseCategories, isLoading: isCategoryLoading } = useCourseCategories();
+  const { teachers } = useTeachers();
   const { hasCourse } = useEnrollments();
 
   if (isError) {
@@ -102,11 +104,12 @@ export default function Store() {
             <div className="store-sorting-input">
               <select className="form-control" onChange={(e) => setCourseInput(e.target.value)} value={courseInput}>
                 <option value="">همه دوره ها</option>
-                {courseCategories?.map((category) => (
-                  <option key={category.id} value={category.id}>
-                    {category.name}
-                  </option>
-                ))}
+                {!isCategoryLoading &&
+                  courseCategories.map((category) => (
+                    <option key={category.id} value={category.id}>
+                      {category.name}
+                    </option>
+                  ))}
               </select>
             </div>
             <div className="store-sorting-input">
@@ -136,14 +139,14 @@ export default function Store() {
               </svg>
             </div>
             <div className="store-sorting-input">
-              <input
-                type="text"
-                placeholder="استاد"
-                className="w-full py-2.5 px-5 rounded-lg shadow-md shadow-black/10"
-                value={teacherInput}
-                onChange={(e) => setTeacherInput(e.target.value)}
-                disabled
-              />
+              <select className="form-control" onChange={(e) => setTeacherInput(e.target.value)} value={teacherInput}>
+                <option value="">همه استاد ها</option>
+                {teachers?.map((teacher) => (
+                  <option key={teacher.id} value={teacher.id}>
+                    {teacher.name}
+                  </option>
+                ))}
+              </select>
               <svg className="absolute w-3 left-5 top-1/2 -translate-y-1/2 text-gray-600">
                 <use href="/sprite/hero.svg#chevron-down"></use>
               </svg>
@@ -162,42 +165,40 @@ export default function Store() {
           <PreLoader pending={isFetching} title={'در حال بارگذاری...'} />
           <PreLoader pending={isAdding} title={'در حال اضافه کردن...'} />
 
-          {!isFetching &&
-            !isError &&
-            courses.map((course) => (
-              <div
-                key={course.id}
-                className="bg-white dark:bg-dark-2 dark:text-white shadow-md shadow-black/10 overflow-hidden rounded-xl cursor-pointer hover:shadow-xl hover:scale-105 transition-all duration-200"
-              >
-                <div>
-                  <img src={course.course_image_url} alt={course.title} className="w-full h-80 bg-cover" />
-                </div>
-                <div className="py-5 px-2.5">
-                  <span className="text-sm font-semibold">{course.title}</span>
-                  {/* course details */}
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <span className="text-xs">قیمت : </span>
-                      <span className="text-xs font-bold">{formatNumber(course.price)} ریال</span>
-                    </div>
-                    <span className="text-xs text-blue-800 underline">بیشتر</span>
-                  </div>
+          {courses?.map((course) => (
+            <div
+              key={course.id}
+              className="bg-white dark:bg-dark-2 dark:text-white shadow-md shadow-black/10 overflow-hidden rounded-xl cursor-pointer hover:shadow-xl hover:scale-105 transition-all duration-200"
+            >
+              <div>
+                <img src={course.course_image_url} alt={course.title} className="w-full h-80 bg-cover" />
+              </div>
+              <div className="py-5 px-2.5">
+                <span className="text-sm font-semibold">{course.title}</span>
+                {/* course details */}
+                <div className="flex items-center justify-between">
                   <div>
-                    <button
-                      className="mt-5 w-full bg-primary-1 text-white py-3 rounded-md shadow-md shadow-black/10 hover:bg-primary-2 active:scale-95 transition-all"
-                      onClick={() => handleAdd(course)}
-                    >
-                      <div className="flex items-center justify-center gap-2.5">
-                        <svg className="w-5 h-5 text-white">
-                          <use href="/sprite/hero.svg#shopping-cart"></use>
-                        </svg>
-                        <span>افزودن به سبد خرید</span>
-                      </div>
-                    </button>
+                    <span className="text-xs">قیمت : </span>
+                    <span className="text-xs font-bold">{formatNumber(course.price)} ریال</span>
                   </div>
+                  <span className="text-xs text-blue-800 underline">بیشتر</span>
+                </div>
+                <div>
+                  <button
+                    className="mt-5 w-full bg-primary-1 text-white py-3 rounded-md shadow-md shadow-black/10 hover:bg-primary-2 active:scale-95 transition-all"
+                    onClick={() => handleAdd(course)}
+                  >
+                    <div className="flex items-center justify-center gap-2.5">
+                      <svg className="w-5 h-5 text-white">
+                        <use href="/sprite/hero.svg#shopping-cart"></use>
+                      </svg>
+                      <span>افزودن به سبد خرید</span>
+                    </div>
+                  </button>
                 </div>
               </div>
-            ))}
+            </div>
+          ))}
         </div>
       </section>
     </section>

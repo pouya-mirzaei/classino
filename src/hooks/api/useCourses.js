@@ -2,7 +2,7 @@ import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { supabase } from '../../supabase/supabaseConfig';
 import { useDebounce } from '../uesDebounce';
 
-export default function useCourses({ title = '', category = '' } = {}) {
+export default function useCourses({ title = '', category = '', teacher = '' } = {}) {
   const debounceTitle = useDebounce(title, 500);
 
   const {
@@ -10,7 +10,7 @@ export default function useCourses({ title = '', category = '' } = {}) {
     isFetching,
     isError,
   } = useQuery({
-    queryKey: ['courses', debounceTitle, category],
+    queryKey: ['courses', debounceTitle, category, teacher],
     queryFn: async () => {
       let query = supabase.from('courses').select('*, teachers(*)').eq('is_purchasable', true);
 
@@ -22,6 +22,10 @@ export default function useCourses({ title = '', category = '' } = {}) {
         query = query.eq('course_category_id', category);
       }
 
+      if (teacher) {
+        query = query.eq('teacher_id', teacher);
+      }
+
       const { data, error } = await query;
       if (error) throw error;
 
@@ -30,7 +34,7 @@ export default function useCourses({ title = '', category = '' } = {}) {
 
     gcTime: 1000 * 60 * 5,
     staleTime: 1000 * 60 * 5,
-    placeholderData: keepPreviousData,
+    placeholderData: (p) => p,
   });
 
   return { courses, isFetching, isError };
