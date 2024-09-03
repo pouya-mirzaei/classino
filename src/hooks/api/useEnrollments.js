@@ -9,18 +9,24 @@ export function useEnrollments() {
     const { error } = await supabase.from('enrollments').select().eq('user_id', user.id).eq('course_id', courseId).single();
 
     if (error) {
+      console.log(error);
+
       return false;
     }
 
     return true;
   };
 
-  const { data: userCourses, isFetching: isUserCoursesFetching } = useQuery({
+  const {
+    data: userCourses,
+    isFetching: isUserCoursesFetching,
+    isError,
+  } = useQuery({
     queryKey: ['userCourses', user.id],
     queryFn: async () => {
       const { data, error } = await supabase.from('enrollments').select('courses(*)').eq('user_id', user.id);
       if (error) {
-        return null;
+        throw error;
       }
 
       return data;
@@ -31,5 +37,6 @@ export function useEnrollments() {
     hasCourse,
     userCourses,
     isUserCoursesFetching,
+    isError,
   };
 }

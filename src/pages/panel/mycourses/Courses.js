@@ -3,9 +3,16 @@ import { Link } from 'react-router-dom';
 import { useEnrollments } from '../../../hooks/api/useEnrollments';
 import PreLoader from '../../../components/PreLoader';
 import Alert from '../../../components/panel/Alert/Alert';
+import { toast } from 'react-toastify';
 
 export default function Courses() {
-  const { userCourses, isUserCoursesFetching } = useEnrollments();
+  const { userCourses, isUserCoursesFetching, isError } = useEnrollments();
+
+  if (isError) {
+    toast.error('مشکلی پیش آمد، لطفا بعدا تلاش کنید', {
+      className: 'font-primary text-xs',
+    });
+  }
 
   return (
     <section className="p-section relative h-full">

@@ -1,12 +1,35 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
-import { getCourseData } from '../../../../functions/Utilities';
+import { Link, Navigate, useNavigate, useParams } from 'react-router-dom';
 import CourseDetailsHeader from '../../../../components/panel/Courses/CourseDetailsHeader';
+import { toast } from 'react-toastify';
+import PreLoader from '../../../../components/PreLoader';
+import Alert from '../../../../components/panel/Alert/Alert';
+import useCourseDetails from '../../../../hooks/api/useCourseDetails';
 
 export default function CourseDetails() {
-  const { id } = useParams();
-  const { name, teacherImage, classes, teacherName } = getCourseData(Number(id));
   const [isLargeWindow, setIsLargeWindow] = useState(false);
+  const navigate = useNavigate();
+  let { id } = useParams();
+  id = Number(id);
+
+  // ---------------------------------- getting course details
+  const { isEnrolled, course, isLoading, error } = useCourseDetails(id);
+
+  useEffect(() => {
+    console.log(isLoading, course);
+
+    if (!isLoading) {
+      if (!isEnrolled) {
+        toast.error('شما در این دوره ثبت نام نکرده اید', {
+          className: 'font-primary text-xs',
+        });
+        navigate('/panel/mycourselist');
+        return;
+      }
+    }
+  }, [isLoading]);
+
+  // ----------------------------------
 
   useEffect(() => {
     handleState();
@@ -18,68 +41,84 @@ export default function CourseDetails() {
   };
 
   return (
-    <div className="m-5">
-      <CourseDetailsHeader teacherImg={teacherImage} teacherName={teacherName} className="px-5">
-        <span className="xl:text-3xl lg:text-3xl md:text-2xl text-lg font-extrabold text-center">{name}</span>
-        <div className="flex items-center justify-evenly gap-5 mt-5">
-          <HoldingInfo title="زمان برگزاری" icon="/sprite/hero.svg#calendar" value="شنبه" />
-          <HoldingInfo title="ساعت برگزاری" icon="/sprite/hero.svg#clock" value=" 01:00 تا 01:00 " />
-        </div>
-      </CourseDetailsHeader>
+    <div className="m-5 relative h-screen">
+      <PreLoader pending={isLoading} title="در حال بارگذاری..." />
+      {!isLoading && course && (
+        <>
+          <CourseDetailsHeader teacherImg={course.teacher.image_url} teacherName={course.teacher.image} className="px-5">
+            <span className="xl:text-3xl lg:text-3xl md:text-2xl text-lg font-extrabold text-center">{course.title}</span>
+            <div className="flex items-center justify-evenly gap-5 mt-5">
+              <HoldingInfo title="زمان برگزاری" icon="/sprite/hero.svg#calendar" value="شنبه" />
+              <HoldingInfo title="ساعت برگزاری" icon="/sprite/hero.svg#clock" value=" 01:00 تا 01:00 " />
+            </div>
+          </CourseDetailsHeader>
 
-      <div className="mt-5 h-12 font-extrabold text-xs bg-gray-300 text-black/60 flex items-center pr-5 rounded-lg rounded-b-none">
-        <span>کلاس ها</span>
-      </div>
-      <table className="w-full dark:text-white">
-        <thead>
-          {isLargeWindow && (
-            <tr className="text-right [&>*]:text-xs [&>*]:text-gray-500 [&>*]:h-12 bg-white dark:bg-dark-1 border-b-2 border-[#e5e7eb]">
-              <th>وضعیت</th>
-              <th>عنوان جلسه</th>
-              <th>تاریخ برگزاری</th>
-              <th>مشاهده</th>
-            </tr>
+          <div className="mt-5 h-12 font-extrabold text-xs bg-gray-300 text-black/60 flex items-center pr-5 rounded-lg rounded-b-none">
+            <span>کلاس ها</span>
+          </div>
+
+          {course.lessons.length === 0 ? (
+            <Alert status="warning" className="mt-5">
+              موردی برای نمایش وجود ندارد
+            </Alert>
+          ) : (
+            <LessonTable lessons={course.lessons} isLargeWindow={isLargeWindow} />
           )}
-        </thead>
-        <tbody className="divide-y-2 rounded-xl">
-          <DesktopCourseTable classes={classes} isLargeWindow={isLargeWindow} />
-        </tbody>
-      </table>
+        </>
+      )}
     </div>
   );
 }
 
-function DesktopCourseTable({ classes, isLargeWindow }) {
+function LessonTable({ lessons, isLargeWindow }) {
   return (
-    <>
-      {classes.map((Class) => (
-        <tr key={Class.id} className="[&>*]:px-4 bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2">
-          <td className="flex md:table-cell items-center justify-between mt-4 md:mt-0">
-            {!isLargeWindow && <span className="text-sm font-semibold text-black/60  dark:text-white/80">وضعیت</span>}
-            <svg className="w-8 text-primary-1">
-              <use href={`/sprite/hero.svg#lock-${Class.isLocked ? 'close' : 'open'}`}></use>
-            </svg>
-          </td>
-          <td className="lg:w-8/12 w-full md:w-8/12 text-sm flex gap-2 md:table-cell items-center mt-3 md:mt-0">
-            {!isLargeWindow && <span className="text-sm font-semibold text-black/60  dark:text-white/80">عنوان جلسه </span>}
-            <span className="text-black/90 font-bold dark:text-white/80">{Class.title}</span>
-          </td>
-          <td className="text-xs font-bold w-full md:w-1/5 mt-3 md:mt-0 flex md:table-cell items-center justify-between">
-            {!isLargeWindow && <span className="text-sm font-semibold text-black/60 dark:text-white/80">تاریخ برگزاری</span>}
-            <span className="text-black/90 font-bold dark:text-white/80">{Class.holdingDate}</span>
-          </td>
-          <td className="w-full md:w-1/5 flex items-center justify-between md:table-cell">
-            {!isLargeWindow && <span className="text-sm font-semibold text-black/60 dark:text-white/80">مشاهده</span>}
-            <Link
-              to={`/panel/class/show/${Class.id}`}
-              className="inline-block basis-2/5 text-center align-middle leading-[45px] bg-primary-1 hover:bg-primary-2 text-white h-[45px] w-full mx-1 my-4 text-[.8rem] font-medium rounded-md transition-all duration-200"
-            >
-              نمایش کلاس
-            </Link>
-          </td>
-        </tr>
-      ))}
-    </>
+    <table className="w-full dark:text-white">
+      {isLargeWindow && (
+        <thead>
+          <tr className="text-right [&>*]:text-xs [&>*]:text-gray-500 [&>*]:h-12 bg-white dark:bg-dark-1 border-b-2 border-[#e5e7eb]">
+            <th>وضعیت</th>
+            <th>عنوان جلسه</th>
+            <th>تاریخ برگزاری</th>
+            <th>مشاهده</th>
+          </tr>
+        </thead>
+      )}
+      <tbody className="divide-y-2 rounded-xl">
+        {lessons.map((lesson) => (
+          <LessonRow key={lesson.id} lesson={lesson} isLargeWindow={isLargeWindow} />
+        ))}
+      </tbody>
+    </table>
+  );
+}
+
+function LessonRow({ lesson, isLargeWindow }) {
+  return (
+    <tr className="[&>*]:px-4 bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2">
+      <td className="flex md:table-cell items-center justify-between mt-4 md:mt-0">
+        {!isLargeWindow && <span className="text-sm font-semibold text-black/60 dark:text-white/80">وضعیت</span>}
+        <svg className="w-8 text-primary-1">
+          <use href={`/sprite/hero.svg#lock-${lesson.isLocked ? 'close' : 'open'}`}></use>
+        </svg>
+      </td>
+      <td className="lg:w-8/12 w-full md:w-8/12 text-sm flex gap-2 md:table-cell items-center mt-3 md:mt-0">
+        {!isLargeWindow && <span className="text-sm font-semibold text-black/60 dark:text-white/80">عنوان جلسه </span>}
+        <span className="text-black/90 font-bold dark:text-white/80">{lesson.title}</span>
+      </td>
+      <td className="text-xs font-bold w-full md:w-1/5 mt-3 md:mt-0 flex md:table-cell items-center justify-between">
+        {!isLargeWindow && <span className="text-sm font-semibold text-black/60 dark:text-white/80">تاریخ برگزاری</span>}
+        <span className="text-black/90 font-bold dark:text-white/80">{lesson.holdingDate}</span>
+      </td>
+      <td className="w-full md:w-1/5 flex items-center justify-between md:table-cell">
+        {!isLargeWindow && <span className="text-sm font-semibold text-black/60 dark:text-white/80">مشاهده</span>}
+        <Link
+          to={`/panel/class/show/${lesson.id}`}
+          className="inline-block basis-2/5 text-center align-middle leading-[45px] bg-primary-1 hover:bg-primary-2 text-white h-[45px] w-full mx-1 my-4 text-[.8rem] font-medium rounded-md transition-all duration-200"
+        >
+          نمایش کلاس
+        </Link>
+      </td>
+    </tr>
   );
 }
 
