@@ -5,6 +5,7 @@ import { toast } from 'react-toastify';
 import PreLoader from '../../../../components/PreLoader';
 import Alert from '../../../../components/panel/Alert/Alert';
 import useCourseDetails from '../../../../hooks/api/useCourseDetails';
+import useCalendar from '../../../../hooks/useCalendar';
 
 export default function CourseDetails() {
   const [isLargeWindow, setIsLargeWindow] = useState(false);
@@ -16,10 +17,8 @@ export default function CourseDetails() {
   const { isEnrolled, course, isLoading, error } = useCourseDetails(id);
 
   useEffect(() => {
-    console.log(isLoading, course);
-
     if (!isLoading) {
-      if (!isEnrolled) {
+      if (!isEnrolled && isEnrolled !== undefined) {
         toast.error('شما در این دوره ثبت نام نکرده اید', {
           className: 'font-primary text-xs',
         });
@@ -27,7 +26,7 @@ export default function CourseDetails() {
         return;
       }
     }
-  }, [isLoading]);
+  }, [isLoading, course, isEnrolled]);
 
   // ----------------------------------
 
@@ -42,7 +41,7 @@ export default function CourseDetails() {
 
   return (
     <div className="m-5 relative h-screen">
-      <PreLoader pending={isLoading} title="در حال بارگذاری..." />
+      <PreLoader pending={isLoading || !course} title="در حال بارگذاری..." />
       {!isLoading && course && (
         <>
           <CourseDetailsHeader teacherImg={course.teacher.image_url} teacherName={course.teacher.image} className="px-5">
@@ -93,6 +92,8 @@ function LessonTable({ lessons, isLargeWindow }) {
 }
 
 function LessonRow({ lesson, isLargeWindow }) {
+  const { day, month, weekDay, year, hours, minutes } = useCalendar(new Date(lesson.schedule_time));
+
   return (
     <tr className="[&>*]:px-4 bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2">
       <td className="flex md:table-cell items-center justify-between mt-4 md:mt-0">
@@ -105,14 +106,17 @@ function LessonRow({ lesson, isLargeWindow }) {
         {!isLargeWindow && <span className="text-sm font-semibold text-black/60 dark:text-white/80">عنوان جلسه </span>}
         <span className="text-black/90 font-bold dark:text-white/80">{lesson.title}</span>
       </td>
-      <td className="text-xs font-bold w-full md:w-1/5 mt-3 md:mt-0 flex md:table-cell items-center justify-between">
+      <td
+        className="text-xs font-bold w-full md:w-1/5 mt-3 md:mt-0 flex md:table-cell items-center justify-between"
+        style={{ padding: 0 }}
+      >
         {!isLargeWindow && <span className="text-sm font-semibold text-black/60 dark:text-white/80">تاریخ برگزاری</span>}
-        <span className="text-black/90 font-bold dark:text-white/80">{lesson.holdingDate}</span>
+        <span className="text-black/90 font-bold dark:text-white/80">{`${weekDay} ${day} ${month} ${year} ساعت ${hours}:${minutes}`}</span>
       </td>
       <td className="w-full md:w-1/5 flex items-center justify-between md:table-cell">
         {!isLargeWindow && <span className="text-sm font-semibold text-black/60 dark:text-white/80">مشاهده</span>}
         <Link
-          to={`/panel/class/show/${lesson.id}`}
+          to={`/panel/class/show/${lesson.lesson_id}`}
           className="inline-block basis-2/5 text-center align-middle leading-[45px] bg-primary-1 hover:bg-primary-2 text-white h-[45px] w-full mx-1 my-4 text-[.8rem] font-medium rounded-md transition-all duration-200"
         >
           نمایش کلاس

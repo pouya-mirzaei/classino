@@ -2,7 +2,7 @@ import React from 'react';
 import useCalendar from '../hooks/useCalendar';
 
 export default function Calendar() {
-  const currentDate = useCalendar();
+  const currentDate = useCalendar(new Date());
   return (
     <div className="basis-5/12 w-full shadow-md shadow-black/20 rounded-xl">
       {/* header */}
