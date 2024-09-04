@@ -40,7 +40,7 @@ export default function CourseDetails() {
   };
 
   return (
-    <div className="m-5 relative h-screen">
+    <section className="p-section relative min-h-[calc(100vh-152px)]">
       <PreLoader pending={isLoading || !course} title="در حال بارگذاری..." />
       {!isLoading && course && (
         <>
@@ -65,7 +65,7 @@ export default function CourseDetails() {
           )}
         </>
       )}
-    </div>
+    </section>
   );
 }
 
@@ -95,25 +95,22 @@ function LessonRow({ lesson, isLargeWindow }) {
   const { day, month, weekDay, year, hours, minutes } = useCalendar(new Date(lesson.schedule_time));
 
   return (
-    <tr className="[&>*]:px-4 bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2">
-      <td className="flex md:table-cell items-center justify-between mt-4 md:mt-0">
+    <tr className=" bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2">
+      <td className="flex md:table-cell items-center justify-between mt-4 md:mt-0 px-4">
         {!isLargeWindow && <span className="text-sm font-semibold text-black/60 dark:text-white/80">وضعیت</span>}
         <svg className="w-8 text-primary-1">
           <use href={`/sprite/hero.svg#lock-${lesson.isLocked ? 'close' : 'open'}`}></use>
         </svg>
       </td>
-      <td className="lg:w-8/12 w-full md:w-8/12 text-sm flex gap-2 md:table-cell items-center mt-3 md:mt-0">
+      <td className="lg:w-8/12 w-full md:w-8/12 text-sm flex gap-2 md:table-cell items-center mt-3 md:mt-0 px-4">
         {!isLargeWindow && <span className="text-sm font-semibold text-black/60 dark:text-white/80">عنوان جلسه </span>}
         <span className="text-black/90 font-bold dark:text-white/80">{lesson.title}</span>
       </td>
-      <td
-        className="text-xs font-bold w-full md:w-1/5 mt-3 md:mt-0 flex md:table-cell items-center justify-between"
-        style={{ padding: 0 }}
-      >
+      <td className="text-xs font-bold w-full md:w-1/5 mt-3 md:mt-0 flex md:table-cell items-center justify-between px-4 md:p-0 ">
         {!isLargeWindow && <span className="text-sm font-semibold text-black/60 dark:text-white/80">تاریخ برگزاری</span>}
         <span className="text-black/90 font-bold dark:text-white/80">{`${weekDay} ${day} ${month} ${year} ساعت ${hours}:${minutes}`}</span>
       </td>
-      <td className="w-full md:w-1/5 flex items-center justify-between md:table-cell">
+      <td className="w-full md:w-1/5 flex items-center justify-between md:table-cell px-4">
         {!isLargeWindow && <span className="text-sm font-semibold text-black/60 dark:text-white/80">مشاهده</span>}
         <Link
           to={`/panel/class/show/${lesson.lesson_id}`}

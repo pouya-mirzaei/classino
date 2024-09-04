@@ -6,8 +6,9 @@ import { toast } from 'react-toastify';
 import { Link, useNavigate } from 'react-router-dom';
 import { useQueryClient } from '@tanstack/react-query';
 import useAuth from '../../hooks/api/useAuth';
+import PreLoader from '../../components/PreLoader';
 export default function LoginForm() {
-  const navigate = useNavigate();
+  const [isLoggingIn, setIsLoggingIn] = useState(false);
   const { loginWithProvider, signInWithEmailAndPassword } = useAuth();
   const query = useQueryClient();
 
@@ -17,6 +18,7 @@ export default function LoginForm() {
       password: '',
     },
     onSubmit: ({ email, password }) => {
+      setIsLoggingIn(true);
       signInWithEmailAndPassword.mutate(
         { email, password },
         {
@@ -30,6 +32,9 @@ export default function LoginForm() {
             toast.error(error.message, {
               className: 'font-primary text-xs',
             });
+          },
+          onSettled: () => {
+            setIsLoggingIn(false);
           },
         }
       );
@@ -57,7 +62,9 @@ export default function LoginForm() {
   const showError = (title) => <span className="text-red-500 text-xs">{title}</span>;
 
   return (
-    <div className="bg-[#f6f8fc] max-w-md w-[400px] mx-5 relative z-20 rounded-lg">
+    <div className="bg-[#f6f8fc] max-w-md w-[400px] mx-5 z-20 rounded-lg">
+      <PreLoader pending={isLoggingIn} title="در حال وارد شدن ..." />
+
       <div className="relative w-full z-10 rounded-lg bg-white flex items-center flex-col gap-5 p-5">
         <SecondaryHeading>ورود / عضویت</SecondaryHeading>
         <p className="text-xs text-center font-bold">برای ورود به سایت، ایمل و رمز عبور خود را وارد کنید</p>
