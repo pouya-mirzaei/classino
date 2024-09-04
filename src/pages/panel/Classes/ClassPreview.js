@@ -1,39 +1,53 @@
 import React, { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import CourseDetailsHeader from '../../../components/panel/Courses/CourseDetailsHeader';
-import { getAllCourses, getAllTeachers } from '../../../functions/Utilities';
 import Alert from '../../../components/panel/Alert/Alert';
 import { toast } from 'react-toastify';
 import PanelDetail from '../../../components/panel/PanelDetail/PanelDetail';
 import Comment from '../../../components/panel/Comment/Comment';
+import { useCourseLessons } from '../../../hooks/api/useCourseLessons';
+import useCalendar from '../../../hooks/useCalendar';
+import PreLoader from '../../../components/PreLoader';
 
 // for demo purposes, I'm getting the course from the props
-// but we're gonna fetch the course data from the backend later
+// but we're gonna fetch the course data from the backend later // done baby
 export default function ClassPreview() {
-  const { id } = useParams();
+  const navigate = useNavigate();
+  let { id } = useParams();
+  const { lesson, isLoading, error } = useCourseLessons(id);
+
+  const { displayFullDate } = useCalendar(new Date(lesson?.schedule_time || null));
+
+  id = Number(id);
 
   useEffect(() => {
-    console.log('handling');
+    console.log(isLoading, 'course =>', lesson);
 
+    if (error && error.message != 'wait') {
+      toast.error(error.message, {
+        className: 'font-primary text-xs',
+      });
+      navigate('/panel/mycourselist', { replace: true });
+    }
+  }, [lesson, isLoading, error]);
+
+  useEffect(() => {
     window.scrollTo({
       top: 0,
       behavior: 'smooth',
     });
   }, []);
 
-  const course = getAllCourses()[1];
-  const session = course.classes.find((session) => session.id == id);
-  let teacher = getAllTeachers().find((tech) => tech.id == course.teacherId);
-  session.status = 'not-started';
+  if (isLoading || !lesson) {
+    return (
+      <section className="p-section">
+        <PreLoader pending={true} title={'در حال بارگذاری...'} />
+      </section>
+    );
+  }
 
   const classStatus =
-    session.status === 'live'
-      ? 'success'
-      : session.status === 'ended'
-      ? 'warning'
-      : session.status === 'not-started'
-      ? 'warning'
-      : 'danger';
+    lesson.status === 2 ? 'success' : lesson.status === 1 ? 'warning' : lesson.status === 3 ? 'warning' : 'danger';
 
   const notYet = () => {
     toast.error('این قابلیت هنوز پیاده سازی نشده است', {
@@ -44,15 +58,16 @@ export default function ClassPreview() {
   return (
     <section className="p-section space-y-12">
       <CourseDetailsHeader
-        teacherName={teacher.name}
-        teacherImg={teacher.img}
+        teacherName={lesson.course.teacher.name}
+        teacherImg={lesson.course.teacher.image_url}
         className="w-full h-4/5 flex md:items-start items-center md:mr-10 justify-evenly flex-col font-extrabold"
       >
-        <span className="md:text-3xl text-lg block text-center mb-5">{course.name}</span>
-        <span className="md:text-xl tel text-center mb-5">{session.title}</span>
+        <span className="md:text-3xl text-lg block text-center mb-5">{lesson.course.title}</span>
+        <span className="md:text-3xl text-lg block text-center mb-5">{lesson.name}</span>
+        <span className="md:text-xl tel text-center mb-5">{lesson.title}</span>
         <span className="md:text-xl tel text-center">
           <span>زمان برگزاری:</span>
-          <span>{session.holdingDate}</span>
+          <span>{displayFullDate()}</span>
         </span>
       </CourseDetailsHeader>
 
@@ -64,24 +79,28 @@ export default function ClassPreview() {
               !
             </span>
             <span className="font-semibold text-lg">
-              {session.status === 'ended' && 'کلاس قبلا برگزار شده است'}
-              {session.status === 'live' && 'کلاس در حال برگزاری است'}
-              {session.status === 'not-started' && 'کلاس هنوز شروع نشده است'}
+              {lesson.status === 3 && 'کلاس قبلا برگزار شده است'}
+              {lesson.status === 2 && 'کلاس در حال برگزاری است'}
+              {lesson.status === 1 && 'کلاس هنوز شروع نشده است'}
             </span>
           </div>
-          {session.status === 'ended' && (
-            <button className="h-12 px-5 item-link text-sm font-bold text-white dark:text-[#3a3b38] rounded-3xl shadow-lg shadow-black/20 active:scale-95">
-              نمایش فیلم ظبط شده
-            </button>
+          {lesson.status === 3 && (
+            <a href={lesson.video_url} target="_blank">
+              <button className="h-12 px-5 item-link text-sm font-bold text-white dark:text-[#3a3b38] rounded-3xl shadow-lg shadow-black/20 active:scale-95">
+                نمایش فیلم ظبط شده
+              </button>
+            </a>
           )}
-          {session.status === 'live' && (
-            <button
-              className="h-12 px-5 item-link text-sm font-bold text-white rounded-3xl shadow-lg shadow-black/20 active:scale-95"
-              onClick={notYet}
-            >
-              ورود به کلاس
-              <span className="text-xl font-semibold"> (classino content)</span>
-            </button>
+          {lesson.status === 2 && (
+            <a href={lesson.video_url} target="_blank">
+              <button
+                className="h-12 px-5 item-link text-sm font-bold text-white rounded-3xl shadow-lg shadow-black/20 active:scale-95"
+                onClick={notYet}
+              >
+                ورود به کلاس
+                <span className="text-xl font-semibold"> (classino connect)</span>
+              </button>
+            </a>
           )}
         </div>
       </Alert>
@@ -118,7 +137,7 @@ export default function ClassPreview() {
         </PanelDetail>
 
         <PanelDetail headerTitle="ارسال نظر" className="w-full basis-1/2">
-          <Comment session={session} />
+          <Comment session={lesson} />
         </PanelDetail>
       </div>
     </section>

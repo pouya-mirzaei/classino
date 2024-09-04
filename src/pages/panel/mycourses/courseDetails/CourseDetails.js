@@ -22,8 +22,7 @@ export default function CourseDetails() {
         toast.error('شما در این دوره ثبت نام نکرده اید', {
           className: 'font-primary text-xs',
         });
-        navigate('/panel/mycourselist');
-        return;
+        navigate('/panel/mycourselist', { replace: true });
       }
     }
   }, [isLoading, course, isEnrolled]);
@@ -92,7 +91,7 @@ function LessonTable({ lessons, isLargeWindow }) {
 }
 
 function LessonRow({ lesson, isLargeWindow }) {
-  const { day, month, weekDay, year, hours, minutes } = useCalendar(new Date(lesson.schedule_time));
+  const { displayFullDate } = useCalendar(new Date(lesson.schedule_time));
 
   return (
     <tr className=" bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2">
@@ -108,7 +107,7 @@ function LessonRow({ lesson, isLargeWindow }) {
       </td>
       <td className="text-xs font-bold w-full md:w-1/5 mt-3 md:mt-0 flex md:table-cell items-center justify-between px-4 md:p-0 ">
         {!isLargeWindow && <span className="text-sm font-semibold text-black/60 dark:text-white/80">تاریخ برگزاری</span>}
-        <span className="text-black/90 font-bold dark:text-white/80">{`${weekDay} ${day} ${month} ${year} ساعت ${hours}:${minutes}`}</span>
+        <span className="text-black/90 font-bold dark:text-white/80">{displayFullDate()}</span>
       </td>
       <td className="w-full md:w-1/5 flex items-center justify-between md:table-cell px-4">
         {!isLargeWindow && <span className="text-sm font-semibold text-black/60 dark:text-white/80">مشاهده</span>}

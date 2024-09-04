@@ -1,35 +1,49 @@
 import React, { useState } from 'react';
 import './Rating.css';
 import BtnSuccess from '../Button/BtnSuccess';
+import { toast } from 'react-toastify';
 
 export default function Comment({ session }) {
   const [comment, setComment] = useState('');
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!comment) return;
+
+    toast.success('نظر شما با موفقیت ثبت شد', {
+      className: 'font-primary text-xs',
+    });
+    setComment('');
+  };
+
   return (
     <div>
-      <h3 className="text-center font-medium mb-2">نظر شما در مورد {session.title}</h3>
-      <span className="text-center inline-block mx-auto w-full text-[#70657b] dark:text-white/60 text-xs mb-5">
-        امتیاز شما به این دوره از 1 تا 5 ستاره:
-      </span>
-
-      {/* rating */}
-      <Rating />
-
-      {/* Writing comment */}
-
-      <div className="mt-7 space-y-10">
-        <span className="text-center inline-block mx-auto w-full text-[#70657b] dark:text-white/60 text-xs">
-          توضیحات (اختیاری) :
+      <form onSubmit={handleSubmit}>
+        <h3 className="text-center font-medium mb-2">نظر شما در مورد {session.title}</h3>
+        <span className="text-center inline-block mx-auto w-full text-[#70657b] dark:text-white/60 text-xs mb-5">
+          امتیاز شما به این دوره از 1 تا 5 ستاره:
         </span>
 
-        <textarea
-          className="text-black w-full bg-[#dde7f5] dark:bg-dark-2 rounded-lg border border-[#d7d7d7] dark:border-dark-3 dark:text-white px-2.5 py-2"
-          rows={10}
-          value={comment}
-          onChange={(e) => setComment(e.target.value)}
-        ></textarea>
+        {/* rating */}
+        <Rating />
 
-        <BtnSuccess type="submit">ارسال نظر</BtnSuccess>
-      </div>
+        {/* Writing comment */}
+
+        <div className="mt-7 space-y-10">
+          <span className="text-center inline-block mx-auto w-full text-[#70657b] dark:text-white/60 text-xs">
+            توضیحات (اختیاری) :
+          </span>
+
+          <textarea
+            className="text-black w-full bg-[#dde7f5] dark:bg-dark-2 rounded-lg border border-[#d7d7d7] dark:border-dark-3 dark:text-white px-2.5 py-2"
+            rows={10}
+            value={comment}
+            onChange={(e) => setComment(e.target.value)}
+          ></textarea>
+
+          <BtnSuccess type="submit">ارسال نظر</BtnSuccess>
+        </div>
+      </form>
     </div>
   );
 }
