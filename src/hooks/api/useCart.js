@@ -84,12 +84,12 @@ export function useCart() {
     const { data, error } = await supabase.from('discounts').select('*').eq('code', code).eq('is_active', true).single();
 
     if (error) {
-      throw new Error('کد تخفیف معتبر نمیباشد');
+      throw new Error('کد تخفیف معتبر نمی باشد');
     }
     let currentDate = new Date().getTime();
 
     if (new Date(data.end_date).getTime() < currentDate || new Date(data.start_date).getTime() > currentDate) {
-      throw new Error('کد فعال نمباشد');
+      throw new Error('کد فعال نمی باشد');
     }
 
     setDiscount(data.discount_percentage);

@@ -22,7 +22,7 @@ export function useCourseLessons(lessonId) {
 
   const {
     data: lesson,
-    isLoading,
+    isFetching,
     error,
   } = useQuery({
     queryKey: ['lessons', lessonId],
@@ -39,5 +39,5 @@ export function useCourseLessons(lessonId) {
     },
   });
 
-  return { lesson, isLoading: isLoading || isUserCoursesFetching, error };
+  return { lesson, isLoading: isFetching || isUserCoursesFetching, error };
 }

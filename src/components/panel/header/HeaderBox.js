@@ -10,7 +10,7 @@ export default function HeaderBox({ icon, text, breakpoint, badge, onClick = nul
     >
       <div className="w-6 sm:w-7">
         {avatar ? (
-          <img src={avatar} alt="avatar" className="rounded-full w-8 h-8" />
+          <img src={avatar} alt="avatar" className="rounded-[50%] w-8 h-8" />
         ) : (
           <svg>
             <use href={`/sprite/hero.svg#${icon}`}></use>

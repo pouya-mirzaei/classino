@@ -98,7 +98,7 @@ function LessonRow({ lesson, isLargeWindow }) {
       <td className="flex md:table-cell items-center justify-between mt-4 md:mt-0 px-4">
         {!isLargeWindow && <span className="text-sm font-semibold text-black/60 dark:text-white/80">وضعیت</span>}
         <svg className="w-8 text-primary-1">
-          <use href={`/sprite/hero.svg#lock-${lesson.isLocked ? 'close' : 'open'}`}></use>
+          <use href={`/sprite/hero.svg#lock-${lesson.is_locked ? 'close' : 'open'}`}></use>
         </svg>
       </td>
       <td className="lg:w-8/12 w-full md:w-8/12 text-sm flex gap-2 md:table-cell items-center mt-3 md:mt-0 px-4">

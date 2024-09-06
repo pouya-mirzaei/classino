@@ -25,3 +25,4 @@ yarn-error.log*
 db_structure.txt
 .env
 test-images
+.netlify

@@ -32,7 +32,7 @@ const useCourseDetails = (courseId) => {
   return {
     isEnrolled,
     course: courseQuery.data,
-    isLoading: courseQuery.isLoading && isUserCoursesFetching,
+    isLoading: courseQuery.isFetching || isUserCoursesFetching,
     error: courseQuery.error,
   };
 };
