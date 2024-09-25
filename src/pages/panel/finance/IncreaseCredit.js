@@ -56,7 +56,7 @@ export default function IncreaseCredit() {
             <div className="flex items-center flex-col lg:flex-row gap-5">
               <input
                 type="number"
-                className="w-64 py-2.5 rounded-md bg-[#f6f8fc] dark:text-white px-3"
+                className="w-64 py-2.5 rounded-md bg-[#f6f8fc] dark:text-white px-3 dark:text-black"
                 placeholder="0"
                 name="amount"
                 value={values.amount}

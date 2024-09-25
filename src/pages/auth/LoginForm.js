@@ -67,7 +67,7 @@ export default function LoginForm() {
 
       <div className="relative w-full z-10 rounded-lg bg-white flex items-center flex-col gap-5 p-5">
         <SecondaryHeading>ورود / عضویت</SecondaryHeading>
-        <p className="text-xs text-center font-bold">برای ورود به سایت، ایمل و رمز عبور خود را وارد کنید</p>
+        <p className="text-xs text-center font-bold">برای ورود به سایت، ایمیل و رمز عبور خود را وارد کنید</p>
         <form onSubmit={form.handleSubmit} className="w-full flex flex-col items-center gap-2.5" autoComplete="off">
           <div className="form-group w-full">
             <input

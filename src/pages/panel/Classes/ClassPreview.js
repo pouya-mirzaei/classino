@@ -87,7 +87,7 @@ export default function ClassPreview() {
           {lesson.status === 3 && (
             <a href={lesson.video_url} target="_blank">
               <button className="h-12 px-5 item-link text-sm font-bold text-white dark:text-[#3a3b38] rounded-3xl shadow-lg shadow-black/20 active:scale-95">
-                نمایش فیلم ظبط شده
+                نمایش فیلم ضبط شده
               </button>
             </a>
           )}

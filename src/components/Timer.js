@@ -9,7 +9,7 @@ export default function Timer() {
   return (
     <div className="basis-7/12 w-full bg-white dark:bg-dark-1 rounded-xl shadow-md shadow-black/20">
       <div className="p-5">
-        <h2 className="text-center dark:text-white text-base font-semibold">زمان باقی مانده تا کنکور 1403</h2>
+        <h2 className="text-center dark:text-white text-base font-semibold">زمان باقی مانده تا کنکور 1404</h2>
         {/* count down */}
         <div className="flex flex-row-reverse justify-center gap-2 mt-4">
           <div className="flex flex-col items-center gap-y-2">
